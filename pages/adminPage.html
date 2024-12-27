@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminPage</title>
+    <link rel="stylesheet" href="../src/style.css">
+</head>
+
+<body>
+    <div id="popup_0"></div>
+    <div class="adminShow" id="popup1">
+        <div id="dataOfDialogue"></div>
+        <div id="popup1_close">X</div>
+        <ol id="popup1_txt"></ol>
+    </div>
+    <div id="header_top_right">
+        <span id="loader" class="loader">ОФИСМАГ</span>
+        <div id="urgentScripts"></div>
+    </div>
+    <nav class="btn-bar" id="btn-bar_sub-division"></nav>
+    <div id="selectMenu">
+        <button id="showDialugues" value="all">1. Получите фильтры</button>
+        <div>            
+            <form action="#" method="get" id="formSelect" style="display: flex;">
+                <div id="oneOfParams" style="margin-right: 10px;">                    
+                    <p style="text-align: center; font-size: 16px; margin: 3px; background-color: mintcream;">2.
+                        Выберите
+                        параметр фильтрации:</p>
+                    <select name="subDivList" id="subDivList" class="getSelect" type="text" placeholder="отдел">
+                    </select>
+                    <select name="nameList" id="nameList" class="getSelect" type="text" placeholder="фио">
+                    </select>
+                    <select name="statusList" id="statusList" class="getSelect" type="text" placeholder="статус 1">
+                    </select>
+                </div>
+                <div>
+                <p style="text-align: center; font-size: 16px; margin: 3px; background-color: mintcream;">3.
+                    Выберите период:</p>
+                <select name="dateList" id="dateListFrom" class="getSelect" type="text" placeholder="дата с">
+                </select>
+                <select name="dateList" id="dateListTo" class="getSelect" type="text" placeholder="дата по">
+                </select>
+            </div>
+            </form>
+        </div>
+        <button id="sentSelect">4. Получите данные</button>
+        <button id="registration_button">Войти</button>
+        <p style="cursor: pointer;" onclick="tableToExcel('table', 'Диалоги операторов','');">Экспорт в EXCEL</p>
+    </div>
+    <p id="errStatus"></p>
+    <p id="jobTitle"></p>
+    <table id="listOfDialogues">
+
+    </table>
+    <script src="../src/employeesesData.js"></script>
+    <script src="../src/markupStructure.js"></script>
+    <script src="../src/managementOfData.js"></script>
+    <script src="../scenarios/scenarios.js"></script>
+    <script src="../src/adminTools.js"></script>
+</body>
+
+</html>
