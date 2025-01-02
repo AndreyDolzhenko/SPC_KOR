@@ -2,7 +2,7 @@
 // https://samson-university.websoft.ru:444/view_doc.html?mode=doc_type&custom_web_template_id=7441843213630862685
 
 const showDialugues = document.getElementById("showDialugues");
-const header_top_right = document.getElementById("header_top_right");
+const header_right = document.getElementById("header_right");
 const buttonClick = document.getElementsByClassName("btn_sub-division");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
@@ -17,7 +17,7 @@ errStatus.style.color = "red";
 const listTitle = ["Дата и время", "Оператор", "Клиент", "Канал сбыта", "Статус 1", "Прогресс"];
 
 
-header_top_right.style.float = "inline-end";
+header_right.style.float = "inline-end";
 
 // Экспорт в EXCEL
 var tableToExcel = (function () {
