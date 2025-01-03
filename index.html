@@ -11,18 +11,17 @@
 
 <body>
 	<div class="main">
+		<div id="icon_home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32"
+				color="linear-gradient(45deg, black, transparent)" height="32" viewBox="0 0 32 32">
+				<title>home</title>
+				<path d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z">
+				</path>
+			</svg>
+		</div>
 		<header class="header" id="header">
 			<div class="header_left" id="header_left">
-				<div id="icon_home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32"
-						color="linear-gradient(45deg, black, transparent)" height="32" viewBox="0 0 32 32">
-						<title>home</title>
-						<path
-							d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z">
-						</path>
-					</svg>
-				</div>
 				<nav class="btn-bar" id="btn-bar_sub-division"></nav>
-				<div id="databaseStatus"></div>
+				<div id="databaseStatus">Состояние базы</div>
 			</div>
 			<div class="header_centr" id="header_centr">
 				<h2 id="sectionTitle"></h2>
@@ -30,11 +29,6 @@
 			</div>
 			<div class="header_right" id="header_right">
 				<span id="loader" class="loader">ОФИСМАГ</span>
-				<div id="urgentScripts"></div>
-				<a id="instructions" href="pages/journals_acts_memos.html" target="blank"
-					style="margin-left: 200px;">Журналы<span
-						style="display: inline-block; width: 10px;"></span>Акты<span
-						style="display: inline-block; width: 10px;"></span>Памятки</a>
 				<div id="registration">
 					<form id="wayToAdmin" action="./pages/adminPage.html" target="_blank">
 						<button id="registration_button">AdminPage</button>
@@ -50,13 +44,23 @@
 
 		</header>
 		<div class="header_tools">
-			<div id="progress">Прогресс:
-				<span id="progress_bar">0%</span>
-				<div id="progress_bar_color"></div>
-			</div><span id="many" class="many"></span>
-			<button id="send">Отправить</button>
-			<div id="header_bottom">
+			<div class="header_tools_left">
+				<div id="progress">Прогресс:
+					<span id="progress_bar">0%</span>
+					<div id="progress_bar_color"></div>
+				</div><span id="many" class="many"></span>
+				<button id="send">Отправить</button>
+			</div>
+			<div class="header_tools_center">
 				<div id="objections"></div>
+			</div>
+			<div class="header_tools_right">
+				<a id="instructions" href="pages/journals_acts_memos.html" target="blank"
+					style="margin-left: 200px;">Журналы<span
+						style="display: inline-block; width: 10px;"></span>Акты<span
+						style="display: inline-block; width: 10px;"></span>Памятки
+				</a>
+				<div id="urgentScripts"></div>
 			</div>
 		</div>
 		<div id="content">

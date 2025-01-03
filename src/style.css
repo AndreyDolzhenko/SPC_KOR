@@ -23,23 +23,36 @@ td {
 	flex-direction: column;
 	position: relative;
 	margin: 0 auto;
+	padding: 5px;
 	background: linear-gradient(90deg, #b9deed, #efefef);
 }
 
-.header {	
-	display: flex;	
+.header {
+	display: flex;
 }
 
-.header_left{
+.header_left {
 	width: 30%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
 }
 
-.header_centr{
+.header_centr {
 	width: 40%;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	position: relative;
 }
 
-.header_right{
+.header_right {
 	width: 30%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
 }
 
 .adminShow {
@@ -53,17 +66,8 @@ td {
 }
 
 #userData {
-	width: 700px;
 	color: darkcyan;
-}
-
-#registration {
-	z-index: 2;
-	position: absolute;
-	right: 25px;
-	text-align: left;
-	display: flex;
-	align-items: center;
+	text-align: center;
 }
 
 #employeesesList {
@@ -80,8 +84,6 @@ td {
 	width: 100px;
 	height: 20px;
 	font-size: 14px;
-	margin: 10px 50px 0 0;
-	display: none;
 }
 
 #progress {
@@ -264,7 +266,7 @@ li {
 	width: 100px;
 }
 
-#header_bottom {
+.header_tools_center {
 	width: auto;
 	text-align: center;
 	padding: 10px;
@@ -280,17 +282,11 @@ li {
 #icon_home {
 	fill: linear-gradient(45deg, black, transparent);
 	cursor: pointer;
-	float: left;
-	margin-left: 10px;
+	position: absolute;		
 }
 
 #content {
 	display: flex;
-}
-
-#databaseStatus {
-	float: left;
-	margin: -40px 0 0 20px;
 }
 
 #left_bar {

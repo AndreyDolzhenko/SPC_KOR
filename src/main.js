@@ -27,6 +27,7 @@ let now_status = 'SMB'; // переменная определяет выбра�
 const loader = document.getElementById("loader");
 const many = document.getElementById("many");
 const userLink = document.getElementById("userLink");
+const registration = document.getElementById("registration");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -320,7 +321,9 @@ userData.addEventListener("click", (event) => {
 ////////////////////////
 
 listScript.addEventListener("click", function (event) {
-	loader.style = 'display: none;';
+	header.style = 'display: none;';
+	// loader.style = 'display: none;';
+	// registration.style = 'display: none';
 	let x = 0; // переменная для процента выполнения скрипта
 	progress_bar_span.innerHTML = `${x}%`;
 	progress_bar_color.style = `width: ${x}%;`;
