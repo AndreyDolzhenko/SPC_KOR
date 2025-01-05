@@ -28,6 +28,7 @@ const loader = document.getElementById("loader");
 const many = document.getElementById("many");
 const userLink = document.getElementById("userLink");
 const registration = document.getElementById("registration");
+const header_tools = document.getElementById("header_tools");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -228,7 +229,7 @@ for (objPresentationsUrgentScripts of arrPresentationsUrgentScripts) {
 	newButton.className = "presentationsUrgentScripts";
 	newButton.value = objPresentationsUrgentScripts["arr_sub-division"];
 	newButton.style.display = 'none';
-	newButton.style.width = "100px";
+	// newButton.style.width = "100px";
 	newButton.innerText = objPresentationsUrgentScripts['title'];
 	urgentScripts.append(newButton);
 };
@@ -322,6 +323,7 @@ userData.addEventListener("click", (event) => {
 
 listScript.addEventListener("click", function (event) {
 	header.style = 'display: none;';
+	header_tools.style = 'display: flex';
 	// loader.style = 'display: none;';
 	// registration.style = 'display: none';
 	let x = 0; // переменная для процента выполнения скрипта
