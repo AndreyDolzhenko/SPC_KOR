@@ -6,7 +6,6 @@ const preparation = document.getElementById("preparation");
 const preparationPlanBlock = document.getElementById('preparationPlan');
 const contactScripts = document.getElementById("contact-scripts");
 const buttonPrep = document.getElementsByClassName("buttonPrep");
-const leftBar = document.getElementById("left_bar");
 const listScript = document.getElementById("list_script");
 const rightBar = document.getElementById("right_bar");
 const listPresentations = document.getElementById("list-presentations");
@@ -152,7 +151,7 @@ function fillInTheListOfScripts() {
 			greetings.style.display = "none";
 			document.getElementById("objections").style.display = "flex";
 			preparation.style.display = "none";
-			rightBar.style.display = "block";
+			rightBar.style.display = "flex";
 			previousElement.style.color = "currentcolor";
 			event.target.style.color = "brown";
 			previousElement = event.target;
