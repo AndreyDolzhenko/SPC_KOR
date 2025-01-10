@@ -12,9 +12,9 @@ const ObjClientStatus={
 	'status_7':'Первая поставка',
 	'status_8':'Lead',
 	'status_9':'Реальный NEW/OLD',
-	'status_10':'Бюджетные клиенты',
-	'status_11':'Первый заказ',
-	'status_12':'Повторный заказ',
+	'status__10':'Бюджетные клиенты',
+	'status__11':'Первый заказ',
+	'status__12':'Повторный заказ',
 };
 
 const preparationPlan={

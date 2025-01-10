@@ -89,10 +89,10 @@ const changeOfDivision = (newDivision) => {
 		// event.target.classList.add("btn_selected");
 	}
 	greetings.style.display = '';
-// меняет цвет кнопок при переходе между подразделениями 
+	// меняет цвет кнопок при переходе между подразделениями 
 	for (let index = 0; index < btnSubDivision.length; index++) {
 		btnSubDivision[index].addEventListener("click", (event) => {
-			
+
 			nextSub.style.background = "aliceblue";
 			nextSub.style.color = "black";
 
@@ -133,24 +133,27 @@ function popupOperation() {
 		textOutput.innerText = "";
 	});
 }
+
 // кнопка возврата на стартовую страницу
 iconHome.addEventListener("click", function (event) {
 	document.location.reload();
 });
+
 // Строим список скриптов в зависимости от ПОДРАЗДЕЛЕНИЯ
 function fillInTheListOfScripts() {
 	listScript.innerHTML = '';
 	for (clientStatus in ObjClientStatus) {
 		newClientStatus = document.createElement("li");
-		newClientStatus.id = clientStatus;
+		newClientStatus.id = clientStatus;		
 		newClientStatus.className = 'status';
 		newClientStatus.innerText = ObjClientStatus[clientStatus];
+		// убираем в левом меню статусы, которые не соответствуют выбранному каналу сбыта
 		newClientStatus.style.display = subDivisionAndstatusScripts[firstSubDivision]["status-scripts"][clientStatus] != undefined ? 'block' : 'none';
 		// вешаем клик на сценарии контакта
 		newClientStatus.addEventListener("click", function (event) {
-			greetings.style.display = "none";
+			greetings.style.display = "none"; // убираем строку с приветствием
 			document.getElementById("objections").style.display = "flex";
-			preparation.style.display = "none";
+			preparation.style.display = "none"; // убираем блок подготовки к контакту
 			rightBar.style.display = "flex";
 			previousElement.style.color = "currentcolor";
 			event.target.style.color = "brown";
@@ -241,7 +244,7 @@ for (ObjPresentations of arrObjPresentations) {
 	newPresentation.value = ObjPresentations['status']
 	newPresentation.innerHTML = ObjPresentations["title"];
 	listPresentations.append(newPresentation);
-	//objections.style.display='none';
+	// objections.style.display='none';
 };
 // вешаем попап на кнопку возражений
 const objectionsCollection = document.getElementsByClassName("objections");
@@ -380,16 +383,18 @@ listScript.addEventListener("click", function (event) {
 				liId++; // увеличиваем Id на единицу
 			};
 			//if(){
+			// ВЫВОД КНОПОК ПРЕЗЕНТАЦИИ
 			for (presentationsUrgentScript of urgentScripts.children) {
 				presentationsUrgentScript.style.display = '';
 				if (!presentationsUrgentScript.value.includes(keySubDivision)) {
 					presentationsUrgentScript.style.display = 'none';
 				}
 			}
-			//}
+			//}			
 			for (presentat of listPresentations.children) {
-				presentat.style.display = '';
-				if (!presentat.value.includes(event.target.id)) {
+				presentat.style.display = '';				
+				// УБИРАЕМ ЛИШНИЕ КНОПКИ ПРЕЗЕНТАЦИИ
+				if (!presentat.value.includes(event.target.id)) {					
 					presentat.style.display = 'none';
 				}
 			}
@@ -520,7 +525,7 @@ if (param === null) {
 
 	Object.values(employeesesListAdmin).map((el) => {
 		if (userData.lastChild.textContent == el) {
-			document.getElementById("registration_button").style.display = "block";			
+			document.getElementById("registration_button").style.display = "block";
 		}
 	});
 }

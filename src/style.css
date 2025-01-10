@@ -6,11 +6,16 @@
 
 body {
 	width: 100%;
+	background: linear-gradient(90deg, #b9deed, #efefef);
 }
 
 p {
 	text-indent: 20px;
 	/* Отступ первой строки в пикселах */
+}
+
+ul{
+	list-style-type: none;
 }
 
 td {
@@ -24,6 +29,7 @@ td {
 
 .main {
 	width: 1200px;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -63,6 +69,9 @@ td {
 
 .header_tools {
 	display: none;
+	position: sticky;
+    top: 0;
+    z-index: 3;
 }
 
 .header_tools_left {
@@ -71,6 +80,7 @@ td {
 	flex-direction: column;
 	align-items: end;
 	position: relative;
+	background: #AFEEEE;
 }
 
 .header_tools_centr {
@@ -79,6 +89,7 @@ td {
 	flex-direction: column;
 	align-items: center;
 	position: relative;
+	background: #AFEEEE;
 }
 
 .header_tools_right {
@@ -87,6 +98,7 @@ td {
 	flex-direction: column;
 	align-items: center;
 	position: relative;
+	background: #AFEEEE;
 }
 
 .content {
@@ -103,15 +115,16 @@ td {
 	line-height: 2;
 	font-size: 18px;
 	font-style: italic;
+	position: fixed;
 }
 
 .content_center {
-	width: 66%;
-	height: 100vh;
+	width: 66%;	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
+	margin-left: 22%;
 }
 
 .content_right {
@@ -335,6 +348,7 @@ li {
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
+	background: #AFEEEE;
 }
 
 #urgentScripts {
@@ -345,7 +359,8 @@ li {
 #icon_home {
 	fill: linear-gradient(45deg, black, transparent);
 	cursor: pointer;
-	position: absolute;
+	position: fixed;
+	z-index: 4;
 }
 
 #contact-scripts {
