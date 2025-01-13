@@ -28,8 +28,7 @@ td {
 }
 
 .main {
-	width: 1200px;
-	height: 100vh;
+	width: 1200px;	
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -40,7 +39,6 @@ td {
 
 .header {
 	display: flex;
-	position: relative;
 }
 
 .header_left {
@@ -68,10 +66,7 @@ td {
 }
 
 .header_tools {
-	display: none;
-	position: sticky;
-    top: 0;
-    z-index: 3;
+	display: none;	
 }
 
 .header_tools_left {
@@ -80,16 +75,14 @@ td {
 	flex-direction: column;
 	align-items: end;
 	position: relative;
-	background: #AFEEEE;
 }
 
-.header_tools_centr {
-	width: 40%;
+.header_tools_center {
+	width: auto;
+	text-align: center;
+	padding: 10px;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	position: relative;
-	background: #AFEEEE;
+	justify-content: space-between;	
 }
 
 .header_tools_right {
@@ -97,8 +90,7 @@ td {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	position: relative;
-	background: #AFEEEE;
+	position: relative;	
 }
 
 .content {
@@ -106,34 +98,43 @@ td {
 	position: relative;
 }
 
-.content_left {
-	width: 16%;
+.content_left {	
+	width: 18%;
 	display: flex;
 	flex-direction: column;
 	position: relative;
 	border-right: solid 3px antiquewhite;
 	line-height: 2;
 	font-size: 18px;
-	font-style: italic;
-	position: fixed;
+	font-style: italic;	
 }
 
-.content_center {
-	width: 66%;	
+.content_center {	
+	width: 64%;	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	position: relative;
-	margin-left: 22%;
+	position: relative;	
 }
+
+#main_scenario {
+	height: 100vh;
+	padding: 20px;
+	font-size: 18px;
+	line-height: 2;
+	overflow: auto;
+}
+
+#main_scenario::-webkit-scrollbar {
+	width: 0;
+  }
 
 .content_right {
 	width: 18%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	text-align: center;
-	position: relative;
+	text-align: center;	
 	border-left: solid 3px antiquewhite;
 	line-height: 2;
 	font-size: 18px;
@@ -342,15 +343,6 @@ li {
 	width: 100px;
 }
 
-.header_tools_center {
-	width: auto;
-	text-align: center;
-	padding: 10px;
-	display: flex;
-	justify-content: space-between;
-	background: #AFEEEE;
-}
-
 #urgentScripts {
 	display: flex;
 	flex-wrap: wrap;
@@ -359,7 +351,7 @@ li {
 #icon_home {
 	fill: linear-gradient(45deg, black, transparent);
 	cursor: pointer;
-	position: fixed;
+	position: absolute;
 	z-index: 4;
 }
 
@@ -396,13 +388,6 @@ li {
 #footer {
 	position: fixed;
 	bottom: 0px;
-}
-
-#main_scenario {
-	padding: 20px;
-	font-size: 18px;
-	line-height: 2;
-	overflow: auto;
 }
 
 #inputName {
