@@ -8,6 +8,7 @@ body {
 	width: 100%;
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	background: linear-gradient(90deg, #b9deed, #efefef);
 }
 
@@ -204,6 +205,7 @@ td {
 	width: 100%;
 	height: 100%;
 	position: fixed;
+	left: 0;
 	z-index: 1;
 	opacity: 0;
 	visibility: hidden;
