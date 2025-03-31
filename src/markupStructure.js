@@ -1,6 +1,6 @@
 //const status1=['Потенциальный NEW','Потенциальный OLD','Реальный 1','Реальный NEW','Реальный OLD','Потерянный NEW','Потерянный OLD','Первая поставка',];
 let clientName='Ольга Петровна';
-const PORT = 5001;
+const PORT = 3000;
 const ObjClientStatus={
 	'status_0':'Потенциальный NEW',
 	'status_1':'Потенциальный OLD',
