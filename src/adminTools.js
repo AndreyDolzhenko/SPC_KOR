@@ -105,7 +105,7 @@ btn();
 let getRes;
 
 const getDataOfDialogues = () => {
-  fetch(`http://89.111.172.208:${PORT}/api/v1/dialogues/`)
+  fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues/`)
     .then(function (response) {
       return response.json();
     })
@@ -121,7 +121,7 @@ const getDataOfDialogues = () => {
 // !!! Функция демонстрации диалогов на странице по фильтру
 const choiseDialogues = (choiseSubDiv) => {
 
-  fetch(`http://89.111.172.208:${PORT}/api/v1/dialogues/select?subDiv=${choiseSubDiv}`)
+  fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues/select?subDiv=${choiseSubDiv}`)
     .then(function (response) {
       return response.json();
     })
@@ -132,7 +132,7 @@ const choiseDialogues = (choiseSubDiv) => {
     })
 }
 
-fetch(`http://89.111.172.208:${PORT}/api/v1/dialogues/`)
+fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues/`)
   .then(function (response) {
     return response.json();
   })
@@ -219,7 +219,7 @@ sentSelect.addEventListener("click", (event) => {
     }
 
 
-    fetch(`http://89.111.172.208:${PORT}/api/v1/dialogues/params?params[${Object.keys(sentParams)[0]}]=${Object.values(sentParams)[0]}&params[createdAtFrom]=${dateListFrom.value}&params[createdAtTo]=${dateListTo.value}`)
+    fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues/params?params[${Object.keys(sentParams)[0]}]=${Object.values(sentParams)[0]}&params[createdAtFrom]=${dateListFrom.value}&params[createdAtTo]=${dateListTo.value}`)
       .then(function (response) {
         return response.json();
       })

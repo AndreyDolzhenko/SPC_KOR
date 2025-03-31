@@ -412,7 +412,7 @@ listScript.addEventListener("click", function (event) {
 	// Функция для отправки результатов на сервер
 	const sendResult = async (dataToSend) => {
 
-		await fetch(`http://89.111.172.208:${PORT}/api/v1/dialogues`, {
+		await fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
