@@ -1,0 +1,138 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: space-between; */
+	background: aliceblue;
+}
+.input_time-test{
+	width: 60px;
+	text-align: center;
+	padding: 4px;
+}
+button{
+	width: 200px;
+	height: 50px;
+	background: aquamarine;
+}
+button:hover{
+	background: SeaGreen;
+	color: aquamarine;
+	cursor: pointer;
+}
+.input_time-test, button{
+	border-radius: 5px;
+	border: 1px solid #B22222;
+	font-size: 18px;
+	letter-spacing: 3px;
+	font-weight: 600;
+	color: darkslategray;
+}
+.container{
+	margin: auto;
+	width: 1200px;
+}
+.header{
+	padding: 5px;
+	justify-content: space-between;
+}
+.icon{
+	width: 15%;
+}
+.blocktime_option{
+	align-items: baseline;
+	justify-content: center;
+}
+.header, .blocktime_option, .game_top, .game_body, .game_footer{
+	display: flex;
+	align-items: center;
+}
+.game_top, .game_body{
+	height: 130px;
+	justify-content: space-evenly;
+}
+#STMValue{
+	display: none;
+    width: 80%;
+    text-align: center;
+}
+#imgShow{
+	
+}
+.brand, .block-itog_title{
+	font-size: 50px;
+}
+.correct_answers, .incorrect_answers{
+	font-size: 80px;
+}
+.correct_answers, .itog_correct-answer{
+	color: forestgreen;
+}
+.incorrect_answers, .itog_incorrect-answer{
+	color: red;
+}
+.brand, .block-itog_title{
+	text-align: center;
+	color: palevioletred;
+}
+.brand{
+	width: 600px;
+}
+.btn_answer, .btn_next, .description, .block-itog{
+	display: none;
+}
+.btn_answer:disabled{
+	background-color: #F6F6F6;
+	color:#B2ACAB;
+	border-color: #B2ACAB;
+}
+.game_footer{
+	flex-direction: column;
+}
+.description{
+	margin-bottom: 25px;
+	font-size: 22px;
+	font-style: oblique;
+}
+.description{
+	color: darkslateblue;
+}
+.block-time_time-scroll, .label_time-test{
+	color: cadetblue;
+	font-size: 24px;
+}
+.table-itog{
+	border-collapse: collapse;
+}
+.table-itog_num{
+	text-align: center;
+	width: 20px;
+}
+.table-itog_brand{
+	text-align: center;
+	width: 130px;
+}
+.table-itog_description{
+	width: 465px;
+}
+.table-itog_answer{
+	text-align: center;
+	width: 120px;
+}
+.table-itog, .block-itog_info{
+	color: SeaGreen;
+	font-size: 18px;
+}
+.table-itog td, .table-itog th{
+    padding: 5px 10px;
+}
+.itog-tbody tr:nth-child(odd){
+	background-color: #d9edff;
+}

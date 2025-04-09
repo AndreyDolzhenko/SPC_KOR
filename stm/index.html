@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>СТМ ОФИСМАГ</title>
+	<link rel="stylesheet" href="src/style.css">
+	<link type="Image/x-icon" href="./img/STM.jpeg" rel="icon">
+	<script src="./src/main.js" defer></script>
+	<script src="./src/product-list.js"></script>
+</head>
+
+<body>
+	<header>
+		<div class="container header">
+			<img class="icon" style="cursor: pointer;" onclick="document.location.reload();"
+				src="./img/Лого УМЦ 2021.png" alt="">
+			<p style="cursor: pointer;" onclick="tableToExcel('table', 'Результаты тестирования','');">Экспорт в EXCEL
+			</p>
+			<p id="userName"></p> <input id="userNameValue" type="text" placeholder="ФИО">
+			<div class="block-time">
+				<label class="label_time-test" for="input_time-test">Время прохождения теста:</label>
+				<div class="blocktime_option" id="block-time_option">
+					<input class="input_time-test" id="input_time-test" type="text" value="60">
+					<p class="label_time-test">сек.</p>
+				</div>
+				<div class="block-time_time-scroll" id="block-time_time-scroll"></div>
+			</div>
+		</div>
+	</header>
+	<div class="game">
+		<!-- <img src="./img/Ofismag.jpg" alt="альтернативный текст"> -->
+		<div class="container game_top">
+			<div class="correct_answers" id="number_of_correct_answers" value="0">0</div>
+			<div class="brand" id="brand">Для начала проверки выберите программу:</div>
+			<div class="incorrect_answers" id="number_of_incorrect_answers" value="0">0</div>
+		</div>
+		<div class="container game_body">
+			<button class="btn_answer" id="btn_answer-true">Правильно</button>
+			<button class="btn_start" id="btn_start">СТМ</button>
+			<button class="btn_start" id="price">Ценовой<br>сегмент</button>
+			<button class="btn_answer" id="btn_answer-false">НЕ правильно</button>
+			<div id="STMValue">
+				<div id="imgShow"></div>
+				<div style="text-align: left;">
+					<form name="" id="selectPrice">
+						<input style="margin: 10px; cursor: pointer; transform:scale(1.3);" name="selectValueSTM"
+							type="radio" value="Высокий">Высокий</input>
+						<br><input style="margin: 10px; cursor: pointer; transform:scale(1.3);" name="selectValueSTM"
+							type="radio" value="Средний, Средний +">Средний, Средний +</input>
+						<br><input style="margin: 10px; cursor: pointer; transform:scale(1.3);" name="selectValueSTM"
+							type="radio" value="Средний">Средний</input>
+						<br><input style="margin: 10px; cursor: pointer; transform:scale(1.3);" name="selectValueSTM"
+							type="radio" value="Низкий">Низкий</input>
+						<!-- <button id="confirmSTM">Подтвердить</button> -->
+					</form>
+					<button id="confirmSTM">Подтвердить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="description" id="description"></div>
+	<div class="container game_footer">		
+		<div id="imgShow"></div>
+		<div class="block-itog" id="block-itog">
+			<div class="block-itog_title">Итог</div>
+			<div class="block-itog_info" id="block-itog_info"></div>
+			<table id="table" class="table-itog">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Имя сотрудника</th>
+						<th>Правильных ответов</th>
+						<th>Неправильных ответов</th>
+						<th>Всего отвечено</th>
+						<th>Время, сек.</th>
+					</tr>
+					<tr>
+						<th></th>
+						<th id="name"></th>
+						<th id="counterOfCorrectAnswers"></th>
+						<th id="counterOfIncorrectAnswers"></th>
+						<th id="counterAnswer"></th>
+						<th id="timeItog"></th>
+					</tr>
+					<tr>
+						<th class="table-itog_num">№</th>
+						<th class="table-itog_brand">Бренд</th>
+						<th class="table-itog_description">Верное утверждение</th>
+						<th class="table-itog_description">Утверждение</th>
+						<th class="table-itog_answer">Выбор сотрудника</th>
+						<th class="table-itog_correct">Корректность</th>
+					</tr>
+				</thead>
+				<tbody class="itog-tbody" id="itog-tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>
