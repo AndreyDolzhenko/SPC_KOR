@@ -14,7 +14,7 @@ const btnBarSubDivision = document.getElementById("btn-bar_sub-division");
 const content = document.getElementById("content");
 const mainScenario = document.getElementById("main_scenario");
 const inputName = document.getElementById("inputName");
-const input = document.querySelector("input");
+const enterName = document.getElementById("enterName");
 const presentationsUrgentScriptsClass = document.getElementsByClassName("presentationsUrgentScripts");
 const presentationsPotenzClass = document.getElementsByClassName("presentationsPotenz");
 const presentationsClass = document.getElementsByClassName("presentations");
@@ -164,9 +164,9 @@ function fillInTheListOfScripts() {
 };
 // /Строим список скриптов в зависимости от подканала сбыта
 // блок ввода Имени Клиента
-input.addEventListener("keyup", function (event) {
+enterName.addEventListener("keyup", function (event) {
 	if (event.key == "Enter") {
-		clientName = input.value;
+		clientName = enterName.value;
 		inputName.style.display = "none";
 		if (contactScripts.childElementCount < 1) {
 			greetings.innerHTML = "Выберите статус клиента в колонке слева!";
@@ -460,8 +460,8 @@ listScript.addEventListener("click", function (event) {
 					inputName.style.background = "antiquewhite";
 
 
-					document.querySelector('input').placeholder = "Имя клиента";
-					document.querySelector('input').value = "";
+					document.getElementById('enterName').placeholder = "Имя клиента";
+					document.getElementById('enterName').value = "";
 					document.querySelectorAll("li").forEach(el => el.style.color = "black");
 
 					console.log("It's allright!");

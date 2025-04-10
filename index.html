@@ -1,108 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/style.css?v=2" />
+    <link type="Image/x-icon" href="img/imgonlinePhon.ico" rel="icon" />
+    <title>СПК ОФИСМАГ</title>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./src/style.css?v=2">
-	<link type="Image/x-icon" href="img/imgonlinePhon.ico" rel="icon">
-	<title>СПК ОФИСМАГ</title>
-</head>
-
-<body>
-	<div class="main">
-		<div id="icon_home"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32"
-				color="linear-gradient(45deg, black, transparent)" height="32" viewBox="0 0 32 32">
-				<title>home</title>
-				<path d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z">
-				</path>
-			</svg>
-		</div>
-		<header class="header" id="header">
-			<div class="header_left" id="header_left">
-				<nav class="btn-bar" id="btn-bar_sub-division"></nav>
-			</div>
-			<div class="header_centr" id="header_centr">
-				<h2 id="sectionTitle"></h2>
-				<div id="userData"></div>
-			</div>
-			<div class="header_right" id="header_right">
-				<span id="loader" class="loader">ОФИСМАГ</span>
-				<div id="registration">
-					<form id="wayToAdmin" action="./pages/adminPage.html" target="_blank">
-						<button id="registration_button">AdminPage</button>
-					</form>
-				</div>
-			</div>
-		</header>
-		<div class="header_tools" id="header_tools">
-			<div class="header_tools_left">
-				<div id="progress">Прогресс:
-					<span id="progress_bar">0%</span>
-					<div id="progress_bar_color"></div>
-				</div>
-				<button id="send">Отправить</button>
-				<span id="many" class="many"></span>
-			</div>
-			<div class="header_tools_center">
-				<div id="objections"></div>
-			</div>
-			<div class="header_tools_right">
-				<div id="urgentScripts"></div>
-				<a id="instructions" href="pages/journals_acts_memos.html" target="blank">Журналы<span
-						style="display: inline-block; width: 10px;"></span>Акты<span
-						style="display: inline-block; width: 10px;"></span>Памятки
-				</a>
-			</div>
-		</div>
-		<div id="databaseStatus" style="height: 10px; background: aliceblue;"></div>
-		<div class="content" id="content">
-			<div class="content_left">
-				<h4>Выбрать сценарий:</h4>
-				<ul id="list_script"></ul>
-			</div>
-			<div class="content_center" id="base_script">
-
-				<div id="greetings">Вас приветствует СПК - "Симулятор переговоров с Клиентами ОФИСМАГ"!</div>
-				<div id="inputName">Для начала диалога с Клиентом введите имя Клиента и нажмите кнопку "Enter":<input
-						type="text" placeholder="Имя Клиента"></div>
-				<div id="main_scenario">
-					<div id="preparation">
-						<h3>Подготовка к контакту:</h3>
-						<div class="preparation">
-							<button class="buttonPrep" id="potenzPrep">Потенциальный</button>
-							<button class="buttonPrep" id="realPrep">Реальный</button>
-							<button class="buttonPrep" id="lostPrep">Потерянный</button>
-							<button class="buttonPrep" id="SRK">СРК</button>
-						</div>
-							<ol id="preparationPlan"></ol>
-							<div id="doNotMakeContactBlock"></div>
-						
-					</div>
-					<ol id="contact-scripts"></ol>
-				</div>
-			</div>
-			<div class="content_right" id="right_bar">
-				<h4>Презентации:</h4>
-				<nav id="list-presentations"></nav>
-			</div>
-		</div>
-		<div class="footer">© ОФИСМАГ<div class="other_app"><a href="./stm/index.html" target="_blank"><span class="loaderSTM">СТМ</span></a></div></div>
-	</div>
-	<div id="popup_0"></div>
-	<div id="popup1">
-		<div id="popup1_close">X</div>
-		<div id="popup1_txt"></div>
-	</div>
-	<script src="./src/employeesesData.js?v=2"></script>
-	<script src="./src/markupStructure.js?v=2"></script>
-	<script src="./presentations/presentations.js?v=2"></script>
-	<script src="./objections/objections.js?v=2"></script>
-	<script src="./src/managementOfData.js?v=2"></script>
-	<script src="./src/dataToSend.js?v=2"></script>
-	<script src="./scenarios/scenarios.js?v=2"></script>
-	<script src="./src/main.js?v=2"></script>
-
-</body>
-
+  <body>
+    <div class="main">
+      <div id="icon_home">
+        <svg
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          color="linear-gradient(45deg, black, transparent)"
+          height="32"
+          viewBox="0 0 32 32"
+        >
+          <title>home</title>
+          <path
+            d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
+          ></path>
+        </svg>
+      </div>
+      <header class="header" id="header">
+        <div class="header_left" id="header_left">
+          <nav class="btn-bar" id="btn-bar_sub-division"></nav>
+        </div>
+        <div class="header_centr" id="header_centr">
+          <h2 id="sectionTitle"></h2>
+          <div id="userData"></div>
+        </div>
+        <div class="header_right" id="header_right">
+          <span id="loader" class="loader">ОФИСМАГ</span>
+          <div id="registration">
+            <form
+              id="wayToAdmin"
+              action="./pages/adminPage.html"
+              target="_blank"
+            >
+              <button id="registration_button">AdminPage</button>
+            </form>
+          </div>
+        </div>
+      </header>
+      <div class="header_tools" id="header_tools">
+        <div class="header_tools_left">
+          <div id="progress">
+            Прогресс:
+            <span id="progress_bar">0%</span>
+            <div id="progress_bar_color"></div>
+          </div>
+          <button id="send">Отправить</button>
+          <span id="many" class="many"></span>
+        </div>
+        <div class="header_tools_center">
+          <div id="objections"></div>
+        </div>
+        <div class="header_tools_right">
+          <div id="urgentScripts"></div>
+          <a
+            id="instructions"
+            href="pages/journals_acts_memos.html"
+            target="blank"
+            >Журналы<span style="display: inline-block; width: 10px"></span
+            >Акты<span style="display: inline-block; width: 10px"></span>Памятки
+          </a>
+        </div>
+      </div>
+      <div
+        id="databaseStatus"
+        style="height: 10px; background: aliceblue"
+      ></div>
+      <div class="content" id="content">
+        <div class="content_left">
+          <div>
+            <h4>Выбрать сценарий:</h4>
+            <ul id="list_script"></ul>
+          </div>
+          <div>
+            <div id="checkDescription"></div>
+            <input id="checkResult" type="text" />
+            <button
+              id="checkResultButton"
+              style="width: 80%; margin: 0 0 20px 0"
+            >
+              Проверить
+            </button>
+          </div>
+        </div>
+        <div class="content_center" id="base_script">
+          <div id="greetings">
+            Вас приветствует СПК - "Симулятор переговоров с Клиентами ОФИСМАГ"!
+          </div>
+          <div id="inputName">
+            Для начала диалога с Клиентом введите имя Клиента и нажмите кнопку
+            "Enter":<input id="enterName" type="text" placeholder="Имя Клиента" />
+          </div>
+          <div id="main_scenario">
+            <div id="preparation">
+              <h3>Подготовка к контакту:</h3>
+              <div class="preparation">
+                <button class="buttonPrep" id="potenzPrep">
+                  Потенциальный
+                </button>
+                <button class="buttonPrep" id="realPrep">Реальный</button>
+                <button class="buttonPrep" id="lostPrep">Потерянный</button>
+                <button class="buttonPrep" id="SRK">СРК</button>
+              </div>
+              <ol id="preparationPlan"></ol>
+              <div id="doNotMakeContactBlock"></div>
+            </div>
+            <ol id="contact-scripts"></ol>
+          </div>
+        </div>
+        <div class="content_right" id="right_bar">
+          <h4>Презентации:</h4>
+          <nav id="list-presentations"></nav>
+        </div>
+      </div>
+      <div class="footer">
+        © ОФИСМАГ
+        <div class="other_app">
+          <a href="./stm/index.html" target="_blank"
+            ><span class="loaderSTM">СТМ</span></a
+          >
+        </div>
+      </div>
+    </div>
+    <div id="popup_0"></div>
+    <div id="popup1">
+      <div id="popup1_close">X</div>
+      <div id="popup1_txt"></div>
+    </div>
+    <script src="./src/baseOfCustomers.js"></script>
+    <script src="./src/employeesesData.js?v=2"></script>
+    <script src="./src/markupStructure.js?v=2"></script>
+    <script src="./presentations/presentations.js?v=2"></script>
+    <script src="./objections/objections.js?v=2"></script>
+    <script src="./src/managementOfData.js?v=2"></script>
+    <script src="./src/dataToSend.js?v=2"></script>
+    <script src="./scenarios/scenarios.js?v=2"></script>
+    <script src="./src/main.js?v=2"></script>
+  </body>
 </html>
