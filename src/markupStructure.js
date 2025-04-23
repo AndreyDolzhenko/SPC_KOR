@@ -15,6 +15,12 @@ const ObjClientStatus={
 	'status__10':'Бюджетные клиенты',
 	'status__11':'Первый заказ',
 	'status__12':'Повторный заказ',
+	'status__13':'Потенциальный',
+	'status__14':'Реальный',
+	'status__15':'Потерянный NEW',
+	'status__16':'Звонок о встрече',
+	'status__17':'Звонок по КП',
+	'status__18':'Дебиторка',
 };
 
 const preparationPlan={

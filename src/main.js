@@ -363,7 +363,7 @@ listScript.addEventListener("click", function (event) {
 						progress_bar_span.innerHTML = `${Math.round(x += progress_counter)}%`;
 						newLiScript.style.color = 'tomato';
 						dialogueStructure[newLiScript.id] = "+";
-
+												
 					} else {
 						progress_bar_span.innerHTML = `${Math.round(x -= progress_counter)}%`;
 						newLiScript.style.color = 'black';

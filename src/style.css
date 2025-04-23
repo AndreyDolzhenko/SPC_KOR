@@ -322,10 +322,18 @@ button:hover {
 	color: currentcolor;
 }
 
+.btn-bar {
+	width: 300px;
+    overflow: auto;
+    height: 30px;
+	scrollbar-color: rgba(95, 158, 160, 0.51) transparent;
+}
+
 .btn_sub-division {
 	width: 50px;
 	height: 30px;
 	margin: 0 0 0 5px;
+	overflow: hidden;
 }
 
 .btn_sub-division * {
