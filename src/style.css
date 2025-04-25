@@ -252,6 +252,17 @@ td {
 
 }
 
+.commonResult {
+	list-style-type: decimal-closed;
+    margin: 5px 5px 5px 20px;
+}
+
+.checkbox {
+	width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
 #dataOfDialogue {
 	margin: -20px 0 10px 0px;
 	text-align: center;

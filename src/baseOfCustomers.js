@@ -2,49 +2,56 @@ const checkDescription = document.getElementById("checkDescription");
 const checkResultButton = document.getElementById("checkResultButton");
 const serchData = document.getElementById("checkResult");
 
-checkDescription.innerHTML = "Проверьте Учётную запись Клиента:";
+checkDescription.innerHTML = "Получи свод по Клиенту:";
 
-checkResultButton.addEventListener("click", (event) => {
-  checkForAvailability();
-});
+// checkResultButton.addEventListener("click", (event) => {
+//   checkForAvailability();
+// });
 
-serchData.addEventListener("keyup", (event) => {
-  event.key == "Enter" ? checkForAvailability() : true;
-});
+// Активация кнопки Проверки клиента
 
-const checkForAvailability = () => {
-  let itog = 0;
+// serchData.addEventListener("keyup", (event) => {
+//   event.key == "Enter" ? checkForAvailability() : true;
+// });
+
+
+// Функция проверки массива на наличие КОДА КЛИЕНТА
+const checkForAvailability = (test) => {
+  let itog = 0; // счётчик совпадений введенного значения кодом из списка
 
   for (let index = 0; index < test.length; index++) {
     serchData.value == test[index] ? itog++ : false;
   }
 
-  if (itog == 1) {
-    checkDescription.style = "color: green; font-size: 18px";
-    checkDescription.innerHTML = `Учётная запись ${serchData.value} привязана!`;
-  } else {
-    checkDescription.innerHTML = `Учётная запись ${serchData.value} <br> НЕ привязана!`;
-    checkDescription.style = "color: red; font-size: 18px";
-    const intervalId = setInterval(() => {
-      checkDescription.style.color == "white"
-        ? (checkDescription.style.color = "red")
-        : (checkDescription.style.color = "white");
-    }, 1000);    
+  // if (itog == 1) {
+  //   checkDescription.style = "color: green; font-size: 18px";
+  //   checkDescription.innerHTML = `Учётная запись ${serchData.value} привязана!`;
+  // } else {
+  //   checkDescription.innerHTML = `Учётная запись ${serchData.value} <br> НЕ привязана!`;
+  //   checkDescription.style = "color: red; font-size: 18px";
+  //   const intervalId = setInterval(() => {
+  //     checkDescription.style.color == "white"
+  //       ? (checkDescription.style.color = "red")
+  //       : (checkDescription.style.color = "white");
+  //   }, 1000);    
 
-    setTimeout(() => {
-        clearInterval(intervalId);
-    }, 5000);
+  //   setTimeout(() => {
+  //       clearInterval(intervalId);
+  //   }, 5000);
     
-  }  
+  // }  
 
-  setTimeout(() => {
-    checkDescription.innerHTML = "Проверьте Учётную запись Клиента:";
-    serchData.value = "";
-    checkDescription.style = "color: darkcyan; font-size: 16px";
-  }, 5000);
+  // setTimeout(() => {
+  //   checkDescription.innerHTML = "Проверьте Учётную запись Клиента:";
+  //   serchData.value = "";
+  //   checkDescription.style = "color: darkcyan; font-size: 16px";
+  // }, 5000);
+
+  return itog;
+
 };
 
-const test = [
+const accountLinked = [
   `325932`,
   `325926`,
   `325924`,
