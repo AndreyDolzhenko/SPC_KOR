@@ -146,36 +146,61 @@ iconHome.addEventListener("click", function (event) {
 // Кнопка ПРОВЕРКИ КЛИЕНТА
 
 const commonResultOfChecking = () => {
+  
 	const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${serchData.value}:</b></p>
 	<ul>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ сумм: 
+  <b style = "color: brown;">
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b> привязана!` : `<b style  = "color: red;"> НЕ привязана!</b>`
+		informationOutput(debtSumm)
+		}</b>;
+	</li>
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ дней:
+  <b style = "color: brown;"> 
+	${
+		informationOutput(debtDays)
+		}</b>;
+	</li>
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Рубликов: 
+	<b style = "color: brown;"> 
+	${
+		informationOutput(cash)
+		}</b>;
+	</li>
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> В корзине: 
+	<b style = "color: brown;"> 
+	${
+		informationOutput(basket)
+		}</b>;
+	</li>
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц): 
+	${
+		checkForAvailability(osonCanc) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
 		
 		}
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(хоз): 
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b> привязана!` : `<b style  = "color: red;"> НЕ привязана!</b>`
+		checkForAvailability(osonChos) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
 		
 		}
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(прод):
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b> привязана!` : `<b style  = "color: red;"> НЕ привязана!</b>`
+		checkForAvailability(osonProd) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
 		
 		}
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Потенциал: 
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b> привязана!` : `<b style  = "color: red;"> НЕ привязана!</b>`
+		checkForAvailability(potencChecing) == 1 ? `<b style = "color: brown;">указан.</b>` : `<b style  = "color: red;"> НЕ указан!</b>`
 		
 		}
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b> привязана!` : `<b style  = "color: red;"> НЕ привязана!</b>`
+		checkForAvailability(accountLinked) == 1 ? `<b style = "color: brown;"> привязана!</b>` : `<b style  = "color: red;"> НЕ привязана!</b>`
 		
 		}
 	</li>
