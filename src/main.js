@@ -146,6 +146,9 @@ iconHome.addEventListener("click", function (event) {
 // Кнопка ПРОВЕРКИ КЛИЕНТА
 
 const commonResultOfChecking = () => {
+
+  clientsName.innerText = informationOutput(clientsNames);
+  clientsName_0.innerText = informationOutput(clientsNames);
   
 	const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${serchData.value}:</b></p>

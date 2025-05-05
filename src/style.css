@@ -555,3 +555,8 @@ li {
 		transform: rotateY(3600deg);
 	}
 }
+
+#clientsName, #clientsName_0 {
+	margin: 10px;
+    color: brown;
+}
