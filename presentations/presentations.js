@@ -2,9 +2,8 @@
 const presentationsUrgentScripts = {
   "УЗ ОМ":
     '<span id="OSS">добрый день! Меня зовут Елена, компания ОФИСМАГ.<br>Звоню, чтобы поблагодарить Вас за регистрацию в нашем интернет-магазине ОФИСМАГ.РФ и обсудить условия сотрудничества!<br>Уделите, пожалуйста, несколько минут!<br>Скажите, Вы хотите сделать заказ от компании, или как частное лицо?<br></span><b class="Services" id="private_person" style="font-size: large;">- Я выбирала для себя (как частное лицо)!</b><br></span><b class="Services" id="order_for_the_company" style="font-size: large;">- Я хочу сделать заказ для компании…!</b>',
-  "ОЗОН":
-    'сейчас Вы можете получить подарочную карту «Озон» номиналом от 1 до 12 тыс. руб. за покупку канцелярских товаров, хозяйственных товаров и продуктов питания:<br><br><span style="font-size: larger; color: red;">ВНИМАНИЕ! Данная акция ТОЛЬКО для Клиентов из списка!</span><br><br><b style="font-size: initial;">Акция №1.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/782/" target="_blank">Канцтовары</a>:<br>•	от 30 000 руб. клиент получит карту ОЗОН на 3 000 руб.;<br>•	от 50 000 руб. клиент получит карту ОЗОН на 5 000 руб.;<br>•	от 80 000 руб. клиент получит карту ОЗОН на 8 000 руб.;<br>•	от 120 000 руб. клиент получит карту ОЗОН на 12 000 руб.<br><br><b style="font-size: initial;">Акция №2.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/1323/" target="_blank">Хозтовары</a>:<br>•	от 30 000 руб. клиент получит карту ОЗОН на 3 000 руб.;<br>•	от 50 000 руб. клиент получит карту ОЗОН на 5 000 руб.;<br>•	от 80 000 руб. клиент получит карту ОЗОН на 8 000 руб.;<br>• от 120 000 руб. клиент получит карту ОЗОН на 12 000 руб.<br><br><b style="font-size: initial;">Акция №3.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/1485/" target="_blank">Продукты питания</a>:<br>•	от 10 000 руб. клиент получит карту ОЗОН на 1 000 руб.;<br>•	от 20 000 руб. клиент получит карту ОЗОН на 2 000 руб.;<br>•	от 40 000 руб. клиент получит карту ОЗОН на 4 000 руб.;<br>•	от 60 000 руб. клиент получит карту ОЗОН на 6 000 руб.<br><br><a href="../temporary_documents/Pril_1_List_of_customers.xlsx" target="_blank">Список клиентов</a><br><a href="../temporary_documents/Pril_5_KP_Kanz.xlsx" target="_blank">КП для Канцтоваров</a><br><a href="../temporary_documents/Pril_6_KP_Choz.xlsx" target="_blank">КП для Хозтоваров</a><br><a href="../temporary_documents/Pril_7_KP_Pitanie.xlsx" target="_blank">КП для Продуктов питания</a><br><a href="../temporary_documents/012_MSK_from_26_02_2025.docx" target="_blank">Распоряжение</a>',
-  "ПРЕТЕНЗИИ":
+  ОЗОН: 'сейчас Вы можете получить подарочную карту «Озон» номиналом от 1 до 12 тыс. руб. за покупку канцелярских товаров, хозяйственных товаров и продуктов питания:<br><br><span style="font-size: larger; color: red;">ВНИМАНИЕ! Данная акция ТОЛЬКО для Клиентов из списка!</span><br><br><b style="font-size: initial;">Акция №1.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/782/" target="_blank">Канцтовары</a>:<br>•	от 30 000 руб. клиент получит карту ОЗОН на 3 000 руб.;<br>•	от 50 000 руб. клиент получит карту ОЗОН на 5 000 руб.;<br>•	от 80 000 руб. клиент получит карту ОЗОН на 8 000 руб.;<br>•	от 120 000 руб. клиент получит карту ОЗОН на 12 000 руб.<br><br><b style="font-size: initial;">Акция №2.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/1323/" target="_blank">Хозтовары</a>:<br>•	от 30 000 руб. клиент получит карту ОЗОН на 3 000 руб.;<br>•	от 50 000 руб. клиент получит карту ОЗОН на 5 000 руб.;<br>•	от 80 000 руб. клиент получит карту ОЗОН на 8 000 руб.;<br>• от 120 000 руб. клиент получит карту ОЗОН на 12 000 руб.<br><br><b style="font-size: initial;">Акция №3.</b> Закупка товаров в ИМ https://www.officemag.ru/ из раздела <a href="https://www.officemag.ru/catalog/1485/" target="_blank">Продукты питания</a>:<br>•	от 10 000 руб. клиент получит карту ОЗОН на 1 000 руб.;<br>•	от 20 000 руб. клиент получит карту ОЗОН на 2 000 руб.;<br>•	от 40 000 руб. клиент получит карту ОЗОН на 4 000 руб.;<br>•	от 60 000 руб. клиент получит карту ОЗОН на 6 000 руб.<br><br><a href="../temporary_documents/Pril_1_List_of_customers.xlsx" target="_blank">Список клиентов</a><br><a href="../temporary_documents/Pril_5_KP_Kanz.xlsx" target="_blank">КП для Канцтоваров</a><br><a href="../temporary_documents/Pril_6_KP_Choz.xlsx" target="_blank">КП для Хозтоваров</a><br><a href="../temporary_documents/Pril_7_KP_Pitanie.xlsx" target="_blank">КП для Продуктов питания</a><br><a href="../temporary_documents/012_MSK_from_26_02_2025.docx" target="_blank">Распоряжение</a>',
+  ПРЕТЕНЗИИ:
     '<span id="OSS">уверен(а), что мы сможем решить любой вопрос! Расскажите подробнее, что произошло? <br><b style="font-size: initial;">(выслушать клиента, используя техники активного слушания)</b><br></span><b class="Services" id="shortage" style="font-size: large;">- Недостача, излишек, брак.</b><br></span><b class="Services" id="return_of_goods" style="font-size: large;">- Возврат качественного товара.</b><br></span><b class="Services" id="return_of_money" style="font-size: large;">- Возврат денежных средств.</b><br></span><b class="Services" id="bad_decision" style="font-size: large;">- Клиента не удовлетворило решение по ПРЕТЕНЗИИ.</b><br></span>',
   "Указать организацию": `<br><b style="font-size: initial;">(ВАЖНО!!! Только для клиентов со статусом 2 «Средний» и «Мелкий»)</b> <br>благодаря регистрации в интернет-магазине ОФИСМАГ.РФ Вы будете видеть цены на товары с учётом <b>персональных скидок</b>, сможете <b>обмениваться документами</b>, получать <b>акты сверки или выгружать счета</b>. Так же, Вы всегда будете видеть <b>контакты Вашего торгового представителя и оператора</b> для оперативного обращения.<br>Что бы подключить все эти опции, войдите, пожалуйста, в интернет-магазин под своей учётной записью. Нажмите кнопку «Кабинет» рядом с поисковой строкой. Скажите, Вы видите доступные Вам персональные условия в ЛК?<br><b style="font-size: initial;">Если клиент не видит эту информацию:</b><br>Выберите <b>пункт «Указать организацию»</b>, введите ИНН своей компании... <br>В ячейке <b>«Код организации»</b> введите код, который я сейчас продиктую... <br>Нажмите кнопку «Сохранить».<br><b style="font-size: initial;">Если последнее посещение было более 3-х месяцев назад:<br></b>Обратил(а) внимание, что с аккаунта … осуществляли вход на сайт ИМ более трех месяцев назад, подскажите, актуальна ли данная учётная запись?`,
 };
@@ -12,9 +11,9 @@ const arrPresentationsUrgentScripts = [
   {
     "arr_sub-division": ["SMB", "KB"],
     title: "УЗ ОМ",
-  },  
+  },
   {
-    "arr_sub-division": ["SMB", "KB", "SRK"],
+    "arr_sub-division": ["SMB", "KB", "SRK", "TPFIELD", "TPOFFICE"],
     title: "ОЗОН",
   },
   {
@@ -60,15 +59,18 @@ const presentations = {
 // Выборочные акции.
 const arrObjPresentations = [
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK"],
-    status: ["status_0", "status_1", "status_8", "status_9"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "TPFIELD", "TPOFFICE"],
+    status: ["status_0", "status_1", "status_8", "status_9",
+      "status__13",
+      "status__16",
+      "status__17",],
     title: "Подарок за ПЕРВУЮ покупку",
     content:
       'При оформлении первого заказа в нашем интернет-магазине ОФИСМАГ.РФ Вы получите следующие подарки от нашей компании: <br><b style="font-size: large;"><br>- от 5 000 до 9 999 руб. – Вы получите подарочную карту ОЗОН номиналом 1 000 руб.!<br>- от 10 000 до 19 999 руб. – Вы получите подарочную карту ОЗОН номиналом 2 000 руб.!<br>- от 20 000 до 49 999 руб. – Вы получите подарочную карту ОЗОН номиналом 3 000 руб.!<br>- от 50 000 руб. и выше  – Вы получите подарочную карту ОЗОН номиналом 5 000 руб.!</b><br><br>Скажите, когда Вы планируете ближайшую закупку? На какую сумму? … Давайте я помогу Вам сформировать заказ с максимальной выгодой!<br><b style="font-size: initial;">(провести презентацию нашего ассортимента, помочь выбрать необходимые клиенту товары).</b>',
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB"],
+    arr_subdivision: ["SMB", "KB", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -79,6 +81,9 @@ const arrObjPresentations = [
       "status_6",
       "status_7",
       "status_9",
+      "status__13",
+      "status__16",
+      "status__17",
     ],
     title: "Персональные скидки",
     content:
@@ -86,7 +91,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -98,6 +103,12 @@ const arrObjPresentations = [
       "status_7",
       "status_8",
       "status_9",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "ОТСРОЧКА",
     content:
@@ -105,7 +116,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -118,6 +129,12 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status_10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Щедрый ОФИСМАГ",
     content:
@@ -125,7 +142,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -138,13 +155,19 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status_10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Заказ на ЧАСТНОЕ лицо",
     content:
       'У нас есть удобный сервис <b style="font-size: large;">заказа на частное лицо</b>, который позволит Вам приобретать товары лично для себя с доставкой до рабочего места. Оплата наличными или бонусами, во взаиморасчетах организации данные закупки не учитываются. Это позволит Вам экономить время на походы в магазин и личные денежные средства.',
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -156,6 +179,12 @@ const arrObjPresentations = [
       "status_7",
       "status_8",
       "status_9",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Цена недели",
     content:
@@ -163,7 +192,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -175,6 +204,12 @@ const arrObjPresentations = [
       "status_7",
       "status_8",
       "status_9",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Акции со скидками",
     content:
@@ -182,7 +217,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -194,6 +229,12 @@ const arrObjPresentations = [
       "status_7",
       "status_8",
       "status_9",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Акции с подарками",
     content:
@@ -220,7 +261,7 @@ const arrObjPresentations = [
   //   sub_presentations: false,
   // },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -233,6 +274,12 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status__10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Презентация ИМ",
     content:
@@ -240,7 +287,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -253,13 +300,19 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status__10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Регистрация в ИМ",
     content: `Регистрация в ИМ позволяет Вам видеть персональные скидки, участвовать в акциях и получать подарки. <b style="font-size: large;">Нажмите, пожалуйста, кнопку "Вход" в правом верхнем углу интернет-магазина!</b> А теперь нажмите синюю кнопку "Зарегистрироваться"!<br><br><b style="font-size: large; font-style: italic;">Клиенту предварительно создана учётная запись:</b><br>На эл. почту Вам поступило письмо с учетными данными от личного кабинета. В случае необходимости, Вы можете сменить пароль. <br>Для Вашей организации создана новая учетная запись для входа в интернет-магазин ОФИСМАГ.РФ. Благодаря регистрации на сайте Вы сможете приобретать товары по максимально выгодным индивидуальным ценам, обмениваться документами, получать акты сверки или выгружать счета. Так же, Вы всегда будете видеть контакты персонального оператора/менеджера для оперативного обращения.<br>Для активации учетной записи необходимо перейти в эл. письмо с темой «Приветствуем в интернет-магазине ОФИСМАГ», нажать кнопку «Активировать учетную запись» и в открывшейся странице ИМ ОФИСМАГ.РФ с уведомлением «Создание учетной записи» установите предложенные чек-боксы и нажмите кнопку «Продолжить». Ваша учетная запись активирована.`,
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -272,6 +325,12 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status__10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Презентация ассортимента",
     content:
@@ -279,7 +338,7 @@ const arrObjPresentations = [
     sub_presentations: false,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -292,6 +351,12 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status__10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Презентация сервисов",
     content:
@@ -299,7 +364,7 @@ const arrObjPresentations = [
     sub_presentations: true,
   },
   {
-    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS"],
+    arr_subdivision: ["SMB", "KB", "TP", "SRK", "GOS", "TPFIELD", "TPOFFICE"],
     status: [
       "status_0",
       "status_1",
@@ -312,6 +377,12 @@ const arrObjPresentations = [
       "status_8",
       "status_9",
       "status__10",
+      "status__13",
+      "status__14",
+      "status__15",
+      "status__16",
+      "status__17",
+      "status__18",
     ],
     title: "Презентация Личного кабинета ИМ",
     content:
@@ -393,7 +464,7 @@ const arrObjPresentations = [
 ];
 // /Выборочные акции.
 
-const onlineStoreServices = {  
+const onlineStoreServices = {
   you_have_more:
     "мы предоставляем индивидуальные условия для наших клиентов с фиксацией скидок в личном кабинете. Уверен, что наши цены окажутся лучше. Давайте сравним, и я согласую более выгодную цену или подберу товар дешевле из нашего ассортимента!",
   product_discussion:

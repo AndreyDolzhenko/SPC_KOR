@@ -484,7 +484,7 @@ listScript.addEventListener("click", function (event) {
           }
           progress_bar_color.style = `width: ${x}%;`;
           if (x > 70) {
-            many.style.display = "block";
+            many.style = "display: block; position: absolute; right: -50px;";
             progress.style.float = "Left";
           } else {
             many.style.display = "none";
