@@ -145,91 +145,104 @@ iconHome.addEventListener("click", function (event) {
 
 // Кнопка ПРОВЕРКИ КЛИЕНТА
 
-const commonResultOfChecking = () => {
+// Функция для получения данных о клиенте
 
+function getDataOfCustomers(codeOfCustomer) {
+  fetch(
+    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+    });
+}
+
+const commonResultOfChecking = () => {
   clientsName.innerText = informationOutput(clientsNames);
   clientsName_0.innerText = informationOutput(clientsNames);
-  
-	const commonResult = `
-	<p style = "text-decoration: underline;"><b>Свод по клиенту ${serchData.value}:</b></p>
+
+  const commonResult = `
+	<p style = "text-decoration: underline;"><b>Свод по клиенту ${
+    serchData.value
+  }:</b></p>
 	<ul>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ сумм: 
   <b style = "color: brown;">
-	${
-		informationOutput(debtSumm)
-		}</b>;
+	${informationOutput(debtSumm)}</b>;
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ дней:
   <b style = "color: brown;"> 
-	${
-		informationOutput(debtDays)
-		}</b>;
+	${informationOutput(debtDays)}</b>;
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Рубликов: 
 	<b style = "color: brown;"> 
-	${
-		informationOutput(cash)
-		}</b>;
+	${informationOutput(cash)}</b>;
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> В корзине: 
 	<b style = "color: brown;"> 
-	${
-		informationOutput(basket)
-		}</b>;
+	${informationOutput(basket)}</b>;
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц): 
 	${
-		checkForAvailability(osonCanc) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
-		
-		}
+    checkForAvailability(osonCanc) == 1
+      ? `<b style = "color: brown;"> Да!</b>`
+      : `<b style = "color: brown;"> Нет.</b>`
+  }
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(хоз): 
 	${
-		checkForAvailability(osonChos) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
-		
-		}
+    checkForAvailability(osonChos) == 1
+      ? `<b style = "color: brown;"> Да!</b>`
+      : `<b style = "color: brown;"> Нет.</b>`
+  }
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(прод):
 	${
-		checkForAvailability(osonProd) == 1 ? `<b style = "color: brown;"> Да!</b>` : `<b style = "color: brown;"> Нет.</b>`
-		
-		}
+    checkForAvailability(osonProd) == 1
+      ? `<b style = "color: brown;"> Да!</b>`
+      : `<b style = "color: brown;"> Нет.</b>`
+  }
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Потенциал: 
 	${
-		checkForAvailability(potencChecing) == 1 ? `<b style = "color: brown;">указан.</b>` : `<b style  = "color: red;"> НЕ указан!</b>`
-		
-		}
+    checkForAvailability(potencChecing) == 1
+      ? `<b style = "color: brown;">указан.</b>`
+      : `<b style  = "color: red;"> НЕ указан!</b>`
+  }
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
 	${
-		checkForAvailability(accountLinked) == 1 ? `<b style = "color: brown;"> привязана!</b>` : `<b style  = "color: red;"> НЕ привязана!</b>`
-		
-		}
+    checkForAvailability(accountLinked) == 1
+      ? `<b style = "color: brown;"> привязана!</b>`
+      : `<b style  = "color: red;"> НЕ привязана!</b>`
+  }
 	</li>
 	`;
 
-	checkDescription.innerHTML = commonResult;
+  checkDescription.innerHTML = commonResult;
 
-	return commonResult;
-}
+  getDataOfCustomers(serchData.value);
+
+  return commonResult;
+};
 
 // клик на кнопку
 checkResultButton.addEventListener("click", (event) => {
-//   popupOperation();
+  //   popupOperation();
   textOutput.innerHTML = commonResultOfChecking();
-  
 });
 // жмак на Enter
 serchData.addEventListener("keyup", (event) => {
-	if (event.key == "Enter") {
-		if (serchData.value == "") {
-			checkDescription.innerHTML = "Получи свод по клиенту:";
-		} else {
-			// popupOperation();
-			textOutput.innerHTML = commonResultOfChecking();
-		}
-	}   
+  if (event.key == "Enter") {
+    if (serchData.value == "") {
+      checkDescription.innerHTML = "Получи свод по клиенту:";
+    } else {
+      // popupOperation();
+      textOutput.innerHTML = commonResultOfChecking();
+    }
+  }
 });
 
 // Строим список скриптов в зависимости от ПОДРАЗДЕЛЕНИЯ
