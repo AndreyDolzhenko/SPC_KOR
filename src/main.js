@@ -42,6 +42,8 @@ let firstSubDivision;
 let previousElement = listScript;
 let progress_counter;
 
+let clientData; // данные о клиенте, полученные с сервера
+
 let localPath = window.location.href;
 const param = new URLSearchParams(window.location.search).get("fio_person");
 // получение данных о пользователе из адресной строки
@@ -145,93 +147,91 @@ iconHome.addEventListener("click", function (event) {
 
 // Кнопка ПРОВЕРКИ КЛИЕНТА
 
-// Функция для получения данных о клиенте
+// Получаем дату актуальности клиентской базы
 
-function getDataOfCustomers(codeOfCustomer) {
-  fetch(
-    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-  )
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
-    });
+async function getActualDate() {
+  let response = await fetch(
+    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://91.236.199.173:${3001}/api/v1/date`
+  );
+
+  searchDate = await response.json();
+
+  actualDate.innerText = searchDate;
 }
 
-const commonResultOfChecking = () => {
-  clientsName.innerText = informationOutput(clientsNames);
-  clientsName_0.innerText = informationOutput(clientsNames);
+getActualDate();
+
+// Функция для получения данных о клиенте
+
+async function getDataOfCustomers(codeOfCustomer) {
+  let response = await fetch(
+    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://127.0.0.1:3002/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+  );
+
+  const customerSearch = await response.json();
+
+  const clientDescription = commonResultOfChecking(
+    customerSearch,
+    codeOfCustomer
+  );
+
+  return clientDescription;
+}
+
+const commonResultOfChecking = (data, codeOfCustomer) => { 
+  clientsName.innerText = data.clientsNames;
+  clientsName_0.innerText = data.clientsNames;
 
   const commonResult = `
-	<p style = "text-decoration: underline;"><b>Свод по клиенту ${
-    serchData.value
-  }:</b></p>
+	<p style = "text-decoration: underline;"><b>Свод по клиенту ${codeOfCustomer}:</b></p>
 	<ul>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ сумм: 
   <b style = "color: brown;">
-	${informationOutput(debtSumm)}</b>;
+	${data.debtSumm}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ дней:
   <b style = "color: brown;"> 
-	${informationOutput(debtDays)}</b>;
+	${data.debtDays}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Рубликов: 
 	<b style = "color: brown;"> 
-	${informationOutput(cash)}</b>;
+	${data.cash}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> В корзине: 
 	<b style = "color: brown;"> 
-	${informationOutput(basket)}</b>;
+	${data.basket}</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц): 
-	${
-    checkForAvailability(osonCanc) == 1
-      ? `<b style = "color: brown;"> Да!</b>`
-      : `<b style = "color: brown;"> Нет.</b>`
-  }
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц):   
+	<b style = "color: brown;">${data.osonCanc}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(хоз): 
-	${
-    checkForAvailability(osonChos) == 1
-      ? `<b style = "color: brown;"> Да!</b>`
-      : `<b style = "color: brown;"> Нет.</b>`
-  }
+	<b style = "color: brown;">${data.osonChos}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(прод):
-	${
-    checkForAvailability(osonProd) == 1
-      ? `<b style = "color: brown;"> Да!</b>`
-      : `<b style = "color: brown;"> Нет.</b>`
-  }
+	<b style = "color: brown;">${data.osonProd}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Потенциал: 
-	${
-    checkForAvailability(potencChecing) == 1
-      ? `<b style = "color: brown;">указан.</b>`
-      : `<b style  = "color: red;"> НЕ указан!</b>`
-  }
+	<b style = "color: brown;">${data.potencChecing}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
-	${
-    checkForAvailability(accountLinked) == 1
-      ? `<b style = "color: brown;"> привязана!</b>`
-      : `<b style  = "color: red;"> НЕ привязана!</b>`
-  }
+	<b style = "color: brown;">${data.accountLinked}</b>
 	</li>
 	`;
 
   checkDescription.innerHTML = commonResult;
-
-  getDataOfCustomers(serchData.value);
 
   return commonResult;
 };
 
 // клик на кнопку
 checkResultButton.addEventListener("click", (event) => {
-  //   popupOperation();
-  textOutput.innerHTML = commonResultOfChecking();
+  if (serchData.value == "") {
+    checkDescription.innerHTML = "Получи свод по клиенту:";
+  } else {
+    textOutput.innerHTML = getDataOfCustomers(serchData.value);
+  }
 });
 // жмак на Enter
 serchData.addEventListener("keyup", (event) => {
@@ -239,8 +239,7 @@ serchData.addEventListener("keyup", (event) => {
     if (serchData.value == "") {
       checkDescription.innerHTML = "Получи свод по клиенту:";
     } else {
-      // popupOperation();
-      textOutput.innerHTML = commonResultOfChecking();
+      textOutput.innerHTML = getDataOfCustomers(serchData.value);
     }
   }
 });
@@ -546,7 +545,6 @@ listScript.addEventListener("click", function (event) {
 
   // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
   send.addEventListener("click", (event) => {
-    // console.log(x);
 
     event.preventDefault();
 
@@ -589,11 +587,11 @@ listScript.addEventListener("click", function (event) {
             .querySelectorAll("li")
             .forEach((el) => (el.style.color = "black"));
 
-          console.log("It's allright!");
+          // console.log("It's allright!");
         })
         .catch((e) => {
           messageFromBase("Подключение к базе отсутствует!");
-          console.log("Connection error!");
+          // console.log("Connection error!");
         });
     }
   });
