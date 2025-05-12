@@ -607,6 +607,9 @@ function homePage() {
 if (param === null) {
   userData.innerHTML = "Войдите в программу через портал СДО!";
   document.getElementById("instructions").style.display = "none";
+  checkDescription.style.display = "none";
+  clientsName.style.display = "none";
+  clientsName_0.style.display = "none";
 } else {
   homePage();
   paramsString = document.location.search;

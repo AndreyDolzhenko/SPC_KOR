@@ -140,6 +140,7 @@ td {
 	font-size: 18px;
 	font-style: italic;	
     overflow: auto;
+	scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.21) transparent;	
 }
 
@@ -158,6 +159,7 @@ td {
 	font-size: 18px;
 	line-height: 2;
 	overflow: auto;
+	scrollbar-width: thin;
 	scrollbar-color: rgba(255, 255, 255, 0.21) transparent;
 }
 
@@ -340,6 +342,7 @@ button:hover {
 	width: 300px;
     overflow: auto;
     height: 30px;
+	scrollbar-width: thin;
 	scrollbar-color: rgba(95, 158, 160, 0.51) transparent;
 }
 
