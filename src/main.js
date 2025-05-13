@@ -180,7 +180,7 @@ async function getDataOfCustomers(codeOfCustomer) {
   return clientDescription;
 }
 
-const commonResultOfChecking = (data, codeOfCustomer) => { 
+const commonResultOfChecking = (data, codeOfCustomer) => {
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
 
@@ -230,6 +230,8 @@ checkResultButton.addEventListener("click", (event) => {
   if (serchData.value == "") {
     checkDescription.innerHTML = "Получи свод по клиенту:";
   } else {
+    const blankOfClient = document.getElementById("blankOfClient");
+    blankOfClient.href = `https://www.officemag.ru/desk/clients/okt/detail.php?CODE=dmd${serchData.value}`;
     textOutput.innerHTML = getDataOfCustomers(serchData.value);
   }
 });
@@ -545,7 +547,6 @@ listScript.addEventListener("click", function (event) {
 
   // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
   send.addEventListener("click", (event) => {
-
     event.preventDefault();
 
     const dataToSend = {
@@ -603,54 +604,87 @@ function homePage() {
   fillInTheListOfScripts();
 }
 
-// Если вход не через СДО
-if (param === null) {
-  userData.innerHTML = "Войдите в программу через портал СДО!";
-  document.getElementById("instructions").style.display = "none";
-  checkDescription.style.display = "none";
-  clientsName.style.display = "none";
-  clientsName_0.style.display = "none";
-} else {
-  homePage();
-  paramsString = document.location.search;
-  searchParams = new URLSearchParams(paramsString);
-  userData.innerHTML = `${searchParams.get("fio_person")}<br>${searchParams.get(
-    "position_person"
-  )}`;
-  switch (userData.lastChild.textContent) {
-    case "Оператор клиентской базы по региону г. Москва и Московской области":
-      changeOfDivision("SMB");
+// Проверка на сотрудника
 
-      break;
+async function getDataOfEmployee(person) {
+  let response = await fetch(
+    `http://91.236.199.173:3001/api/v1/employee?person=${person}`
+    // `http://127.0.0.1:3001/api/v1/employee?person=${person}`
+  );
 
-    case "Оператор клиентской базы крупного бизнеса по региону г. Москва и Московской области":
-      changeOfDivision("KB");
-      break;
+  const employeeSearch = await response.json();
 
-    case "Специалист по развитию стратегических клиентов по региону г. Москва и Московской области":
-      changeOfDivision("SRK");
-      break;
-
-    case "Специалист по развитию ключевых клиентов по региону г.Москва и Московской области":
-      changeOfDivision("SRK");
-      break;
-
-    case "GOS": // if (x === 'value2')
-      break;
-
-    case "OPS": // if (x === 'value2')
-      break;
-
-    default:
-      changeOfDivision("SMB");
-      break;
-  }
-
-  Object.values(employeesesListAdmin).map((el) => {
-    if (userData.lastChild.textContent == el) {
-      document.getElementById("registration_button").style.display = "block";
-    }
-  });
+  return employeeSearch;
 }
+
+// Сравнение фио из базы и фио из URL
+let matchingEmployee = (param, result) => {
+  if (param == result) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const person = new URLSearchParams(window.location.search).get("person");
+
+getDataOfEmployee(person).then((result) =>
+  console.log(matchingEmployee(param, result))
+);
+
+// Если вход не через СДО
+getDataOfEmployee(person).then((result) => {
+  const matchingResult = matchingEmployee(param, result);
+  if (param === null || matchingResult == false) {
+    matchingResult == false
+      ? (userData.innerHTML = `Нет такого пользователя в базе.<br>Войдите в программу через портал СДО!`)
+      : (userData.innerHTML = "Войдите в программу через портал СДО!");
+    document.getElementById("instructions").style.display = "none";
+    checkDescription.style.display = "none";
+    clientsName.style.display = "none";
+    clientsName_0.style.display = "none";
+  } else {
+    homePage();
+    paramsString = document.location.search;
+    searchParams = new URLSearchParams(paramsString);
+    userData.innerHTML = `${searchParams.get(
+      "fio_person"
+    )}<br>${searchParams.get("position_person")}`;
+    switch (userData.lastChild.textContent) {
+      case "Оператор клиентской базы по региону г. Москва и Московской области":
+        changeOfDivision("SMB");
+
+        break;
+
+      case "Оператор клиентской базы крупного бизнеса по региону г. Москва и Московской области":
+        changeOfDivision("KB");
+        break;
+
+      case "Специалист по развитию стратегических клиентов по региону г. Москва и Московской области":
+        changeOfDivision("SRK");
+        break;
+
+      case "Специалист по развитию ключевых клиентов по региону г.Москва и Московской области":
+        changeOfDivision("SRK");
+        break;
+
+      case "GOS": // if (x === 'value2')
+        break;
+
+      case "OPS": // if (x === 'value2')
+        break;
+
+      default:
+        changeOfDivision("SMB");
+        break;
+    }
+
+    Object.values(employeesesListAdmin).map((el) => {
+      if (userData.lastChild.textContent == el) {
+        document.getElementById("registration_button").style.display = "block";
+      }
+    });
+  }
+});
 
 // homePage();

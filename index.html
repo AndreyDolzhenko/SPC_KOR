@@ -85,16 +85,27 @@
           <div>
             <div id="checkDescription"></div>
             <input id="checkResult" type="text" />
-            <button
-              id="checkResultButton"
-              style="width: 80%; margin: 0 0 20px 0"
+            <a id="blankOfClient" style="color: darkcyan;" target="_blank" title="Открыть карточку в CRM">
+              <button
+                id="checkResultButton"
+                style="width: 80%; margin: 0 0 20px 0"
+              >
+                Проверить
+              </button>
+            </a>
+            <div
+              style="
+                line-height: 1;
+                font-size: 14px;
+                font-style: italic;
+                margin-bottom: 20px;
+              "
             >
-              Проверить
-            </button>
-            <div style="line-height: 1;
-            font-size: 14px;
-            font-style: italic;
-            margin-bottom: 20px;">Дата актуальности:<br><b id="actualDate" style = "color: brown;"></b></div>
+              Дата актуальности:<br /><b
+                id="actualDate"
+                style="color: brown"
+              ></b>
+            </div>
           </div>
         </div>
         <div class="content_center" id="base_script">
@@ -103,7 +114,11 @@
           </div>
           <div id="inputName">
             Для начала диалога с Клиентом введите имя Клиента и нажмите кнопку
-            "Enter":<input id="enterName" type="text" placeholder="Имя Клиента" />
+            "Enter":<input
+              id="enterName"
+              type="text"
+              placeholder="Имя Клиента"
+            />
           </div>
           <div id="main_scenario">
             <div id="preparation">
@@ -140,12 +155,12 @@
     <div id="popup1">
       <div id="popup1_close">X</div>
       <div id="popup1_txt"></div>
-    </div>   
+    </div>
     <script src="./src/baseOfCustomers.js"></script>
     <script src="./src/employeesesData.js?v=2"></script>
     <script src="./src/markupStructure.js?v=2"></script>
     <script src="./presentations/presentations.js?v=2"></script>
-    <script src="./objections/objections.js?v=2"></script>    
+    <script src="./objections/objections.js?v=2"></script>
     <script src="./src/dataToSend.js?v=2"></script>
     <script src="./scenarios/scenarios.js?v=2"></script>
     <script src="./src/main.js?v=2"></script>
