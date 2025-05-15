@@ -75,7 +75,7 @@ td {
 	width: 30%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: end;
 	position: relative;
 }
 
@@ -565,4 +565,30 @@ li {
 #clientsName, #clientsName_0 {
 	margin: 10px;
     color: brown;
+}
+
+#updatePlace{
+	width: 200px;
+	height: 20px;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 0 5px 10px;
+}
+#updatePlace:hover{
+	#updatePass, #updateLink{
+	display: block;	    
+	}	
+}
+
+#updatePass{
+	width: 70px;
+	height: 20px;
+	display: block;
+	display: none;
+    /* position: absolute; */
+}
+
+#updateLink{
+	pointer-events: none;
+	display: none;
 }
