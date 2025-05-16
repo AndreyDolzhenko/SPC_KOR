@@ -167,13 +167,15 @@ iconHome.addEventListener("click", function (event) {
 
 async function getActualDate() {
   let response = await fetch(
-    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://91.236.199.173:${3001}/api/v1/date`
+    `http://127.0.0.1:3001/api/v1/date`
   );
 
   searchDate = await response.json();
 
-  actualDate.innerText = searchDate;
+  const actualDate = document.getElementById("actualDate");
+
+  actualDate.innerHTML = searchDate;
 }
 
 getActualDate();
@@ -205,19 +207,30 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 	<ul>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ сумм: 
   <b style = "color: brown;">
-	${data.debtSumm}</b>
+	${
+    typeof data.debSumm == "number"
+      ? (data.debSumm = data.debSumm.toFixed(2))
+      : (data.debSumm = data.debSumm)
+  }</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ дней:
   <b style = "color: brown;"> 
-	${data.debtDays}</b>
+	${data.debDays}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Рубликов: 
 	<b style = "color: brown;"> 
-	${data.cash}</b>
+	${
+    typeof data.cash == "number"
+      ? (data.cash = data.cash.toFixed(2))
+      : (data.cash = data.cash)}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> В корзине: 
 	<b style = "color: brown;"> 
-	${data.basket}</b>
+	${
+    typeof data.basket == "number"
+      ? (data.basket = data.basket.toFixed(2))
+      : (data.basket = data.basket)
+  }</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц):   
 	<b style = "color: brown;">${data.osonCanc}</b>
@@ -553,15 +566,16 @@ listScript.addEventListener("click", function (event) {
   // Функция для отправки результатов на сервер
   const sendResult = async (dataToSend) => {
     await fetch(
-      // `http://91.236.199.173:${PORT}/api/v1/dialogues`, 
-      `http://127.0.0.1:3001/api/v1/dialogues`,      
+      // `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+      `http://127.0.0.1:3001/api/v1/dialogues`,
       {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      }
+    );
   };
 
   // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
