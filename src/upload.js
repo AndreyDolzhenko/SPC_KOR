@@ -10,7 +10,10 @@ const uploadDate = async () => {
 
   try {
     await fetch(    
-      `http://127.0.0.1:3001/api/v1/upload`, {
+      `http://91.236.199.173:3001/api/v1/upload`,
+      // `http://127.0.0.1:3001/api/v1/upload`, 
+      
+      {
         method: "POST",
         body: formData,
       }
