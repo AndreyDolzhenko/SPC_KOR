@@ -167,8 +167,8 @@ iconHome.addEventListener("click", function (event) {
 
 async function getActualDate() {
   let response = await fetch(
-    `http://91.236.199.173:${3001}/api/v1/date`
-    // `http://127.0.0.1:3001/api/v1/date`
+    // `http://91.236.199.173:${3001}/api/v1/date`
+    `http://127.0.0.1:3001/api/v1/date`
   );
 
   searchDate = await response.json();
@@ -184,8 +184,8 @@ getActualDate();
 
 async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
-    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
 
   const customerSearch = await response.json();
@@ -566,8 +566,8 @@ listScript.addEventListener("click", function (event) {
   // Функция для отправки результатов на сервер
   const sendResult = async (dataToSend) => {
     await fetch(
-      `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-      // `http://127.0.0.1:3001/api/v1/dialogues`,
+      // `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+      `http://127.0.0.1:3001/api/v1/dialogues`,
       {
         method: "POST",
         headers: {
@@ -641,8 +641,8 @@ function homePage() {
 
 async function getDataOfEmployee(person) {
   let response = await fetch(
-    `http://91.236.199.173:3001/api/v1/employee?person=${person}`
-    // `http://127.0.0.1:3001/api/v1/employee?person=${person}`
+    // `http://91.236.199.173:3001/api/v1/employee?person=${person}`
+    `http://127.0.0.1:3001/api/v1/employee?person=${person}`
   );
 
   const employeeSearch = await response.json();
