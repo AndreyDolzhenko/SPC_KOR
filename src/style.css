@@ -12,6 +12,10 @@ body {
 	background: linear-gradient(90deg, #b9deed, #efefef);
 }
 
+label {
+	cursor: pointer;
+}
+
 .footer{
 	display: flex;    
 }
@@ -77,6 +81,11 @@ td {
 	flex-direction: column;
 	align-items: end;
 	position: relative;
+}
+
+#header_right {
+	display: flex;
+    justify-content: space-between;
 }
 
 .header_tools {

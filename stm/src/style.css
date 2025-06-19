@@ -12,6 +12,11 @@ body{
 	/* justify-content: space-between; */
 	background: aliceblue;
 }
+
+label{
+	cursor: pointer;
+}
+
 .input_time-test{
 	width: 60px;
 	text-align: center;

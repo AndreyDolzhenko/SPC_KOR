@@ -4,6 +4,9 @@
 const showDialugues = document.getElementById("showDialugues");
 const header_right = document.getElementById("header_right");
 const buttonClick = document.getElementsByClassName("btn_sub-division");
+const searchEmployee = document.getElementById("searchEmployee");
+const listOfDialogues = document.getElementById("listOfDialogues");
+const showSearchEmployee = document.getElementById("showSearchEmployee");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -240,7 +243,7 @@ sentSelect.addEventListener("click", (event) => {
 
 // Вывод полученных данных на экран
 const buildingTable = (data) => {
-  const listOfDialogues = document.getElementById("listOfDialogues");
+  // const listOfDialogues = document.getElementById("listOfDialogues");
   listOfDialogues.innerHTML = "";
   const titleLine = document.createElement("tr");
   // Строим шапку таблицы с данными
@@ -256,10 +259,14 @@ const buildingTable = (data) => {
 
   listOfDialogues.append(titleLine);
 
-  data.map(el => {
+  data.map((el, i) => {
     const lineOfData = document.createElement("tr");
+    lineOfData.id = i;
+    lineOfData.addEventListener("click", (event) => {
+      console.log(typeof(lineOfData.innerHTML));
+    } );
     for (let index = 0; index < Object.keys(el).length; index++) {
-      const columnOfData = document.createElement("td");
+      const columnOfData = document.createElement("td");      
       switch (index) {
         case 0:
           columnOfData.innerHTML = el.createdAt;
@@ -296,10 +303,17 @@ const buildingTable = (data) => {
       }
     }
 
+    // const managerChecing = document.createElement("input");
+    // managerChecing.type = "text";
+    // managerChecing.placeholder = "отметка руководителя";
+    // managerChecing.style = "width: 200px; font-size: 12px";
+
+    // lineOfData.append(managerChecing);
+
     lineOfData.style.cursor = "pointer";
 
     // Выводим сценарий по клику на данные о диалоге
-    lineOfData.addEventListener("click", (event) => {
+    lineOfData.firstChild.addEventListener("click", (event) => {
 
       popupAdmin();
 
@@ -349,4 +363,31 @@ for (let index = 0; index < buttonClick.length; index++) {
   });
 
 };
+
+// Работа менеджера по контролю содержания звонков
+
+searchEmployee.addEventListener("keyup", (event) => {  
+
+  if (event.code == "Enter" || event.code == "NumpadEnter") {
+    managerChecing(listOfDialogues, searchEmployee.value);
+    
+  }
+})
+
+const managerChecing = (list, value) => {
+  console.log(value);
+  
+  for (let index = 0; index < list.rows.length; index++) {
+    // console.log(list.rows[index].innerText.includes(value));
+    if (list.rows[index].innerText.includes(value) == true) {
+      console.log(list.rows[index].id);
+      const newRow = document.createElement("div");
+      newRow.innerHTML = list.rows[index].id + ". " + list.rows[index].innerText;
+      showSearchEmployee.append(newRow);
+      
+    }      
+      
+    }
+ 
+}
 

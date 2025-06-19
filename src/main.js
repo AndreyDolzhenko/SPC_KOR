@@ -167,8 +167,8 @@ iconHome.addEventListener("click", function (event) {
 
 async function getActualDate() {
   let response = await fetch(
-    // `http://91.236.199.173:${3001}/api/v1/date`
-    `http://127.0.0.1:3001/api/v1/date`
+    `http://91.236.199.173:${3001}/api/v1/date`
+    // `http://127.0.0.1:3001/api/v1/date`
   );
 
   searchDate = await response.json();
@@ -184,8 +184,8 @@ getActualDate();
 
 async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
-    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
 
   const customerSearch = await response.json();
@@ -205,7 +205,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${codeOfCustomer}:</b></p>
 	<ul>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ сумм: 
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzsumm"><label for="labelpdzsumm"> ПДЗ сумм:</label> 
   <b style = "color: brown;">
 	${
     typeof data.debSumm == "number"
@@ -213,18 +213,18 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.debSumm = data.debSumm)
   }</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ПДЗ дней:
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzday"><label for="labelpdzday"> ПДЗ дней:</label>
   <b style = "color: brown;"> 
 	${data.debDays}</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> Рубликов: 
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelcash"><label for="labelcash"> Рубликов:</label> 
 	<b style = "color: brown;"> 
 	${
     typeof data.cash == "number"
       ? (data.cash = data.cash.toFixed(2))
       : (data.cash = data.cash)}</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> В корзине: 
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelbascket"><label for="labelbascket"> В корзине:</label> 
 	<b style = "color: brown;"> 
 	${
     typeof data.basket == "number"
@@ -232,19 +232,19 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.basket = data.basket)
   }</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(канц):   
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonC"><label for="labelozonC"> ОЗОН(канц):</label>   
 	<b style = "color: brown;">${data.osonCanc}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(хоз): 
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonH"><label for="labelozonH"> ОЗОН(хоз):</label> 
 	<b style = "color: brown;">${data.osonChos}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> ОЗОН(прод):
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonP"><label for="labelozonP"> ОЗОН(прод):</label>
 	<b style = "color: brown;">${data.osonProd}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Потенциал: 
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
 	<b style = "color: brown;">${data.potencChecing}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox"> Учётная запись клиента
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labellinck"><label for="labellinck"> Учётная запись клиента</label>
 	<b style = "color: brown;">${data.accountLinked}</b>
 	</li>
 	`;
@@ -566,8 +566,8 @@ listScript.addEventListener("click", function (event) {
   // Функция для отправки результатов на сервер
   const sendResult = async (dataToSend) => {
     await fetch(
-      // `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-      `http://127.0.0.1:3001/api/v1/dialogues`,
+      `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+      // `http://127.0.0.1:3001/api/v1/dialogues`,
       {
         method: "POST",
         headers: {
@@ -641,8 +641,8 @@ function homePage() {
 
 async function getDataOfEmployee(person) {
   let response = await fetch(
-    // `http://91.236.199.173:3001/api/v1/employee?person=${person}`
-    `http://127.0.0.1:3001/api/v1/employee?person=${person}`
+    `http://91.236.199.173:3001/api/v1/employee?person=${person}`
+    // `http://127.0.0.1:3001/api/v1/employee?person=${person}`
   );
 
   const employeeSearch = await response.json();
