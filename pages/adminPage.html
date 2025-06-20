@@ -17,10 +17,18 @@
     </div>
     <div id="header_right">
       <span id="loader" class="loader">ОФИСМАГ</span>
-      <span style="margin: auto;">Поиск сотрудника: <input id="searchEmployee" type="text"></span>      
-      <div id="urgentScripts"></div>
+      <span style="margin: auto"
+        >Поиск сотрудника:
+        <input id="searchEmployee" class="searchInput" type="text" />
+        &nbsp;Комментарий к диалогу:
+        <input id="commentEmployee" class="searchInput" type="text" />
+        &nbsp;&nbsp; <b class="deleteRow" onclick="deleteSearhing()">Очистить</b>
+      </span>
+      <div id="urgentScripts">
+        <p id="sendingDatetoExcel" style="cursor: pointer">Экспорт в EXCEL</p>
+      </div>
     </div>
-    <div id="showSearchEmployee"></div>
+    <table id="showSearchEmployee"></table>
     <nav class="btn-bar" id="btn-bar_sub-division"></nav>
     <div id="selectMenu">
       <button id="showDialugues" value="all">1. Получите фильтры</button>

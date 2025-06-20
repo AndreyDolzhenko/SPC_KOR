@@ -20,6 +20,19 @@ label {
 	display: flex;    
 }
 
+.deleteRow {
+	color: aliceblue; 
+	cursor: pointer;
+}
+
+.searchInput {
+	width: 150px;
+}
+
+.deleteRow:hover {
+	color: red;
+}
+
 .other_app{
 	display: flex;
     width: 80%;
