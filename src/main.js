@@ -198,15 +198,31 @@ async function getDataOfCustomers(codeOfCustomer) {
   return clientDescription;
 }
 
+// Создание переменной с данными для чек-бокса по клиенту
+
 const commonResultOfChecking = (data, codeOfCustomer) => {
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
+
+  let colorDate = {};
+
+  colorDate.debSumm = data.debSumm > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.debDays = data.debDays > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.cash = data.cash > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.basket = data.basket > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.osonCanc = data.osonCanc == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.osonChos = data.osonChos == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.osonProd = data.osonProd == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.potencChecing = data.potencChecing == "Не указан!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+  colorDate.accountLinked = data.accountLinked == "Не привязана!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
+
+  console.log(colorDate.debSumm);
 
   const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${codeOfCustomer}:</b></p>
 	<ul>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzsumm"><label for="labelpdzsumm"> ПДЗ сумм:</label> 
-  <b style = "color: brown;">
+  ${colorDate.debSumm}
 	${
     typeof data.debSumm == "number"
       ? (data.debSumm = data.debSumm.toFixed(2))
@@ -214,18 +230,19 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   }</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzday"><label for="labelpdzday"> ПДЗ дней:</label>
-  <b style = "color: brown;"> 
+  ${colorDate.debDays} 
 	${data.debDays}</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelcash"><label for="labelcash"> Рубликов:</label> 
-	<b style = "color: brown;"> 
+	${colorDate.cash} 
 	${
     typeof data.cash == "number"
       ? (data.cash = data.cash.toFixed(2))
-      : (data.cash = data.cash)}</b>
+      : (data.cash = data.cash)
+  }</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelbascket"><label for="labelbascket"> В корзине:</label> 
-	<b style = "color: brown;"> 
+	${colorDate.basket} 
 	${
     typeof data.basket == "number"
       ? (data.basket = data.basket.toFixed(2))
@@ -233,19 +250,19 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   }</b>
 	</li>
 	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonC"><label for="labelozonC"> ОЗОН(канц):</label>   
-	<b style = "color: brown;">${data.osonCanc}</b>
+	${colorDate.osonCanc}${data.osonCanc}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonH"><label for="labelozonH"> ОЗОН(хоз):</label> 
-	<b style = "color: brown;">${data.osonChos}</b>
+	${colorDate.osonChos}${data.osonChos}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonP"><label for="labelozonP"> ОЗОН(прод):</label>
-	<b style = "color: brown;">${data.osonProd}</b>
+	${colorDate.osonProd}${data.osonProd}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
-	<b style = "color: brown;">${data.potencChecing}</b>
+	${colorDate.potencChecing}${data.potencChecing}</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labellinck"><label for="labellinck"> Учётная запись клиента</label>
-	<b style = "color: brown;">${data.accountLinked}</b>
+	${colorDate.accountLinked}${data.accountLinked}</b>
 	</li>
 	`;
 
@@ -661,7 +678,9 @@ let matchingEmployee = (param, result) => {
 
 const person = new URLSearchParams(window.location.search).get("person");
 
-param != "Долженко Андрей Александрович" ? updatePlace.style.display = "none" : true;
+param != "Долженко Андрей Александрович"
+  ? (updatePlace.style.display = "none")
+  : true;
 
 getDataOfEmployee(person).then((result) =>
   console.log(matchingEmployee(param, result))

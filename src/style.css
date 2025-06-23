@@ -282,6 +282,7 @@ td {
 .commonResult {
 	list-style-type: decimal-closed;
     margin: 5px 5px 5px 20px;
+	cursor: pointer;
 }
 
 .checkbox {

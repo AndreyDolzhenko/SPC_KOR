@@ -381,7 +381,7 @@ const buildingTable = (data) => {
     lineOfData.style.cursor = "pointer";
 
     // Выводим сценарий по клику на данные о диалоге
-    lineOfData.firstChild.addEventListener("click", (event) => {
+    lineOfData.addEventListener("click", (event) => {
       popupAdmin();
 
       popupOpen.style.width = "80%";
@@ -443,6 +443,7 @@ for (let index = 0; index < buttonClick.length; index++) {
 searchEmployee.addEventListener("keyup", (event) => {
   if (event.code == "Enter" || event.code == "NumpadEnter") {
     managerChecing(listOfDialogues, searchEmployee.value);
+    searchEmployee.value = "";
   }
 });
 
@@ -455,6 +456,7 @@ commentEmployee.addEventListener("keyup", (event) => {
     );
     commentWrite.lastChild.innerText = commentEmployee.value;
     commentEmployee.value = "";
+    commentEmployee.placeholder = "";
   }
 });
 
@@ -462,12 +464,14 @@ commentEmployee.addEventListener("keyup", (event) => {
 const deleteRowFunc = (event) => {
   console.log(event.currentTarget.parentNode);
   event.currentTarget.parentNode.remove();
+  commentEmployee.placeholder = "";
 };
-
+// Очистка всей формы
 const deleteSearhing = () => {
   showSearchEmployee.innerHTML = "";
+  commentEmployee.placeholder = "";
 };
-
+// Поиск диалога и работа с выбранной строкой
 const managerChecing = (list, value) => {
   for (let index = 0; index < list.rows.length; index++) {
     if (list.rows[index].innerText.includes(value) == true) {
