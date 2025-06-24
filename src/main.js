@@ -32,6 +32,7 @@ const many = document.getElementById("many");
 const userLink = document.getElementById("userLink");
 const registration = document.getElementById("registration");
 const header_tools = document.getElementById("header_tools");
+const fullCheck = document.getElementById("100%");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -206,17 +207,42 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 
   let colorDate = {};
 
-  colorDate.debSumm = data.debSumm > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.debDays = data.debDays > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.cash = data.cash > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.basket = data.basket > 0 ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.osonCanc = data.osonCanc == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.osonChos = data.osonChos == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.osonProd = data.osonProd == "Да!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.potencChecing = data.potencChecing == "Не указан!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-  colorDate.accountLinked = data.accountLinked == "Не привязана!" ? `<b style = "color: brown;">` : `<b style = "color: darkcyan;">`;
-
-  console.log(colorDate.debSumm);
+  colorDate.debSumm =
+    data.debSumm > 0
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.debDays =
+    data.debDays > 0
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.cash =
+    data.cash > 0
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.basket =
+    data.basket > 0
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.osonCanc =
+    data.osonCanc == "Да!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.osonChos =
+    data.osonChos == "Да!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.osonProd =
+    data.osonProd == "Да!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.potencChecing =
+    data.potencChecing == "Не указан!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.accountLinked =
+    data.accountLinked == "Не привязана!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
 
   const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${codeOfCustomer}:</b></p>
@@ -279,6 +305,7 @@ checkResultButton.addEventListener("click", (event) => {
     const blankOfClient = document.getElementById("blankOfClient");
     blankOfClient.href = `https://www.officemag.ru/desk/clients/okt/detail.php?CODE=dmd${serchData.value}`;
     textOutput.innerHTML = getDataOfCustomers(serchData.value);
+    enterName.value = serchData.value;
   }
 });
 // жмак на Enter
@@ -288,6 +315,7 @@ serchData.addEventListener("keyup", (event) => {
       checkDescription.innerHTML = "Получи свод по клиенту:";
     } else {
       textOutput.innerHTML = getDataOfCustomers(serchData.value);
+      enterName.value = serchData.value;
     }
   }
 });
@@ -484,12 +512,43 @@ userData.addEventListener("click", (event) => {
 
 ////////////////////////
 
+// Клики на пункты скрипта
 listScript.addEventListener("click", function (event) {
   header.style = "display: none;";
   header_tools.style = "display: flex";
-  // loader.style = 'display: none;';
-  // registration.style = 'display: none';
-  let x = 0; // переменная для процента выполнения скрипта
+
+  let x = 0; // переменная для процента выполнения скрипта  
+    // console.log(dialogueStructure);
+
+  // 100% checking
+
+  fullCheck.addEventListener("click", (event) => {
+    if (contactScripts.innerHTML != "" && fullCheck.checked == true) {
+      const includesOfScript = contactScripts.querySelectorAll("li");
+      for (let elem of includesOfScript) {
+        // console.log(elem);
+        elem.style.color = "tomato";
+        dialogueStructure[elem.id] = "+";
+      }
+      x = 100;
+      progress_bar_span.innerHTML = `${x}%`;
+      progress_bar_color.style = `width: ${x}%;`;
+      many.style = "display: block; position: absolute; right: -50px;";
+    } else {
+      const includesOfScript = contactScripts.querySelectorAll("li");
+      for (let elem of includesOfScript) {
+        // console.log(elem);
+        elem.style.color = "black";
+        dialogueStructure[elem.id] = "-";
+      }
+      x = 0;
+      progress_bar_span.innerHTML = `${x}%`;
+      progress_bar_color.style = `width: ${x}%;`;
+      many.style.display = "none";
+    }
+    // console.log(dialogueStructure);
+  });
+
   progress_bar_span.innerHTML = `${x}%`;
   progress_bar_color.style = `width: ${x}%;`;
   send.style.display = "block";
@@ -498,10 +557,19 @@ listScript.addEventListener("click", function (event) {
   const objections = document.getElementById("objections");
   thisStatus = event.target.innerText;
 
-  // now_status == 'OPS' ? objections.style.display = 'none' : true;
+  // Вывод скрипта на экран
   if (event.target.id != "list_script") {
+
+    //ОБНУЛЯЕМ ВСЕ ПАРАМЕТРЫ ПРЕДЫДУЩЕГО СКРИПТА
+
     contactScripts.innerHTML = "";
     contactScripts.style.display = "block";
+    many.style.display = "none";
+    dialogueStructure = {};
+    fullCheck.checked = false;
+    // console.log("check");
+    // console.log(dialogueStructure);
+    
     if (content.style.justifyContent != "space-between") {
       content.style.justifyContent = "space-between";
     }
@@ -527,8 +595,11 @@ listScript.addEventListener("click", function (event) {
         contactScripts.append(newLiScript);
 
         i++;
+
         // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
+
         newLiScript.addEventListener("click", function (event) {
+          fullCheck.checked = false;
           if (newLiScript.style.color != "tomato") {
             progress_bar_span.innerHTML = `${Math.round(
               (x += progress_counter)
@@ -549,7 +620,8 @@ listScript.addEventListener("click", function (event) {
           } else {
             many.style.display = "none";
             progress.style.float = "inherit";
-          }
+          }          
+          // console.log(x);
         });
 
         liId++; // увеличиваем Id на единицу

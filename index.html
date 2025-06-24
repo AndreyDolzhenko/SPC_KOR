@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <META HTTP-EQUIV="expires" CONTENT="0">
+    <meta http-equiv="expires" content="0" />
     <link rel="stylesheet" href="./src/style.css?v=2" />
     <link type="Image/x-icon" href="img/imgonlinePhon.ico" rel="icon" />
     <title>СПК ОФИСМАГ</title>
@@ -50,7 +50,8 @@
               update
               <input id="updatePass" type="password" />
               <a id="updateLink" href="./pages/upload.html" target="_blank"
-                >открыть</a>
+                >открыть</a
+              >
             </div>
           </div>
         </div>
@@ -64,6 +65,20 @@
           </div>
           <button id="send">Отправить</button>
           <span id="many" class="many"></span>
+          <div
+            style="
+              display: block;
+              position: absolute;
+              right: -70px;
+              bottom: 50px;
+            "
+          >
+            <input
+              type="checkbox"
+              id="100%"
+              style="width: 25px; vertical-align: middle; cursor: pointer"
+            /><label for="100%">100%</label>
+          </div>
           <b id="clientsName"></b>
         </div>
         <div class="header_tools_center">
@@ -114,10 +129,7 @@
                 margin-bottom: 20px;
               "
             >
-              Дата актуальности: <b
-                id="actualDate"
-                style="color: brown"
-              ></b>
+              Дата актуальности: <b id="actualDate" style="color: brown"></b>
             </div>
           </div>
         </div>
@@ -127,11 +139,9 @@
           </div>
           <div id="inputName">
             Для начала диалога с Клиентом введите имя Клиента и нажмите кнопку
-            "Enter":<input
-              id="enterName"
-              type="text"
-              placeholder="Имя Клиента"
-            />
+            "Enter":
+
+            <input id="enterName" type="text" placeholder="Имя Клиента" />
           </div>
           <div id="main_scenario">
             <div id="preparation">
