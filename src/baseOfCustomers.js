@@ -9,3 +9,16 @@ const serchData = document.getElementById("checkResult");
 checkDescription.innerHTML = "Получи свод по Клиенту:";
 
 
+// Блоки ОЗОН
+
+// <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonC"><label for="labelozonC"> ОЗОН(канц):</label>   
+// 	${colorDate.osonCanc}${data.osonCanc}</b>
+// 	</li>
+//   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonH"><label for="labelozonH"> ОЗОН(хоз):</label> 
+// 	${colorDate.osonChos}${data.osonChos}</b>
+// 	</li>
+//   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonP"><label for="labelozonP"> ОЗОН(прод):</label>
+// 	${colorDate.osonProd}${data.osonProd}</b>
+// 	</li>
+
+

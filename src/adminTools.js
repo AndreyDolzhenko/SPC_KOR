@@ -369,14 +369,7 @@ const buildingTable = (data) => {
         default:
           break;
       }
-    }
-
-    // const managerChecing = document.createElement("input");
-    // managerChecing.type = "text";
-    // managerChecing.placeholder = "отметка руководителя";
-    // managerChecing.style = "width: 200px; font-size: 12px";
-
-    // lineOfData.append(managerChecing);
+    }    
 
     lineOfData.style.cursor = "pointer";
 
@@ -442,7 +435,7 @@ for (let index = 0; index < buttonClick.length; index++) {
 
 searchEmployee.addEventListener("keyup", (event) => {
   if (event.code == "Enter" || event.code == "NumpadEnter") {
-    managerChecing(listOfDialogues, searchEmployee.value);
+    managerChecing(listOfDialogues, searchEmployee.value[0].toUpperCase() + searchEmployee.value.slice(1));
     searchEmployee.value = "";
   }
 });

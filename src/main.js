@@ -202,6 +202,9 @@ async function getDataOfCustomers(codeOfCustomer) {
 // Создание переменной с данными для чек-бокса по клиенту
 
 const commonResultOfChecking = (data, codeOfCustomer) => {
+
+  console.log(data);
+
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
 
@@ -223,8 +226,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.basket > 0
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-  colorDate.osonCanc =
-    data.osonCanc == "Да!"
+  colorDate.decreaseInPurchases =
+    data.decreaseInPurchases != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
   colorDate.osonChos =
@@ -275,14 +278,13 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.basket = data.basket)
   }</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonC"><label for="labelozonC"> ОЗОН(канц):</label>   
-	${colorDate.osonCanc}${data.osonCanc}</b>
-	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonH"><label for="labelozonH"> ОЗОН(хоз):</label> 
-	${colorDate.osonChos}${data.osonChos}</b>
-	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelozonP"><label for="labelozonP"> ОЗОН(прод):</label>
-	${colorDate.osonProd}${data.osonProd}</b>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInPurchases"><label for="labeldecreaseInPurchases" title="Процент снижения закупок Хозяйственных товаров 2025 к 2024"> ↓ Хоз:</label> 
+	${colorDate.decreaseInPurchases} 
+	${
+    typeof data.decreaseInPurchases == "number"
+      ? (data.decreaseInPurchases = data.decreaseInPurchases.toFixed(2)+"%")
+      : (data.decreaseInPurchases = data.decreaseInPurchases)
+  }</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
 	${colorDate.potencChecing}${data.potencChecing}</b>
