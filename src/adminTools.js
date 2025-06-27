@@ -325,9 +325,35 @@ const buildingTable = (data) => {
     titleLine.append(titleColomn);
   });
 
-  listOfDialogues.append(titleLine);
+  listOfDialogues.append(titleLine);  
 
   data.map((el) => {
+
+    // Получаем статистику по пунктам
+    const statCheck = {
+      "plus": 0,
+      "minus": 0,
+      "percent": 0,
+    };
+
+    const searchPlus = el.questions.split("");
+    searchPlus.map(el => {
+      switch (el) {
+        case "+":
+          statCheck.plus ++;
+          break;
+
+          case "-":
+          statCheck.minus ++;
+          break;
+      
+        default:
+          break;
+      }
+    });
+    ////////////////////////
+    // console.log("plus: ", statCheck.plus, " minus: ", statCheck.minus, " percent: ", Math.round(statCheck.plus/(statCheck.plus+statCheck.minus)*100));
+    
     const lineOfData = document.createElement("tr");
     // lineOfData.id = i;
     lineOfData.addEventListener("click", (event) => {
@@ -362,7 +388,7 @@ const buildingTable = (data) => {
           break;
 
         case 5:
-          columnOfData.innerHTML = el.progress;
+          columnOfData.innerHTML = Math.round(statCheck.plus/(statCheck.plus+statCheck.minus)*100);
           lineOfData.append(columnOfData);
           break;
 
