@@ -203,7 +203,7 @@ async function getDataOfCustomers(codeOfCustomer) {
 
 const commonResultOfChecking = (data, codeOfCustomer) => {
 
-  console.log(data);
+  // console.log(data);
 
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
@@ -298,6 +298,24 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 
   return commonResult;
 };
+
+// Очищаем инпут serchData и сразу вставляем данные нового клиента
+
+serchData.addEventListener("click", (event) => {
+  serchData.value = "";  
+
+  // navigator.clipboard.readText()
+  // .then(text => {
+  //   serchData.value = text;
+  //   textOutput.innerHTML = getDataOfCustomers(serchData.value);
+  //   enterName.value = serchData.value;
+  // })
+  // .catch(err => {
+  //   // возможно, пользователь не дал разрешение на чтение данных из буфера обмена
+  //   console.log('Something went wrong', err);
+  // });
+
+});
 
 // клик на кнопку
 checkResultButton.addEventListener("click", (event) => {

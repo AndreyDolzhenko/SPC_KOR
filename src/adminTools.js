@@ -176,7 +176,6 @@ const getDataOfDialogues = () => {
     .then(function (data) {
       buildingTable(data);
       getRes = data;
-      // console.log(getRes);
     });
 };
 
@@ -199,7 +198,6 @@ fetch(`http://91.236.199.173:${PORT}/api/v1/dialogues/`)
   })
   .then(function (data) {
     getRes = data;
-    // console.log(getRes);
   });
 
 const actualStatus = document.querySelectorAll("btn_sub-division");
@@ -254,13 +252,11 @@ showDialugues.addEventListener("click", () => {
 for (let index = 0; index < getSelect.length; index++) {
   if (getSelect[index].name != "dateList") {
     getSelect[index].addEventListener("change", (event) => {
-      // console.log(event.target.name);
       for (let index = 0; index < getSelect.length; index++) {
         if (getSelect[index].name != "dateList") {
           event.target.name != getSelect[index].name
             ? (getSelect[index].value = "старт")
             : false;
-          // console.log(getSelect[index].value);
         }
       }
     });
@@ -273,7 +269,7 @@ const dateListTo = document.getElementById("dateListTo");
 // отправка фильтров и получение данных по фильтрам
 sentSelect.addEventListener("click", (event) => {
   const currentDate = new Date().toISOString().slice(0, -14);
-  // console.log(currentDate);
+
   // присваиваем по умолчанию ТЕКУЩУЮ ДАТУ
   dateListFrom.value == "старт" ? (dateListFrom.value = currentDate) : true;
   dateListTo.value == "старт" ? (dateListTo.value = currentDate) : true;
@@ -282,7 +278,6 @@ sentSelect.addEventListener("click", (event) => {
   for (let index = 0; index < formSelect.length; index++) {
     if (formSelect[index].value != "старт") {
       sentParams[formSelect[index].id] = formSelect[index].value;
-      // console.log(formSelect[index].value);
     }
 
     fetch(
@@ -299,7 +294,7 @@ sentSelect.addEventListener("click", (event) => {
         data.length != 0
           ? (errStatus.innerText = "")
           : (errStatus.innerText = "Данные НЕ найдены!");
-        // console.log(data);
+
         buildingTable(data);
       })
       .catch((err) => {
@@ -325,35 +320,33 @@ const buildingTable = (data) => {
     titleLine.append(titleColomn);
   });
 
-  listOfDialogues.append(titleLine);  
+  listOfDialogues.append(titleLine);
 
   data.map((el) => {
-
     // Получаем статистику по пунктам
     const statCheck = {
-      "plus": 0,
-      "minus": 0,
-      "percent": 0,
+      plus: 0,
+      minus: 0,
+      percent: 0,
     };
 
     const searchPlus = el.questions.split("");
-    searchPlus.map(el => {
+    searchPlus.map((el) => {
       switch (el) {
         case "+":
-          statCheck.plus ++;
+          statCheck.plus++;
           break;
 
-          case "-":
-          statCheck.minus ++;
+        case "-":
+          statCheck.minus++;
           break;
-      
+
         default:
           break;
       }
     });
     ////////////////////////
-    // console.log("plus: ", statCheck.plus, " minus: ", statCheck.minus, " percent: ", Math.round(statCheck.plus/(statCheck.plus+statCheck.minus)*100));
-    
+
     const lineOfData = document.createElement("tr");
     // lineOfData.id = i;
     lineOfData.addEventListener("click", (event) => {
@@ -388,14 +381,16 @@ const buildingTable = (data) => {
           break;
 
         case 5:
-          columnOfData.innerHTML = Math.round(statCheck.plus/(statCheck.plus+statCheck.minus)*100);
+          columnOfData.innerHTML = Math.round(
+            (statCheck.plus / (statCheck.plus + statCheck.minus)) * 100
+          );
           lineOfData.append(columnOfData);
           break;
 
         default:
           break;
       }
-    }    
+    }
 
     lineOfData.style.cursor = "pointer";
 
@@ -461,7 +456,10 @@ for (let index = 0; index < buttonClick.length; index++) {
 
 searchEmployee.addEventListener("keyup", (event) => {
   if (event.code == "Enter" || event.code == "NumpadEnter") {
-    managerChecing(listOfDialogues, searchEmployee.value[0].toUpperCase() + searchEmployee.value.slice(1));
+    managerChecing(
+      listOfDialogues,
+      searchEmployee.value[0].toUpperCase() + searchEmployee.value.slice(1)
+    );
     searchEmployee.value = "";
   }
 });
@@ -491,9 +489,16 @@ const deleteSearhing = () => {
   commentEmployee.placeholder = "";
 };
 // Поиск диалога и работа с выбранной строкой
-const managerChecing = (list, value) => {
+
+let includesTrue = [];
+
+const managerChecing = (list, value) => {   
+
   for (let index = 0; index < list.rows.length; index++) {
     if (list.rows[index].innerText.includes(value) == true) {
+
+      includesTrue.includes(value) == false ? includesTrue.push(value) : false;
+            
       const newRow = document.createElement("tr");
       const rowNumber = document.createElement("td");
       rowNumber.innerHTML = index;
@@ -509,7 +514,8 @@ const managerChecing = (list, value) => {
       newRow.id = "choise_" + index;
       newRow.addEventListener("click", (event) => {
         const searchRow = event.currentTarget.id;
-
+        // navigator.clipboard.writeText(event.target.innerText.split(" ")[0]);
+        // commentEmployee.focus();
         commentEmployee.placeholder = searchRow.split("_")[1];
       });
 
@@ -517,6 +523,6 @@ const managerChecing = (list, value) => {
       newRow.prepend(deleteRow);
       newRow.append(commentToDialog);
       showSearchEmployee.append(newRow);
-    }
-  }
+    } 
+  }  
 };
