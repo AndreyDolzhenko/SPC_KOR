@@ -191,6 +191,8 @@ async function getDataOfCustomers(codeOfCustomer) {
 
   const customerSearch = await response.json();
 
+  console.log(customerSearch);
+
   const clientDescription = commonResultOfChecking(
     customerSearch,
     codeOfCustomer
@@ -228,6 +230,10 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : `<b style = "color: darkcyan;">`;
   colorDate.decreaseInPurchases =
     data.decreaseInPurchases != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.decreaseInOffice =
+    data.decreaseInOffice != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
   colorDate.osonChos =
@@ -286,6 +292,14 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.decreaseInPurchases = data.decreaseInPurchases)
   }</b>
 	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInOffice"><label for="labeldecreaseInOffice" title="Процент снижения закупок Офисных товаров 2025 к 2024"> ↓ Офис:</label> 
+	${colorDate.decreaseInOffice} 
+	${
+    typeof data.decreaseInOffice == "number"
+      ? (data.decreaseInOffice = data.decreaseInOffice.toFixed(2)+"%")
+      : (data.decreaseInOffice = data.decreaseInOffice)
+  }</b>
+	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
 	${colorDate.potencChecing}${data.potencChecing}</b>
 	</li>
@@ -293,7 +307,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 	${colorDate.accountLinked}${data.accountLinked}</b>
 	</li>
 	`;
-
+  console.log(data.decreaseInOffice);
   checkDescription.innerHTML = commonResult;
 
   return commonResult;
