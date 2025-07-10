@@ -158,6 +158,29 @@
               <div id="doNotMakeContactBlock"></div>
             </div>
             <ol id="contact-scripts"></ol>
+            <form id="getOfClients" action="./src/choiseOfClients.js" method="get">
+              <select name="choiseStatus_001" id="choiseStatus_001">
+                <option disabled selected>Статус 1</option>
+                <option value="потенциальный_NEW">потенциальный NEW</option>
+                <option value="потенциальный_OLD">потенциальный OLD</option>
+                <option value="реальный_1">реальный 1</option>
+                <option value="реальный_NEW">реальный NEW</option>
+                <option value="реальный_OLD+">реальный OLD +</option>
+                <option value="реальный_OLD-">реальный OLD -</option>
+                <option value="потерянный_NEW">потерянный NEW</option>
+                <option value="потерянный_OLD">потерянный OLD</option>
+              </select>
+              <select name="choiseStatus_002" id="choiseStatus_002">
+                <option disabled selected>Статус 2</option>
+                <option value="Мелкий">мелкий</option>
+                <option value="Средний">средний</option>
+                <option value="Крупный">крупный</option>
+                <option value="VIP">vip</option>
+                <option value="Ключевой">ключевой</option>
+                <option value="Стратегический">стратегический</option>
+              </select>
+              <input type="submit" value="выбрать">
+            </form>
           </div>
         </div>
         <div class="content_right" id="right_bar">
@@ -187,5 +210,6 @@
     <script src="./src/dataToSend.js?v=2"></script>
     <script src="./scenarios/scenarios.js?v=2"></script>
     <script src="./src/main.js?v=2"></script>
+    <script src="./src/choiseOfClients.js"></script>
   </body>
 </html>

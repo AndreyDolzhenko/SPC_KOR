@@ -204,7 +204,6 @@ async function getDataOfCustomers(codeOfCustomer) {
 // Создание переменной с данными для чек-бокса по клиенту
 
 const commonResultOfChecking = (data, codeOfCustomer) => {
-
   // console.log(data);
 
   clientsName.innerText = data.clientsNames;
@@ -288,7 +287,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 	${colorDate.decreaseInPurchases} 
 	${
     typeof data.decreaseInPurchases == "number"
-      ? (data.decreaseInPurchases = data.decreaseInPurchases.toFixed(2)+"%")
+      ? (data.decreaseInPurchases = data.decreaseInPurchases.toFixed(2) + "%")
       : (data.decreaseInPurchases = data.decreaseInPurchases)
   }</b>
 	</li>
@@ -296,7 +295,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 	${colorDate.decreaseInOffice} 
 	${
     typeof data.decreaseInOffice == "number"
-      ? (data.decreaseInOffice = data.decreaseInOffice.toFixed(2)+"%")
+      ? (data.decreaseInOffice = data.decreaseInOffice.toFixed(2) + "%")
       : (data.decreaseInOffice = data.decreaseInOffice)
   }</b>
 	</li>
@@ -316,7 +315,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 // Очищаем инпут serchData и сразу вставляем данные нового клиента
 
 serchData.addEventListener("click", (event) => {
-  serchData.value = "";  
+  serchData.value = "";
 
   // navigator.clipboard.readText()
   // .then(text => {
@@ -328,7 +327,6 @@ serchData.addEventListener("click", (event) => {
   //   // возможно, пользователь не дал разрешение на чтение данных из буфера обмена
   //   console.log('Something went wrong', err);
   // });
-
 });
 
 // клик на кнопку
@@ -551,8 +549,8 @@ listScript.addEventListener("click", function (event) {
   header.style = "display: none;";
   header_tools.style = "display: flex";
 
-  let x = 0; // переменная для процента выполнения скрипта  
-    // console.log(dialogueStructure);
+  let x = 0; // переменная для процента выполнения скрипта
+  // console.log(dialogueStructure);
 
   // 100% checking
 
@@ -593,7 +591,6 @@ listScript.addEventListener("click", function (event) {
 
   // Вывод скрипта на экран
   if (event.target.id != "list_script") {
-
     //ОБНУЛЯЕМ ВСЕ ПАРАМЕТРЫ ПРЕДЫДУЩЕГО СКРИПТА
 
     contactScripts.innerHTML = "";
@@ -603,7 +600,7 @@ listScript.addEventListener("click", function (event) {
     fullCheck.checked = false;
     // console.log("check");
     // console.log(dialogueStructure);
-    
+
     if (content.style.justifyContent != "space-between") {
       content.style.justifyContent = "space-between";
     }
@@ -654,7 +651,7 @@ listScript.addEventListener("click", function (event) {
           } else {
             many.style.display = "none";
             progress.style.float = "inherit";
-          }          
+          }
           // console.log(x);
         });
 
@@ -840,11 +837,15 @@ getDataOfEmployee(person).then((result) => {
     }
 
     Object.values(employeesesListAdmin).map((el) => {
-      if (userData.lastChild.textContent == el) {
+      
+      if (userData.lastChild.textContent == el) {  
         document.getElementById("registration_button").style.display = "block";
+      } else {
+        
       }
     });
   }
 });
 
 // homePage();
+
