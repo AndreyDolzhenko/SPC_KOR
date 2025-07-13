@@ -191,7 +191,7 @@ async function getDataOfCustomers(codeOfCustomer) {
 
   const customerSearch = await response.json();
 
-  console.log(customerSearch);
+  // console.log(customerSearch);
 
   const clientDescription = commonResultOfChecking(
     customerSearch,
@@ -255,7 +255,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   const commonResult = `
 	<p style = "text-decoration: underline;"><b>Свод по клиенту ${codeOfCustomer}:</b></p>
 	<ul>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzsumm"><label for="labelpdzsumm"> ПДЗ сумм:</label> 
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldebSumm"><label for="labeldebSumm"> ПДЗ сумм:</label> 
   ${colorDate.debSumm}
 	${
     typeof data.debSumm == "number"
@@ -263,7 +263,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.debSumm = data.debSumm)
   }</b>
 	</li>
-	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpdzday"><label for="labelpdzday"> ПДЗ дней:</label>
+	<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldebDays"><label for="labeldebDays"> ПДЗ дней:</label>
   ${colorDate.debDays} 
 	${data.debDays}</b>
 	</li>
@@ -302,11 +302,11 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
 	${colorDate.potencChecing}${data.potencChecing}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labellinck"><label for="labellinck"> Учётная запись клиента</label>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelaccountLinked"><label for="labelaccountLinked"> Учётная запись клиента</label>
 	${colorDate.accountLinked}${data.accountLinked}</b>
 	</li>
 	`;
-  console.log(data.decreaseInOffice);
+  // console.log(data.decreaseInOffice);
   checkDescription.innerHTML = commonResult;
 
   return commonResult;
@@ -341,13 +341,21 @@ checkResultButton.addEventListener("click", (event) => {
   }
 });
 // жмак на Enter
+const pushEnter = (choiseCode) => {
+  textOutput.innerHTML = getDataOfCustomers(choiseCode);
+  enterName.value = choiseCode;
+};
+
 serchData.addEventListener("keyup", (event) => {
   if (event.key == "Enter") {
     if (serchData.value == "") {
       checkDescription.innerHTML = "Получи свод по клиенту:";
     } else {
-      textOutput.innerHTML = getDataOfCustomers(serchData.value);
-      enterName.value = serchData.value;
+
+      pushEnter(serchData.value);
+
+      // textOutput.innerHTML = getDataOfCustomers(serchData.value);
+      // enterName.value = serchData.value;
     }
   }
 });
@@ -837,15 +845,12 @@ getDataOfEmployee(person).then((result) => {
     }
 
     Object.values(employeesesListAdmin).map((el) => {
-      
-      if (userData.lastChild.textContent == el) {  
+      if (userData.lastChild.textContent == el) {
         document.getElementById("registration_button").style.display = "block";
       } else {
-        
       }
     });
   }
 });
 
 // homePage();
-
