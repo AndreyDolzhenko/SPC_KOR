@@ -4,6 +4,8 @@ const codeOfClientsShow = document.getElementById("codeOfClientsShow");
 const scoreItems = document.createElement("b");
 const getFilters = document.getElementById("getFilters");
 const checkbox = document.getElementsByClassName("checkbox");
+const header_tools_left = document.getElementsByClassName("header_tools_left");
+const listOfStatuisScenar = document.getElementById("listOfStatuisScenar");
 
 getOfClients.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -19,11 +21,13 @@ getOfClients.addEventListener("submit", function (e) {
     clientsConditions.status_2 = getOfClients[1].value;
   }
 
-  // console.log(clientsConditions);
+  console.log(clientsConditions);
 
   // Функция для получения клиентов из Цикла контактов
   const clientsFromCK = async (clientsConditions) => {
     await fetch(
+      // `http://127.0.0.1:3001/api/v1/getOfClients?getOfClients
+      // `http://91.236.199.173:3001/api/v1/getOfClients?getOfClients
       `http://127.0.0.1:3001/api/v1/getOfClients?getOfClients=${[
         clientsConditions.operatorSName,
         clientsConditions.status_1,
@@ -37,8 +41,8 @@ getOfClients.addEventListener("submit", function (e) {
         let score = 0;
         scoreItems.innerHTML = ``;
 
-        // console.log(data);
         searhOfClientsResult.innerHTML = "";
+
         data.map((el) => {
           if (el[Object.keys(el)] == "Более 6 месяцев назад") {
             el[Object.keys(el)] = "6 и более";
@@ -59,22 +63,27 @@ getOfClients.addEventListener("submit", function (e) {
           }
         });
 
+
+        for (let index = 0; index < dateSort.length - 1; ) {
+        
+          if (dateSort[index] == dateSort[index + 1]) {
+            dateSort.splice(index, 1);            
+          } else {
+            index++;
+          }
+        }
+
         dateSort.map((el) => {
-          if (el[Object.keys(el)] != "6 и более") {
-            for (let index = 0; index < data.length; index++) {
-              // console.log(Object.values(data[index]).join().split(".")[1]);
-              if (Object.values(data[index]).join().split(".")[1] == el) {
-                // console.log(el);
-                // console.log(data[index]);
-                spanWithCode = document.createElement("span");
-                spanWithCode.innerHTML = `<span class="clientsCode">${Object.keys(
-                  data[index]
-                )}</span><span>${Object.values(data[index])
-                  .join()
-                  .slice(0, 10)}</span>;`;
-                score++;
-                searhOfClientsResult.append(spanWithCode);
-              }
+          for (let index = 0; index < data.length; index++) {
+            if (Object.values(data[index]).join().split(".")[1] == el) {             
+              spanWithCode = document.createElement("span");
+              spanWithCode.innerHTML = `<span class="clientsCode">${Object.keys(
+                data[index]
+              )}</span><span>${Object.values(data[index])
+                .join()
+                .slice(0, 10)}</span>;`;
+              score++;
+              searhOfClientsResult.append(spanWithCode);
             }
           }
         });
@@ -102,8 +111,13 @@ getOfClients.addEventListener("submit", function (e) {
 
     for (let index = 0; index < clientsCode.length; index++) {
       clientsCode[index].addEventListener("click", (event) => {
+        if (clientsCode[index].className == "clientsCode underLine") {
+          clientsCode[index].classList.remove("underLine");
+        } else {
+          clientsCode[index].classList.add("underLine");
+        }
         serchData.value = event.target.innerText;
-        pushEnter(event.target.innerText);        
+        pushEnter(event.target.innerText);
       });
     }
   };
@@ -116,13 +130,15 @@ getOfClients.addEventListener("submit", function (e) {
 getFilters.addEventListener("click", (event) => {
   const getClientByFilter = async (filterItem) => {
     await fetch(
-      `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
+      // `http://91.236.199.173:3001/api/v1/filterItem?filterItem
+      `http://127.0.0.1:3001/api/v1/filterItem?filterItem
+      =
+      ${filterItem}`
     )
       .then(function (response) {
         return response.json();
       })
-      .then(function (data) {
-        // console.log(data);
+      .then(function (filterResult) {        
 
         const clientsCode = document.getElementsByClassName("clientsCode");
         const labelSearch = document.getElementById(`label${filterItem}`);
@@ -130,64 +146,62 @@ getFilters.addEventListener("click", (event) => {
 
         // убираем подчеркивания со всех лейблов
 
-        for (let index = 0; index < checkbox.length; index++) {         
-
-          const labelElement = document.querySelector(`label[for="${checkbox[index].id}"]`); 
+        for (let index = 0; index < checkbox.length; index++) {
+          const labelElement = document.querySelector(
+            `label[for="${checkbox[index].id}"]`
+          );
           labelElement.style = "text-decoration: none";
-          
         }
 
-        labelSearch.nextElementSibling.style = "text-decoration: underline";
-        // console.log(labelSearch.nextElementSibling);   
+        labelSearch.nextElementSibling.style = "text-decoration: underline";       
 
-// Создаем массивы для отбора нужных клиентов и отфильтровывания нулей - 0
+        // Создаем массивы для отбора нужных клиентов и отфильтровывания нулей - 0
         let checkingList = [];
         let zeroList = [];
+        let scoreChoiseClients = 0;
 
         if (filterItem != "potenc" && filterItem != "accountLinked") {
-          
-          data.map(el => {
-            Object.values(el) == 0 ? zeroList.push(Object.keys(el).join()) : false;
-          })
-  
-          data.map(el => checkingList.push(Object.keys(el).join()));
-  
-          // console.log(checkingList.includes(clientsCode[0].innerText));
-  
-          for (let index = 0; index < clientsCode.length; index++) {
-            // console.log(checkingList.includes(clientsCode[index].innerText));
-  
-            if (checkingList.includes(clientsCode[index].innerText) == true && zeroList.includes(clientsCode[index].innerText) == false) {
-                            
-                // console.log(clientsCode[index].innerText);
-                clientsCode[index].style.color = "blue";           
+          filterResult.map((el) => {
+            Object.values(el) == 0
+              ? zeroList.push(Object.keys(el).join())
+              : false;
+          });
+
+          filterResult.map((el) => checkingList.push(Object.keys(el).join()));
+        
+
+          for (let index = 0; index < clientsCode.length; index++) {           
+
+            if (
+              checkingList.includes(clientsCode[index].innerText) == true &&
+              zeroList.includes(clientsCode[index].innerText) == false
+            ) {
+              scoreChoiseClients++;             
+              clientsCode[index].style.color = "blue";
             } else {
               clientsCode[index].style.color = "brown";
             }
-            
           }
         } else {
-             
-          data.map(el => checkingList.push(el.join()));
+          filterResult.map((el) => checkingList.push(el.join()));
 
-          for (let index = 0; index < clientsCode.length; index++) {
-            // console.log(checkingList.includes(clientsCode[index].innerText));
-  
-            if (checkingList.includes(clientsCode[index].innerText) == true) {
-                            
-                // console.log(clientsCode[index].innerText);
-                clientsCode[index].style.color = "blue";           
+          for (let index = 0; index < clientsCode.length; index++) {           
+
+            if (checkingList.includes(clientsCode[index].innerText) == true) {             
+              clientsCode[index].style.color = "blue";
             } else {
               clientsCode[index].style.color = "brown";
+              scoreChoiseClients++;
             }
-            
           }
-  
-          // console.log(checkingList.includes(clientsCode[0].innerText));
         }
+        const scoreChoiseClientsResult = document.createElement("div");
 
-
-
+        scoreChoiseClientsResult.style =
+          "color: blue; font-weight: 600; font-size: 14px;";
+        scoreChoiseClientsResult.innerHTML = `Статистика выбора: ${scoreChoiseClients}`;
+        listOfStatuisScenar.lastChild.remove();
+        listOfStatuisScenar.append(scoreChoiseClientsResult);
       });
   };
 
@@ -198,9 +212,7 @@ getFilters.addEventListener("click", (event) => {
     getFilters.append(filtersItem);
 
     filtersItem.addEventListener("click", (event) => {
-      
       getClientByFilter(event.target.innerText);
-
     });
   }
 });

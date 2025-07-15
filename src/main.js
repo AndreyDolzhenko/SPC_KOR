@@ -235,6 +235,22 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.decreaseInOffice != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
+      colorDate.decreaseInPaper =
+    data.decreaseInPaper != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+      colorDate.decreaseInChemistry =
+    data.decreaseInChemistry != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+      colorDate.decreaseInParfum =
+    data.decreaseInParfum != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+      colorDate.decreaseInFood =
+    data.decreaseInFood != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
   colorDate.osonChos =
     data.osonChos == "Да!"
       ? `<b style = "color: brown;">`
@@ -297,6 +313,38 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     typeof data.decreaseInOffice == "number"
       ? (data.decreaseInOffice = data.decreaseInOffice.toFixed(2) + "%")
       : (data.decreaseInOffice = data.decreaseInOffice)
+  }</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInPaper"><label for="labeldecreaseInPaper" title="Процент снижения закупок Бумаги 2025 к 2024"> ↓ Бумага:</label> 
+	${colorDate.decreaseInPaper} 
+	${
+    typeof data.decreaseInPaper == "number"
+      ? (data.decreaseInPaper = data.decreaseInPaper.toFixed(2) + "%")
+      : (data.decreaseInPaper = data.decreaseInPaper)
+  }</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInChemistry"><label for="labeldecreaseInChemistry" title="Процент снижения закупок Бытовой химии 2025 к 2024"> ↓ Быт.химия:</label> 
+	${colorDate.decreaseInChemistry} 
+	${
+    typeof data.decreaseInChemistry == "number"
+      ? (data.decreaseInChemistry = data.decreaseInChemistry.toFixed(2) + "%")
+      : (data.decreaseInChemistry = data.decreaseInChemistry)
+  }</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInParfum"><label for="labeldecreaseInParfum" title="Процент снижения закупок Косметики 2025 к 2024"> ↓ Косметика:</label> 
+	${colorDate.decreaseInParfum} 
+	${
+    typeof data.decreaseInParfum == "number"
+      ? (data.decreaseInParfum = data.decreaseInParfum.toFixed(2) + "%")
+      : (data.decreaseInParfum = data.decreaseInParfum)
+  }</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInFood"><label for="labeldecreaseInFood" title="Процент снижения закупок Продуктов питания 2025 к 2024"> ↓ Бакалея:</label> 
+	${colorDate.decreaseInFood} 
+	${
+    typeof data.decreaseInFood == "number"
+      ? (data.decreaseInFood = data.decreaseInFood.toFixed(2) + "%")
+      : (data.decreaseInFood = data.decreaseInFood)
   }</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 

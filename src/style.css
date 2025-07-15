@@ -57,6 +57,10 @@ span {
 	width: 150px;
 }
 
+.underLine {
+	text-decoration: underline;
+}
+
 #searhOfClientsResult {
 	flex-wrap: wrap;
     display: flex;
@@ -69,7 +73,7 @@ span {
 }
 
 #searhOfClientsResult:hover {
-	height: 100px;
+	height: 200px;
 	background: aliceblue;
     border: 1px solid brown;
     overflow: auto;
@@ -204,6 +208,7 @@ td {
     padding: 0 5px 5px 0;
     font-size: 16px;
     color: darkcyan;
+	font-size: 14px;
 }
 
 #checkResult{
