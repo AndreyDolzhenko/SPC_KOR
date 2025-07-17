@@ -6,6 +6,110 @@ const getFilters = document.getElementById("getFilters");
 const checkbox = document.getElementsByClassName("checkbox");
 const header_tools_left = document.getElementsByClassName("header_tools_left");
 const listOfStatuisScenar = document.getElementById("listOfStatuisScenar");
+const getFromOrder = document.getElementById("getFromOrder");
+
+// функция для получения клиентов из СПИСКА НАЗНАЧЕННЫХ
+
+const ordersToEmployee = async (employeeName) => {
+
+  let dateSort = [];
+
+  await fetch(
+    `http://91.236.199.173:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${employeeName}`
+    // `http://127.0.0.1:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${employeeName}`    
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      // console.log(data);
+
+      let score = 0;
+        scoreItems.innerHTML = ``;
+
+        searhOfClientsResult.innerHTML = "";
+
+        data.map((el) => {
+          if (el[Object.keys(el)] == "Более 6 месяцев назад") {
+            el[Object.keys(el)] = "6 и более";
+          } else {
+            dateSort.push(el[Object.keys(el)].split(".")[1]);
+            el[Object.keys(el)] = el[Object.keys(el)].slice(0, 10);
+          }
+          spanWithCode = document.createElement("span");
+          spanWithCode.innerHTML = `<span class="clientsCode">${Object.keys(
+            el
+          )}</span><span>${Object.values(el).join().slice(0, 10)}</span>;`;
+
+          if (el[Object.keys(el)] == "6 и более") {
+            score++;
+            searhOfClientsResult.prepend(spanWithCode);
+          } else {
+            dateSort.sort((a, b) => a - b);
+          }
+        });
+
+        for (let index = 0; index < dateSort.length - 1; ) {
+          if (dateSort[index] == dateSort[index + 1]) {
+            dateSort.splice(index, 1);
+          } else {
+            index++;
+          }
+        }
+
+        dateSort.map((el) => {
+          for (let index = 0; index < data.length; index++) {
+            if (Object.values(data[index]).join().split(".")[1] == el) {
+              spanWithCode = document.createElement("span");
+              spanWithCode.innerHTML = `<span class="clientsCode">${Object.keys(
+                data[index]
+              )}</span><span>${Object.values(data[index])
+                .join()
+                .slice(0, 10)}</span>;`;
+              score++;
+              searhOfClientsResult.append(spanWithCode);
+            }
+          }
+        });
+
+        scoreItems.innerHTML = `${score}`;
+        codeOfClientsShow.prepend(scoreItems);
+        codeOfClientsShow.style.display = "block";
+
+    });
+
+     const clientsCode = document.getElementsByClassName("clientsCode");
+    const goUp = document.getElementById("goUp");
+    const goDown = document.getElementById("goDown");
+
+    goUp.addEventListener("click", (event) => {
+      goUp.style.display = "none";
+      goDown.style.display = "contents";
+      searhOfClientsResult.style =
+        "width: 50vh; height: 100vh; flex-direction: column; right: 0px;";
+    });
+    goDown.addEventListener("click", (event) => {
+      goDown.style.display = "none";
+      goUp.style.display = "contents";
+      searhOfClientsResult.style = "initial";
+    });
+
+    for (let index = 0; index < clientsCode.length; index++) {
+      clientsCode[index].addEventListener("click", (event) => {
+        if (clientsCode[index].className == "clientsCode underLine") {
+          clientsCode[index].classList.remove("underLine");
+        } else {
+          clientsCode[index].classList.add("underLine");
+        }
+        serchData.value = event.target.innerText;
+        pushEnter(event.target.innerText);
+      });
+    }
+};
+
+getFromOrder.addEventListener("click", (event) => {
+  ordersToEmployee(userData.firstChild.textContent);
+});
 
 getOfClients.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -21,14 +125,17 @@ getOfClients.addEventListener("submit", function (e) {
     clientsConditions.status_2 = getOfClients[1].value;
   }
 
-  console.log(clientsConditions);
+  // console.log(clientsConditions);
 
   // Функция для получения клиентов из Цикла контактов
   const clientsFromCK = async (clientsConditions) => {
     await fetch(
-      // `http://127.0.0.1:3001/api/v1/getOfClients?getOfClients
-      // `http://91.236.199.173:3001/api/v1/getOfClients?getOfClients
-      `http://127.0.0.1:3001/api/v1/getOfClients?getOfClients=${[
+      // `http://127.0.0.1:3001/api/v1/getOfClients?getOfClients=${[
+      //   clientsConditions.operatorSName,
+      //   clientsConditions.status_1,
+      //   clientsConditions.status_2,
+      // ]}`
+      `http://91.236.199.173:3001/api/v1/getOfClients?getOfClients=${[
         clientsConditions.operatorSName,
         clientsConditions.status_1,
         clientsConditions.status_2,
@@ -63,11 +170,9 @@ getOfClients.addEventListener("submit", function (e) {
           }
         });
 
-
         for (let index = 0; index < dateSort.length - 1; ) {
-        
           if (dateSort[index] == dateSort[index + 1]) {
-            dateSort.splice(index, 1);            
+            dateSort.splice(index, 1);
           } else {
             index++;
           }
@@ -75,7 +180,7 @@ getOfClients.addEventListener("submit", function (e) {
 
         dateSort.map((el) => {
           for (let index = 0; index < data.length; index++) {
-            if (Object.values(data[index]).join().split(".")[1] == el) {             
+            if (Object.values(data[index]).join().split(".")[1] == el) {
               spanWithCode = document.createElement("span");
               spanWithCode.innerHTML = `<span class="clientsCode">${Object.keys(
                 data[index]
@@ -130,16 +235,12 @@ getOfClients.addEventListener("submit", function (e) {
 getFilters.addEventListener("click", (event) => {
   const getClientByFilter = async (filterItem) => {
     await fetch(
-      // `http://91.236.199.173:3001/api/v1/filterItem?filterItem
-      `http://127.0.0.1:3001/api/v1/filterItem?filterItem
-      =
-      ${filterItem}`
+      `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
     )
       .then(function (response) {
         return response.json();
       })
-      .then(function (filterResult) {        
-
+      .then(function (filterResult) {
         const clientsCode = document.getElementsByClassName("clientsCode");
         const labelSearch = document.getElementById(`label${filterItem}`);
         const commonResult = document.getElementsByClassName("commonResult");
@@ -153,7 +254,7 @@ getFilters.addEventListener("click", (event) => {
           labelElement.style = "text-decoration: none";
         }
 
-        labelSearch.nextElementSibling.style = "text-decoration: underline";       
+        labelSearch.nextElementSibling.style = "text-decoration: underline";
 
         // Создаем массивы для отбора нужных клиентов и отфильтровывания нулей - 0
         let checkingList = [];
@@ -168,15 +269,13 @@ getFilters.addEventListener("click", (event) => {
           });
 
           filterResult.map((el) => checkingList.push(Object.keys(el).join()));
-        
 
-          for (let index = 0; index < clientsCode.length; index++) {           
-
+          for (let index = 0; index < clientsCode.length; index++) {
             if (
               checkingList.includes(clientsCode[index].innerText) == true &&
               zeroList.includes(clientsCode[index].innerText) == false
             ) {
-              scoreChoiseClients++;             
+              scoreChoiseClients++;
               clientsCode[index].style.color = "blue";
             } else {
               clientsCode[index].style.color = "brown";
@@ -185,9 +284,8 @@ getFilters.addEventListener("click", (event) => {
         } else {
           filterResult.map((el) => checkingList.push(el.join()));
 
-          for (let index = 0; index < clientsCode.length; index++) {           
-
-            if (checkingList.includes(clientsCode[index].innerText) == true) {             
+          for (let index = 0; index < clientsCode.length; index++) {
+            if (checkingList.includes(clientsCode[index].innerText) == true) {
               clientsCode[index].style.color = "blue";
             } else {
               clientsCode[index].style.color = "brown";

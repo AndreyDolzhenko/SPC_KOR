@@ -61,6 +61,13 @@ span {
 	text-decoration: underline;
 }
 
+.adminButton {
+	width: 100px;
+    height: 20px;
+    font-size: 14px;
+    display: none;
+}
+
 #searhOfClientsResult {
 	flex-wrap: wrap;
     display: flex;
@@ -73,11 +80,19 @@ span {
 }
 
 #searhOfClientsResult:hover {
-	height: 200px;
+	height: 150px;
 	background: aliceblue;
     border: 1px solid brown;
     overflow: auto;
 	transition: 2s;
+	align-content: baseline;
+}
+
+#getFilters {
+	cursor: pointer; 
+	width: 100%; 
+	height: 30px; 
+	overflow: auto; 	
 }
 
 #codeOfClientsShow {
@@ -308,10 +323,7 @@ td {
 }
 
 #registration_button {
-	width: 100px;
-	height: 20px;
-	font-size: 14px;
-	display: none;
+	
 }
 
 #progress {

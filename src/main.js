@@ -33,6 +33,7 @@ const userLink = document.getElementById("userLink");
 const registration = document.getElementById("registration");
 const header_tools = document.getElementById("header_tools");
 const fullCheck = document.getElementById("100%");
+const getEmployeesSchow = document.getElementById("getEmployeesSchow");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -235,19 +236,19 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.decreaseInOffice != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.decreaseInPaper =
+  colorDate.decreaseInPaper =
     data.decreaseInPaper != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.decreaseInChemistry =
+  colorDate.decreaseInChemistry =
     data.decreaseInChemistry != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.decreaseInParfum =
+  colorDate.decreaseInParfum =
     data.decreaseInParfum != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.decreaseInFood =
+  colorDate.decreaseInFood =
     data.decreaseInFood != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
@@ -399,7 +400,6 @@ serchData.addEventListener("keyup", (event) => {
     if (serchData.value == "") {
       checkDescription.innerHTML = "Получи свод по клиенту:";
     } else {
-
       pushEnter(serchData.value);
 
       // textOutput.innerHTML = getDataOfCustomers(serchData.value);
@@ -894,7 +894,11 @@ getDataOfEmployee(person).then((result) => {
 
     Object.values(employeesesListAdmin).map((el) => {
       if (userData.lastChild.textContent == el) {
-        document.getElementById("registration_button").style.display = "block";
+        document.getElementById("registration_button").style.display = "inline";
+        getEmployeesSchow.style.display = "inline";
+        getEmployeesSchow.addEventListener("click", (event) => {
+          allEmployees("all");
+        });
       } else {
       }
     });
@@ -902,3 +906,29 @@ getDataOfEmployee(person).then((result) => {
 });
 
 // homePage();
+
+// Функция для получения всех сотрудников
+
+const allEmployees = async () => {
+  let response = await fetch(
+    `http://91.236.199.173:3001/api/v1/employees`
+    // `http://127.0.0.1:3001/api/v1/employees`
+  );
+
+  let res = await response.json();
+
+  getEmployeesSchow.innerHTML = `<option disabled selected>Имя сотрудника</option>`;
+
+  // console.log(res);
+
+  res.map((el) => {
+    const newOptionItem = document.createElement("option");
+    newOptionItem.value = el;
+    newOptionItem.innerText = el;
+    getEmployeesSchow.append(newOptionItem);
+  });
+
+  getEmployeesSchow.addEventListener("click", (event) => {
+    userData.firstChild.textContent = getEmployeesSchow.value;
+  });
+};

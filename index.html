@@ -36,15 +36,20 @@
           <div id="userData"></div>
         </div>
         <div class="header_right" id="header_right">
-          <span id="loader" class="loader">ОФИСМАГ</span>
+          <span id="loader" class="loader">ОФИСМАГ</span>          
           <div id="registration">
             <form
               id="wayToAdmin"
               action="./pages/adminPage.html"
               target="_blank"
+              style="display: inline;"
             >
-              <button id="registration_button">Диалоги</button>
+              <button class="adminButton" id="registration_button">Диалоги</button>    
             </form>
+            <!-- <button class="adminButton" id="getEmployeesSchow">Сотрудники</button> -->
+            <select name="employeesSchow" class="adminButton" id="getEmployeesSchow">
+                <option disabled selected>Имя сотрудника</option>
+              </select>
 
             <div id="updatePlace">
               update
@@ -125,7 +130,7 @@
             <div class="leftBottom">
               Дата актуальности: <b id="actualDate" style="color: brown"></b>
             </div>
-            <div class="leftBottom" id="getFilters" style="cursor: pointer; width: 100%; overflow: auto;">Фильтры:</div>
+            <div class="leftBottom" id="getFilters">Фильтры:</div>
           </div>
         </div>
         <div class="content_center" id="base_script">
@@ -180,6 +185,7 @@
               </select>
               <input type="submit" value="выбрать" />
             </form>
+            <div><button id="getFromOrder">получить клиентов из списка</button></div>
           </div>
         </div>
         <div class="content_right" id="right_bar">
