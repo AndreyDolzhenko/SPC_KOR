@@ -90,9 +90,22 @@ span {
 
 #getFilters {
 	cursor: pointer; 
-	width: 100%; 
-	height: 30px; 
-	overflow: auto; 	
+	width: 100%; 	 
+	overflow: auto; 
+	display: flex;
+	justify-content: center;
+    flex-wrap: wrap;	
+}
+
+.filtersButton {
+	cursor: pointer; 
+	font-weight: 600;
+	width: 50px;
+	height: 27px;
+    font-size: 10px;
+	overflow: hidden;
+	margin: 2px;
+	border: 1px solid darkcyan;
 }
 
 #codeOfClientsShow {
@@ -452,6 +465,10 @@ button {
 button:hover {
 	background-color: burlywood;
 	color: currentcolor;
+}
+
+button:active {
+	background: darkgoldenrod;
 }
 
 .btn-bar {

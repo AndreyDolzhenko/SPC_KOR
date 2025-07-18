@@ -114,6 +114,8 @@ getFromOrder.addEventListener("click", (event) => {
 getOfClients.addEventListener("submit", function (e) {
   e.preventDefault();
 
+  console.log(getOfClients[0].value);
+
   let dateSort = [];
 
   let clientsConditions = {
@@ -121,7 +123,7 @@ getOfClients.addEventListener("submit", function (e) {
   };
 
   for (let index = 0; index < getOfClients.length; index++) {
-    clientsConditions.status_1 = getOfClients[0].value;
+    clientsConditions.status_1 = String(getOfClients[0].value);
     clientsConditions.status_2 = getOfClients[1].value;
   }
 
@@ -303,14 +305,18 @@ getFilters.addEventListener("click", (event) => {
       });
   };
 
+  getFilters.innerHTML = "";
+
   for (let index = 0; index < checkbox.length; index++) {
-    const filtersItem = document.createElement("span");
-    filtersItem.innerText = checkbox[index].id.slice(5);
-    filtersItem.style = "cursor: pointer; font-weight: 600";
+    console.log(checkbox.length)
+    const filtersItem = document.createElement("button");
+    filtersItem.classList.add("filtersButton");
+    filtersItem.name = checkbox[index].id.slice(5)
+    filtersItem.innerText = checkbox[index].nextSibling.innerText.slice(0, -1);       
     getFilters.append(filtersItem);
 
     filtersItem.addEventListener("click", (event) => {
-      getClientByFilter(event.target.innerText);
+      getClientByFilter(event.target.name);
     });
   }
 });
