@@ -197,6 +197,7 @@ getOfClients.addEventListener("submit", function (e) {
 
         scoreItems.innerHTML = `${score}`;
         codeOfClientsShow.prepend(scoreItems);
+        codeOfClientsShow.title = clientsConditions.status_1;
         codeOfClientsShow.style.display = "block";
       });
 
@@ -305,7 +306,7 @@ getFilters.addEventListener("click", (event) => {
       });
   };
 
-  getFilters.innerHTML = "";
+  serchData.value == "" ? alert("Выберите клиента для получения Фильтров!") : getFilters.innerHTML = "";
 
   for (let index = 0; index < checkbox.length; index++) {
     console.log(checkbox.length)
