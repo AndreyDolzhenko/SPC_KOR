@@ -7,16 +7,17 @@ const checkbox = document.getElementsByClassName("checkbox");
 const header_tools_left = document.getElementsByClassName("header_tools_left");
 const listOfStatuisScenar = document.getElementById("listOfStatuisScenar");
 const getFromOrder = document.getElementById("getFromOrder");
+const ordersList = document.getElementsByClassName("ordersList");
 
 // функция для получения клиентов из СПИСКА НАЗНАЧЕННЫХ
 
-const ordersToEmployee = async (employeeName) => {
+const ordersToEmployee = async (employeeName, orderType) => {
 
   let dateSort = [];
 
   await fetch(
-    `http://91.236.199.173:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${employeeName}`
-    // `http://127.0.0.1:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${employeeName}`    
+    // `http://91.236.199.173:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${employeeName}`
+    `http://127.0.0.1:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${[employeeName, orderType]}`    
   )
     .then(function (response) {
       return response.json();
@@ -107,9 +108,19 @@ const ordersToEmployee = async (employeeName) => {
     }
 };
 
-getFromOrder.addEventListener("click", (event) => {
-  ordersToEmployee(userData.firstChild.textContent);
-});
+// кнопки запросов из Списков поручений
+
+  for (let index = 0; index < ordersList.length; index++) {
+
+    ordersList[index].addEventListener("click", (event) => {
+
+      console.log(event.target.id);
+
+      ordersToEmployee([userData.firstChild.textContent, event.target.id]);    
+
+    });
+  }
+
 
 getOfClients.addEventListener("submit", function (e) {
   e.preventDefault();
