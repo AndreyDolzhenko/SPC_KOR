@@ -34,6 +34,7 @@ const registration = document.getElementById("registration");
 const header_tools = document.getElementById("header_tools");
 const fullCheck = document.getElementById("100%");
 const getEmployeesSchow = document.getElementById("getEmployeesSchow");
+const statusData = document.getElementById("statusData");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -209,6 +210,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
+
+  statusData.innerHTML = `${data.status_1}&nbsp;&nbsp;${data.status_2}`;
 
   let colorDate = {};
 

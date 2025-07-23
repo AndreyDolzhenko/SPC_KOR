@@ -563,6 +563,12 @@ li {
 	width: 80%;
 }
 
+#statusData {
+	font-size: 14px;
+    font-style: italic;
+    color: darkcyan;
+}
+
 #greetings {
 	display: flex;
 	color: currentcolor;
