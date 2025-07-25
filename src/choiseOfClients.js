@@ -7,6 +7,7 @@ const checkbox = document.getElementsByClassName("checkbox");
 const header_tools_left = document.getElementsByClassName("header_tools_left");
 const listOfStatuisScenar = document.getElementById("listOfStatuisScenar");
 const getFromOrder = document.getElementById("getFromOrder");
+const actionCall = document.getElementById("actionCall");
 const ordersList = document.getElementsByClassName("ordersList");
 
 // функция для получения клиентов из СПИСКА НАЗНАЧЕННЫХ
@@ -241,12 +242,16 @@ getOfClients.addEventListener("submit", function (e) {
 getFilters.addEventListener("click", (event) => {
   const getClientByFilter = async (filterItem) => {
     await fetch(
-      `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
+      `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
+      // `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
     )
       .then(function (response) {
         return response.json();
       })
       .then(function (filterResult) {
+
+        console.log(filterResult);
+
         const clientsCode = document.getElementsByClassName("clientsCode");
         const labelSearch = document.getElementById(`label${filterItem}`);
         const commonResult = document.getElementsByClassName("commonResult");
@@ -267,7 +272,12 @@ getFilters.addEventListener("click", (event) => {
         let zeroList = [];
         let scoreChoiseClients = 0;
 
-        if (filterItem != "potenc" && filterItem != "accountLinked") {
+        if (filterItem != "potenc" 
+          && filterItem != "accountLinked"
+          && filterItem != "osonCanc"
+          && filterItem != "osonChos"
+          && filterItem != "osonProd"
+        ) {
           filterResult.map((el) => {
             Object.values(el) == 0
               ? zeroList.push(Object.keys(el).join())

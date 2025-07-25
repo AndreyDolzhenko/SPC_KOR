@@ -35,6 +35,7 @@ const header_tools = document.getElementById("header_tools");
 const fullCheck = document.getElementById("100%");
 const getEmployeesSchow = document.getElementById("getEmployeesSchow");
 const statusData = document.getElementById("statusData");
+const statusData_0 = document.getElementById("statusData_0");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -187,8 +188,8 @@ getActualDate();
 
 async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
-    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
 
   const customerSearch = await response.json();
@@ -212,6 +213,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   clientsName_0.innerText = data.clientsNames;
 
   statusData.innerHTML = `${data.status_1}&nbsp;&nbsp;${data.status_2}`;
+  statusData_0.innerHTML = `${data.status_1}&nbsp;&nbsp;${data.status_2}`;
 
   let colorDate = {};
 
@@ -253,6 +255,10 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : `<b style = "color: darkcyan;">`;
   colorDate.decreaseInFood =
     data.decreaseInFood != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
+  colorDate.osonCanc =
+    data.osonCanc == "Да!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
   colorDate.osonChos =
@@ -303,6 +309,17 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.basket = data.basket)
   }</b>
 	</li>
+
+<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonCanc"><label for="labelosonCanc"> ОЗОН(канц):</label>   
+	${colorDate.osonCanc}${data.osonCanc}</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonChos"><label for="labelosonChos"> ОЗОН(хоз):</label> 
+	${colorDate.osonChos}${data.osonChos}</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН(прод):</label>
+	${colorDate.osonProd}${data.osonProd}</b>
+	</li>
+
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInPurchases"><label for="labeldecreaseInPurchases" title="Процент снижения закупок Хозяйственных товаров 2025 к 2024"> ↓ Хоз:</label> 
 	${colorDate.decreaseInPurchases} 
 	${
@@ -327,6 +344,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.decreaseInPaper = data.decreaseInPaper)
   }</b>
 	</li>
+  
+<!--
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInChemistry"><label for="labeldecreaseInChemistry" title="Процент снижения закупок Бытовой химии 2025 к 2024"> ↓ Быт.химия:</label> 
 	${colorDate.decreaseInChemistry} 
 	${
@@ -335,6 +354,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.decreaseInChemistry = data.decreaseInChemistry)
   }</b>
 	</li>
+  
+  
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInParfum"><label for="labeldecreaseInParfum" title="Процент снижения закупок Косметики 2025 к 2024"> ↓ Косметика:</label> 
 	${colorDate.decreaseInParfum} 
 	${
@@ -343,6 +364,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.decreaseInParfum = data.decreaseInParfum)
   }</b>
 	</li>
+-->
+
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInFood"><label for="labeldecreaseInFood" title="Процент снижения закупок Продуктов питания 2025 к 2024"> ↓ Бакалея:</label> 
 	${colorDate.decreaseInFood} 
 	${
@@ -431,8 +454,9 @@ function fillInTheListOfScripts() {
       greetings.style.display = "none"; // убираем строку с приветствием
       document.getElementById("objections").style.display = "flex";
       preparation.style.display = "none"; // убираем блок подготовки к контакту
-      getFromOrder.style.display = "none";// убираем фильтры по клиентам
-      getOfClients.style.display = "none";// убираем фильтры по клиентам
+      getFromOrder.style.display = "none"; // убираем фильтры по клиентам
+      actionCall.style.display = "none"; // убираем фильтры по звонкам
+      getOfClients.style.display = "none"; // убираем фильтры по клиентам
       rightBar.style.display = "flex";
       previousElement.style.color = "currentcolor";
       event.target.style.color = "brown";

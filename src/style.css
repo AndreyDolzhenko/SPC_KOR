@@ -261,7 +261,7 @@ td {
 	justify-content: space-between;
 	position: relative;
 	border-right: solid 3px antiquewhite;
-	line-height: 2;
+	line-height: 1.5;
 	font-size: 18px;
 	font-style: italic;	
     overflow: auto;
@@ -563,7 +563,7 @@ li {
 	width: 80%;
 }
 
-#statusData {
+#statusData, #statusData_0 {
 	font-size: 14px;
     font-style: italic;
     color: darkcyan;
