@@ -37,20 +37,26 @@
           <div id="userData"></div>
         </div>
         <div class="header_right" id="header_right">
-          <span id="loader" class="loader">ОФИСМАГ</span>          
+          <span id="loader" class="loader">ОФИСМАГ</span>
           <div id="registration">
             <form
               id="wayToAdmin"
               action="./pages/adminPage.html"
               target="_blank"
-              style="display: inline;"
+              style="display: inline"
             >
-              <button class="adminButton" id="registration_button">Диалоги</button>    
+              <button class="adminButton" id="registration_button">
+                Диалоги
+              </button>
             </form>
             <!-- <button class="adminButton" id="getEmployeesSchow">Сотрудники</button> -->
-            <select name="employeesSchow" class="adminButton" id="getEmployeesSchow">
-                <option disabled selected>Имя сотрудника</option>
-              </select>
+            <select
+              name="employeesSchow"
+              class="adminButton"
+              id="getEmployeesSchow"
+            >
+              <option disabled selected>Имя сотрудника</option>
+            </select>
 
             <div id="updatePlace">
               update
@@ -160,6 +166,7 @@
               <div id="doNotMakeContactBlock"></div>
             </div>
             <ol id="contact-scripts"></ol>
+            <div id="preferBlock">
             <form
               id="getOfClients"
               action="./src/choiseOfClients.js"
@@ -187,9 +194,102 @@
               </select>
               <input type="submit" value="выбрать" />
             </form>
-            <div>
-              <button id="getFromOrder" class="ordersList">нет заказов Май-Июнь</button>
-              <button id="actionCall" class="ordersList">нет заказов Июнь</button>
+            
+              <table>
+                <colgroup>
+                  <col>
+                  <col>
+                </colgroup>
+                <tr>
+                  <td style="padding: 0">
+                    <button
+                      id="getFromOrder"
+                      class="ordersList"
+                      title="Нет заказов Май-Июнь"
+                    >
+                      Приоритет 1
+                    </button>
+                  </td>
+                  <td style="position: relative; padding: 0">
+                    <div
+                      class="preferPrompt"
+                    >
+                      Обратил(а) внимание, что Вы не делали заказы <b>в течение 2-х
+                      месяцев</b>. При этом у Вас накопилось более 500 рубликов.
+                      Кроме того, сейчас Вы можете получить карты ОЗОН номиналом
+                      от 1000 до 8000 рублей. Давайте я расскажу Вам подробнее
+                      об условиях получения!
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 0">
+                    <button
+                      id="actionCall"
+                      class="ordersList"
+                      title="Нет заказов Июнь"
+                    >
+                      Приоритет 2
+                    </button>
+                  </td>
+                  <td style="position: relative; padding: 0">
+                    <div class="preferPrompt">
+                      Обратил(а) внимание, что Вы не делали заказы <b>в течение месяца</b>. При этом у Вас накопилось более 500 рубликов.
+                      Кроме того, сейчас Вы можете получить карты ОЗОН номиналом
+                      от 1000 до 8000 рублей. Давайте я расскажу Вам подробнее
+                      об условиях получения!
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 0">
+                    <button
+                      id="actionCall"
+                      class="ordersList"
+                      title="Нет заказов Июнь"
+                    >
+                      Приоритет 3
+                    </button>
+                  </td>
+                  <td style="position: relative; padding: 0">
+                    <div class="preferPrompt">
+                      
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 0">
+                    <button
+                      id="actionCall"
+                      class="ordersList"
+                      title="Нет заказов Июнь"
+                    >
+                      Приоритет 4
+                    </button>
+                  </td>
+                  <td style="position: relative; padding: 0">
+                    <div class="preferPrompt">
+                      
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 0">
+                    <button
+                      id="actionCall"
+                      class="ordersList"
+                      title="Нет заказов Июнь"
+                    >
+                      Приоритет 5
+                    </button>
+                  </td>
+                  <td style="position: relative; padding: 0">
+                    <div class="preferPrompt">
+                      
+                    </div>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

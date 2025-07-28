@@ -36,6 +36,7 @@ const fullCheck = document.getElementById("100%");
 const getEmployeesSchow = document.getElementById("getEmployeesSchow");
 const statusData = document.getElementById("statusData");
 const statusData_0 = document.getElementById("statusData_0");
+const preferBlock = document.getElementById("preferBlock");
 
 const popupOpen = document.getElementById("popup1"); // поле попапа
 const textOutput = document.getElementById("popup1_txt"); // текстовое поле для попапа
@@ -188,8 +189,8 @@ getActualDate();
 
 async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
-    // `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
 
   const customerSearch = await response.json();
@@ -455,7 +456,7 @@ function fillInTheListOfScripts() {
       document.getElementById("objections").style.display = "flex";
       preparation.style.display = "none"; // убираем блок подготовки к контакту
       getFromOrder.style.display = "none"; // убираем фильтры по клиентам
-      actionCall.style.display = "none"; // убираем фильтры по звонкам
+      preferBlock.style.display = "none"; // убираем фильтры по звонкам
       getOfClients.style.display = "none"; // убираем фильтры по клиентам
       rightBar.style.display = "flex";
       previousElement.style.color = "currentcolor";
@@ -517,6 +518,7 @@ for (let index = 0; index < buttonPrep.length; index++) {
       preparationPlanBlock.append(elemPrep);
     });
     doNotMakeContactBlockId.innerHTML = doNotMakeContact[event.target.id];
+    preferBlock.style.display = "none";
   });
 }
 // строим блок с возражениями.

@@ -242,8 +242,8 @@ getOfClients.addEventListener("submit", function (e) {
 getFilters.addEventListener("click", (event) => {
   const getClientByFilter = async (filterItem) => {
     await fetch(
-      `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
-      // `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
+      // `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
+      `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
     )
       .then(function (response) {
         return response.json();
