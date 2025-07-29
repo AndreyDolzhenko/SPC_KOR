@@ -167,125 +167,116 @@
             </div>
             <ol id="contact-scripts"></ol>
             <div id="preferBlock">
-            <form
-              id="getOfClients"
-              action="./src/choiseOfClients.js"
-              method="get"
-            >
-              <select name="choiseStatus_001" id="choiseStatus_001">
-                <option disabled selected>Статус 1</option>
-                <option value="потенциальный_NEW">потенциальный NEW</option>
-                <option value="потенциальный_OLD">потенциальный OLD</option>
-                <option value="реальный_1">реальный 1</option>
-                <option value="реальный_NEW">реальный NEW</option>
-                <option value="реальный_OLD+">реальный OLD +</option>
-                <option value="реальный_OLD-">реальный OLD -</option>
-                <option value="потерянный_NEW">потерянный NEW</option>
-                <option value="потерянный_OLD">потерянный OLD</option>
-              </select>
-              <select name="choiseStatus_002" id="choiseStatus_002">
-                <option disabled selected>Статус 2</option>
-                <option value="Мелкий">мелкий</option>
-                <option value="Средний">средний</option>
-                <option value="Крупный">крупный</option>
-                <option value="VIP">vip</option>
-                <option value="Ключевой">ключевой</option>
-                <option value="Стратегический">стратегический</option>
-              </select>
-              <input type="submit" value="выбрать" />
-            </form>
-            
+              <form
+                id="getOfClients"
+                action="./src/choiseOfClients.js"
+                method="get"
+              >
+                <select name="choiseStatus_001" id="choiseStatus_001">
+                  <option disabled selected>Статус 1</option>
+                  <option value="потенциальный_NEW">потенциальный NEW</option>
+                  <option value="потенциальный_OLD">потенциальный OLD</option>
+                  <option value="реальный_1">реальный 1</option>
+                  <option value="реальный_NEW">реальный NEW</option>
+                  <option value="реальный_OLD+">реальный OLD +</option>
+                  <option value="реальный_OLD-">реальный OLD -</option>
+                  <option value="потерянный_NEW">потерянный NEW</option>
+                  <option value="потерянный_OLD">потерянный OLD</option>
+                </select>
+                <select name="choiseStatus_002" id="choiseStatus_002">
+                  <option disabled selected>Статус 2</option>
+                  <option value="Мелкий">мелкий</option>
+                  <option value="Средний">средний</option>
+                  <option value="Крупный">крупный</option>
+                  <option value="VIP">vip</option>
+                  <option value="Ключевой">ключевой</option>
+                  <option value="Стратегический">стратегический</option>
+                </select>
+                <input type="submit" value="выбрать" />
+              </form>
+
               <table>
                 <colgroup>
-                  <col>
-                  <col>
+                  <col />
+                  <col />
                 </colgroup>
                 <tr>
                   <td style="padding: 0">
                     <button
-                      id="getFromOrder"
+                      id="firstPriority"
                       class="ordersList"
-                      title="Нет заказов Май-Июнь"
+                      title="Не было заказа 2 последних месяца"
                     >
                       Приоритет 1
                     </button>
                   </td>
                   <td style="position: relative; padding: 0">
-                    <div
-                      class="preferPrompt"
-                    >
-                      Обратил(а) внимание, что Вы не делали заказы <b>в течение 2-х
-                      месяцев</b>. При этом у Вас накопилось более 500 рубликов.
-                      Кроме того, сейчас Вы можете получить карты ОЗОН номиналом
-                      от 1000 до 8000 рублей. Давайте я расскажу Вам подробнее
-                      об условиях получения!
+                    <div class="preferPrompt">
+                      Обратили внимание, что не закупа-ли у нас товары <b>2 последних месяца</b>. Подскажите, пожалуйста, где приобрели товары?
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 0">
                     <button
-                      id="actionCall"
+                      id="secondPriority"
                       class="ordersList"
-                      title="Нет заказов Июнь"
+                      title="Не было заказа последний месяц"
                     >
                       Приоритет 2
                     </button>
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      Обратил(а) внимание, что Вы не делали заказы <b>в течение месяца</b>. При этом у Вас накопилось более 500 рубликов.
-                      Кроме того, сейчас Вы можете получить карты ОЗОН номиналом
-                      от 1000 до 8000 рублей. Давайте я расскажу Вам подробнее
-                      об условиях получения!
+                      Обратили внимание, что не было заказа <b>в прошлом месяце</b>. Подскажите, где приобрели товары?
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 0">
                     <button
-                      id="actionCall"
+                      id="thirdPriority"
                       class="ordersList"
-                      title="Нет заказов Июнь"
+                      title="Доля бумаги> 50 % от ВО за 6 месяцев"
                     >
                       Приоритет 3
                     </button>
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      
+                      Обратили внимание на то, что не закупаете у нас основные группы товаров <b>(товары для офиса, хозяйственные, бакалея)</b>. Подскажите, где приобретаете?
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 0">
                     <button
-                      id="actionCall"
+                      id="fourthPriority"
                       class="ordersList"
-                      title="Нет заказов Июнь"
+                      title="Сокращение отгрузок более 30% от месяца к месяцу"
                     >
                       Приоритет 4
                     </button>
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      
+                      Обратили внимание, что <b>ранее приобретали товары на сумму...</b>, в этом месяце сумма заказа составила … Подскажите, с чем связано?
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 0">
                     <button
-                      id="actionCall"
+                      id="fifthPriority"
                       class="ordersList"
-                      title="Нет заказов Июнь"
+                      title="Реальные по остаточному принципу с целью получения заказа"
                     >
                       Приоритет 5
                     </button>
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      
+                      В соответствии со сценарием контакта СПК.
                     </div>
                   </td>
                 </tr>

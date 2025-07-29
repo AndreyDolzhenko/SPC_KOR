@@ -455,9 +455,9 @@ function fillInTheListOfScripts() {
       greetings.style.display = "none"; // убираем строку с приветствием
       document.getElementById("objections").style.display = "flex";
       preparation.style.display = "none"; // убираем блок подготовки к контакту
-      getFromOrder.style.display = "none"; // убираем фильтры по клиентам
+      // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
       preferBlock.style.display = "none"; // убираем фильтры по звонкам
-      getOfClients.style.display = "none"; // убираем фильтры по клиентам
+      getOfClients.style.display = "none"; // убираем фильтры по клиентам      
       rightBar.style.display = "flex";
       previousElement.style.color = "currentcolor";
       event.target.style.color = "brown";

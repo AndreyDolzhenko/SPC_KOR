@@ -8,6 +8,7 @@ const header_tools_left = document.getElementsByClassName("header_tools_left");
 const listOfStatuisScenar = document.getElementById("listOfStatuisScenar");
 const getFromOrder = document.getElementById("getFromOrder");
 const actionCall = document.getElementById("actionCall");
+
 const ordersList = document.getElementsByClassName("ordersList");
 
 // функция для получения клиентов из СПИСКА НАЗНАЧЕННЫХ
