@@ -278,6 +278,7 @@ getFilters.addEventListener("click", (event) => {
           && filterItem != "osonCanc"
           && filterItem != "osonChos"
           && filterItem != "osonProd"
+          && filterItem != "snow"
         ) {
           filterResult.map((el) => {
             Object.values(el) == 0

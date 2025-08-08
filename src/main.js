@@ -270,6 +270,10 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.osonProd == "Да!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
+      colorDate.snow =
+    data.snow == "Да!"
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
   colorDate.potencChecing =
     data.potencChecing == "Не указан!"
       ? `<b style = "color: brown;">`
@@ -319,6 +323,10 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН(прод):</label>
 	${colorDate.osonProd}${data.osonProd}</b>
+	</li>
+
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelsnow"><label for="labelsnow" title = 'Потенциальный участник акции по бумаге "Снегурочка"'> Снегурочка:</label>
+	${colorDate.snow}${data.snow}</b>
 	</li>
 
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInPurchases"><label for="labeldecreaseInPurchases" title="Процент снижения закупок Хозяйственных товаров 2025 к 2024"> ↓ Хоз:</label> 
