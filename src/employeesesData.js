@@ -83,6 +83,7 @@ const searchTeam = document.getElementById("searchTeam");
 const dataOfManager = async (manager) => {
   let response = await fetch(    
     `http://91.236.199.173:3001/api/v1/manager?manager=${manager}`
+    // `http://89.111.172.208:3001/api/v1/manager?manager=${manager}`
   );
 
   let res = await response.json();
@@ -102,6 +103,7 @@ searchTeam.addEventListener("click", (event) => {
     const nextEmployee = async (manager) => {
       let response = await fetch(        
         `http://91.236.199.173:3001/api/v1/manager?manager=${manager}`
+        // `http://89.111.172.208:3001/api/v1/manager?manager=${manager}`
       );
 
       let teamEmployee = await response.json();

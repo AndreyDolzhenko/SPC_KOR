@@ -174,6 +174,7 @@ async function getActualDate() {
   let response = await fetch(
     `http://91.236.199.173:${3001}/api/v1/date`
     // `http://127.0.0.1:3001/api/v1/date`
+    // `http://89.111.172.208:3001/api/v1/date`
   );
 
   searchDate = await response.json();
@@ -191,6 +192,7 @@ async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
     `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
     // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    // `http://89.111.172.208:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
 
   const customerSearch = await response.json();
@@ -208,7 +210,7 @@ async function getDataOfCustomers(codeOfCustomer) {
 // Создание переменной с данными для чек-бокса по клиенту
 
 const commonResultOfChecking = (data, codeOfCustomer) => {
-  // console.log(data);
+  console.log(data);
 
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
@@ -278,8 +280,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.potencChecing == "Не указан!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-  colorDate.accountLinked =
-    data.accountLinked == "Не привязана!"
+  colorDate.lastActivityOfCustomer =
+    data.lastActivityOfCustomer == "Не привязан!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
 
@@ -315,13 +317,13 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   }</b>
 	</li>
 
-<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonCanc"><label for="labelosonCanc"> ОЗОН(канц):</label>   
+<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonCanc"><label for="labelosonCanc"> ОЗОН (канц):</label>   
 	${colorDate.osonCanc}${data.osonCanc}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonChos"><label for="labelosonChos"> ОЗОН(хоз):</label> 
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonChos"><label for="labelosonChos"> ОЗОН (хоз):</label> 
 	${colorDate.osonChos}${data.osonChos}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН(прод):</label>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН (прод):</label>
 	${colorDate.osonProd}${data.osonProd}</b>
 	</li>
 
@@ -386,8 +388,8 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 
 	${colorDate.potencChecing}${data.potencChecing}</b>
 	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelaccountLinked"><label for="labelaccountLinked"> Учётная запись клиента</label>
-	${colorDate.accountLinked}${data.accountLinked}</b>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labellastActivityOfCustomer"><label for="labellastActivityOfCustomer"> Посещение ИМ:</label>
+	${colorDate.lastActivityOfCustomer}${data.lastActivityOfCustomer}</b>
 	</li>
 	`;
   // console.log(data.decreaseInOffice);
@@ -783,6 +785,7 @@ listScript.addEventListener("click", function (event) {
     await fetch(
       `http://91.236.199.173:${PORT}/api/v1/dialogues`,
       // `http://127.0.0.1:3001/api/v1/dialogues`,
+      // `http://89.111.172.208:3001/api/v1/dialogues`,
       {
         method: "POST",
         headers: {
@@ -858,6 +861,7 @@ async function getDataOfEmployee(person) {
   let response = await fetch(
     `http://91.236.199.173:3001/api/v1/employee?person=${person}`
     // `http://127.0.0.1:3001/api/v1/employee?person=${person}`
+    // `http://89.111.172.208:3001/api/v1/employee?person=${person}`
   );
 
   const employeeSearch = await response.json();
@@ -952,6 +956,7 @@ const allEmployees = async () => {
   let response = await fetch(
     `http://91.236.199.173:3001/api/v1/employees`
     // `http://127.0.0.1:3001/api/v1/employees`
+    // `http://89.111.172.208:3001/api/v1/employees`
   );
 
   let res = await response.json();

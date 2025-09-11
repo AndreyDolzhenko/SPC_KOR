@@ -25,6 +25,10 @@ const ordersToEmployee = async (employeeName, orderType) => {
     //   employeeName,
     //   orderType,
     // ]}`
+    // `http://89.111.172.208:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${[
+    //   employeeName,
+    //   orderType,
+    // ]}`
   )
     .then(function (response) {
       return response.json();
@@ -147,6 +151,11 @@ getOfClients.addEventListener("submit", function (e) {
         clientsConditions.status_1,
         clientsConditions.status_2,
       ]}`
+      // `http://89.111.172.208:3001/api/v1/getOfClients?getOfClients=${[
+      //   clientsConditions.operatorSName,
+      //   clientsConditions.status_1,
+      //   clientsConditions.status_2,
+      // ]}`
     )
       .then(function (response) {
         return response.json();
@@ -245,6 +254,7 @@ getFilters.addEventListener("click", (event) => {
     await fetch(
       // `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
       `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
+      // `http://89.111.172.208:3001/api/v1/filterItem?filterItem=${filterItem}`
     )
       .then(function (response) {
         return response.json();
