@@ -29,6 +29,7 @@ const progress_bar_color = document.getElementById("progress_bar_color");
 let now_status = "SMB"; // переменная определяет выбранный подканал сбыта
 const loader = document.getElementById("loader");
 const many = document.getElementById("many");
+const heart = document.getElementById("heart");
 const userLink = document.getElementById("userLink");
 const registration = document.getElementById("registration");
 const header_tools = document.getElementById("header_tools");
@@ -492,6 +493,7 @@ enterName.addEventListener("keyup", function (event) {
 btnBarSubDivision.addEventListener("click", function (event) {
   loader.style = "display: inline-block;";
   many.style.display = "none";
+  heart.style.display = "block";
   progress.style.float = "inherit";
   now_status = event.target.value;
 
@@ -663,6 +665,7 @@ listScript.addEventListener("click", function (event) {
       progress_bar_span.innerHTML = `${x}%`;
       progress_bar_color.style = `width: ${x}%;`;
       many.style = "display: block; position: absolute; right: -50px;";
+      heart.style.display = "none";
     } else {
       const includesOfScript = contactScripts.querySelectorAll("li");
       for (let elem of includesOfScript) {
@@ -674,6 +677,7 @@ listScript.addEventListener("click", function (event) {
       progress_bar_span.innerHTML = `${x}%`;
       progress_bar_color.style = `width: ${x}%;`;
       many.style.display = "none";
+      heart.style.display = "block";
     }
     // console.log(dialogueStructure);
   });
@@ -693,6 +697,7 @@ listScript.addEventListener("click", function (event) {
     contactScripts.innerHTML = "";
     contactScripts.style.display = "block";
     many.style.display = "none";
+    heart.style.display = "block";
     dialogueStructure = {};
     fullCheck.checked = false;
     // console.log("check");
@@ -744,9 +749,11 @@ listScript.addEventListener("click", function (event) {
           progress_bar_color.style = `width: ${x}%;`;
           if (x > 70) {
             many.style = "display: block; position: absolute; right: -50px;";
+            heart.style.display = "none";
             progress.style.float = "Left";
           } else {
             many.style.display = "none";
+            heart.style.display = "block";
             progress.style.float = "inherit";
           }
           // console.log(x);

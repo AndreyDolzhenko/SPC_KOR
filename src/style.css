@@ -382,7 +382,7 @@ td {
   height: 100%;
   position: fixed;
   left: 0;
-  z-index: 1;
+  z-index: 3;
   opacity: 0;
   visibility: hidden;
   background-color: rgba(169, 169, 169, 0.8);
@@ -396,7 +396,7 @@ td {
   font-size: 18px;
   /*background-color: rgba(255, 160, 122, 0.8);*/
   border-radius: 15px;
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   opacity: 0;
   visibility: hidden;
@@ -562,7 +562,7 @@ li {
   fill: linear-gradient(45deg, black, transparent);
   cursor: pointer;
   position: absolute;
-  z-index: 4;
+  z-index: 2;
 }
 
 #contact-scripts {
@@ -677,12 +677,28 @@ li {
   }
 }
 
+textarea { 
+  resize: none;
+}
+
+.inputContact {
+  font-size: 14px;
+}
+
+.inputContact:focus {
+  width: 500px; 
+  height: 50px;
+}
+
 /* heart */
 
 #heart {
-  position: relative;
+  position: absolute;
+  left: 260px;
+  top: 20px;
   width: 40px;
   height: 60px;
+  cursor: pointer;
   animation: heartBeat 3s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
@@ -760,7 +776,7 @@ li {
 }
 
 #contactRelise {
-  z-index: 3;
+  z-index: 5;
   visibility: visible;
   position: absolute;
   flex-direction: column;

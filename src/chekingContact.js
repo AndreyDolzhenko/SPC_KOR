@@ -2,26 +2,47 @@ const contactRelise = document.getElementById("contactRelise");
 const contactClose = document.getElementById("contactClose");
 const contactIncluding = document.getElementById("contactIncluding");
 const basicDiv = document.createElement("form");
+const basicContent = document.createElement("div");
+
+// basicDiv.onfocus.style = "width: 500px";
+
+many.addEventListener("click", () => contactOperations());
+
+heart.addEventListener("click", () => contactOperations());
+
+let clickTime = 0;
 
 contactClose.addEventListener("click", (event) => {
   contactRelise.style.display = "none";
 });
 
-many.addEventListener("click", (event) => {
-  popup1_txt.innerHTML = `<u>Содержание документа Контакт:</u>`;
+const contactOperations = () => {
 
-  contactTempt.map((el) => {
-    const p = document.createElement("p");
-    p.textContent = Object.keys(el);
+  if (clickTime == 0) {
+    popup1_txt.innerHTML = `<u>Содержание документа Контакт:</u>`;
+  
+    contactTempt.map((el, index) => {
+      const p = document.createElement("p");
+      p.textContent = Object.keys(el);
+  
+      const input = document.createElement("textarea");
+      input.type = "textarea";
+      input.name = "textarea";
+      input.setAttribute("rows", 1);
+      input.setAttribute("cols", 50);
+      input.className = "inputContact";     
+      
+      basicDiv.append(p);
+      basicDiv.append(input);
+    });
+  
+    basicContent.append(basicDiv);
 
-    const input = document.createElement("input");
-    input.type = "text";
+    clickTime++;
+    
+  }
 
-    basicDiv.append(p);
-    basicDiv.append(input);
-  });
-
-  popup1_txt.append(basicDiv);
+  popup1_txt.append(basicContent);
 
   const button = document.createElement("button");
   button.textContent = "Сохранить";
@@ -33,28 +54,9 @@ many.addEventListener("click", (event) => {
       index % 2 == 0
         ? contactArray.push(basicDiv.children[index].innerText)
         : contactArray.push(basicDiv.children[index].value);
-    }
+    }   
 
-    
-
-    // contactArray.map((el, index) => {       
-        
-       
-    //   const span = document.createElement("span");
-    //   span.innerText = el;
-    //   contactIncluding.append(span);
-        
-    //   if (index % 2 != 0) { 
-        
-    //     const br = document.createElement("br");
-    //     contactIncluding.append(br);
-    //     span.style.color = "blue";
-        
-    //   }
-
-    // });
-
-    // Группируем пункты документа Контакт
+    // Группируем пункты документа Контакт по парам
 
     let lastArray = [];
     let arr = [];
@@ -76,9 +78,7 @@ many.addEventListener("click", (event) => {
         lastArray.push(arr);
         arr = [];
         arr.push(el);
-       }
-
-       
+       }       
     });
 
     console.log(lastArray);
@@ -111,4 +111,6 @@ many.addEventListener("click", (event) => {
   popup1_txt.append(button);
 
   popupOperation();
-});
+}
+
+
