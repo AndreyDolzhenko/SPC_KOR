@@ -261,6 +261,10 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.decreaseInFood != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
+      colorDate.decreaseInOrgtech =
+    data.decreaseInOrgtech != "Нет."
+      ? `<b style = "color: brown;">`
+      : `<b style = "color: darkcyan;">`;
   colorDate.osonCanc =
     data.osonCanc == "Да!"
       ? `<b style = "color: brown;">`
@@ -357,7 +361,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
   }</b>
 	</li>
   
-<!--
+
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInChemistry"><label for="labeldecreaseInChemistry" title="Процент снижения закупок Бытовой химии 2025 к 2024"> ↓ Быт.химия:</label> 
 	${colorDate.decreaseInChemistry} 
 	${
@@ -376,7 +380,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       : (data.decreaseInParfum = data.decreaseInParfum)
   }</b>
 	</li>
--->
+
 
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInFood"><label for="labeldecreaseInFood" title="Процент снижения закупок Продуктов питания 2025 к 2024"> ↓ Бакалея:</label> 
 	${colorDate.decreaseInFood} 
@@ -384,6 +388,15 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     typeof data.decreaseInFood == "number"
       ? (data.decreaseInFood = data.decreaseInFood.toFixed(2) + "%")
       : (data.decreaseInFood = data.decreaseInFood)
+  }</b>
+	</li>
+
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInOrgtech"><label for="labeldecreaseInOrgtech" title="Процент снижения закупок Оргтехники 2025 к 2024"> ↓ Оргтехника:</label> 
+	${colorDate.decreaseInOrgtech} 
+	${
+    typeof data.decreaseInOrgtech == "number"
+      ? (data.decreaseInOrgtech = data.decreaseInOrgtech.toFixed(2) + "%")
+      : (data.decreaseInOrgtech = data.decreaseInOrgtech)
   }</b>
 	</li>
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelpotenc"><label for="labelpotenc"> Потенциал:</label> 

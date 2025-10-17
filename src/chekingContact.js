@@ -91,10 +91,8 @@ const contactOperations = () => {
             span.innerText = el;
             p.append(span);
               
-            if (index % 2 != 0) { 
-              
-            //   const br = document.createElement("br");
-            //   p.append(br);
+            if (index % 2 != 0) {               
+           
               span.style.color = "blue";
               
             }
