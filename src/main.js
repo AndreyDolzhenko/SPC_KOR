@@ -261,7 +261,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.decreaseInFood != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.decreaseInOrgtech =
+  colorDate.decreaseInOrgtech =
     data.decreaseInOrgtech != "Нет."
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
@@ -277,7 +277,7 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
     data.osonProd == "Да!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
-      colorDate.snow =
+  colorDate.snow =
     data.snow == "Да!"
       ? `<b style = "color: brown;">`
       : `<b style = "color: darkcyan;">`;
@@ -320,20 +320,6 @@ const commonResultOfChecking = (data, codeOfCustomer) => {
       ? (data.basket = data.basket.toFixed(2))
       : (data.basket = data.basket)
   }</b>
-	</li>
-
-<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonCanc"><label for="labelosonCanc"> ОЗОН (канц):</label>   
-	${colorDate.osonCanc}${data.osonCanc}</b>
-	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonChos"><label for="labelosonChos"> ОЗОН (хоз):</label> 
-	${colorDate.osonChos}${data.osonChos}</b>
-	</li>
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН (прод):</label>
-	${colorDate.osonProd}${data.osonProd}</b>
-	</li>
-
-  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelsnow"><label for="labelsnow" title = 'Потенциальный участник акции по бумаге "Снегурочка"'> Снегурочка:</label>
-	${colorDate.snow}${data.snow}</b>
 	</li>
 
   <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labeldecreaseInPurchases"><label for="labeldecreaseInPurchases" title="Процент снижения закупок Хозяйственных товаров 2025 к 2024"> ↓ Хоз:</label> 
@@ -481,7 +467,7 @@ function fillInTheListOfScripts() {
       preparation.style.display = "none"; // убираем блок подготовки к контакту
       // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
       preferBlock.style.display = "none"; // убираем фильтры по звонкам
-      getOfClients.style.display = "none"; // убираем фильтры по клиентам      
+      getOfClients.style.display = "none"; // убираем фильтры по клиентам
       rightBar.style.display = "flex";
       previousElement.style.color = "currentcolor";
       event.target.style.color = "brown";
@@ -713,8 +699,6 @@ listScript.addEventListener("click", function (event) {
     heart.style.display = "block";
     dialogueStructure = {};
     fullCheck.checked = false;
-    // console.log("check");
-    // console.log(dialogueStructure);
 
     if (content.style.justifyContent != "space-between") {
       content.style.justifyContent = "space-between";
@@ -726,54 +710,169 @@ listScript.addEventListener("click", function (event) {
       ] != undefined
     ) {
       let liId = 0;
-      for (scriptPoint of subDivisionAndstatusScripts[keySubDivision][
-        "status-scripts"
-      ][event.target.id]) {
-        const newLiScript = document.createElement("li");
-        // присваиваем Id каждому пункту скрипта
-        newLiScript.id = liId;
-        // dialogueStructure[clientStatusForSend] = newLiScript.id;
-        dialogueStructure[newLiScript.id] = "-";
-        newLiScript.innerHTML =
-          i % 2 == 0
-            ? `<b>${clientName}, </b>` + scriptPoint
-            : scriptPoint[0].toUpperCase() + scriptPoint.slice(1);
-        contactScripts.append(newLiScript);
 
-        i++;
+      /// ВЫВОД скрипта из БАЗЫ
 
-        // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
+      console.log("ВЫВОД скрипта из БАЗЫ");
 
-        newLiScript.addEventListener("click", function (event) {
-          fullCheck.checked = false;
-          if (newLiScript.style.color != "tomato") {
-            progress_bar_span.innerHTML = `${Math.round(
-              (x += progress_counter)
-            )}%`;
-            newLiScript.style.color = "tomato";
-            dialogueStructure[newLiScript.id] = "+";
-          } else {
-            progress_bar_span.innerHTML = `${Math.round(
-              (x -= progress_counter)
-            )}%`;
-            newLiScript.style.color = "black";
+      const getDataFromBack = {
+        status_name: event.target.innerText,
+        channel_name: keySubDivision,
+        priority: 1,
+      };
+
+      const getScriptsByParams = async (filters = {}) => {
+        try {
+          // Создаем query строку из фильтров
+          const queryParams = new URLSearchParams();
+
+          // Добавляем только те параметры, которые есть в filters
+          if (filters.status_name)
+            queryParams.append("status_name", filters.status_name);
+          if (filters.channel_name)
+            queryParams.append("channel_name", filters.channel_name);
+          if (filters.priority)
+            queryParams.append("priority", filters.priority);
+          if (filters.order) queryParams.append("order", filters.order);
+
+          const queryString = queryParams.toString();
+          const url = queryString
+            ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            : "/api/scripts";
+
+          console.log("Fetching from URL:", url);
+
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const scripts = await response.json();
+          scripts.forEach((element) => {
+            // console.log(element.content);
+          });
+
+          scripts.forEach((el) => {
+            console.log("keySubDivision - ", event.target.innerText);
+            // console.log("subDivisionAndstatusScripts - ", subDivisionAndstatusScripts);
+            const newLiScript = document.createElement("li");
+            // присваиваем Id каждому пункту скрипта
+            newLiScript.id = liId;
+            // dialogueStructure[clientStatusForSend] = newLiScript.id;
             dialogueStructure[newLiScript.id] = "-";
-          }
-          progress_bar_color.style = `width: ${x}%;`;
-          if (x > 70) {
-            many.style = "display: block; position: absolute; right: -50px;";
-            heart.style.display = "none";
-            progress.style.float = "Left";
-          } else {
-            many.style.display = "none";
-            heart.style.display = "block";
-            progress.style.float = "inherit";
-          }
-          // console.log(x);
-        });
+            newLiScript.innerHTML =
+              i % 2 == 0
+                ? `<b>${clientName}, </b>` + el.content
+                : el.content[0].toUpperCase() + el.content.slice(1);
+            contactScripts.append(newLiScript);
 
-        liId++; // увеличиваем Id на единицу
-      }
+            i++;
+
+            // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
+
+            newLiScript.addEventListener("click", function (event) {
+              fullCheck.checked = false;
+              if (newLiScript.style.color != "tomato") {
+                progress_bar_span.innerHTML = `${Math.round(
+                  (x += progress_counter)
+                )}%`;
+                newLiScript.style.color = "tomato";
+                dialogueStructure[newLiScript.id] = "+";
+              } else {
+                progress_bar_span.innerHTML = `${Math.round(
+                  (x -= progress_counter)
+                )}%`;
+                newLiScript.style.color = "black";
+                dialogueStructure[newLiScript.id] = "-";
+              }
+              progress_bar_color.style = `width: ${x}%;`;
+              if (x > 70) {
+                many.style =
+                  "display: block; position: absolute; right: -50px;";
+                heart.style.display = "none";
+                progress.style.float = "Left";
+              } else {
+                many.style.display = "none";
+                heart.style.display = "block";
+                progress.style.float = "inherit";
+              }
+              // console.log(x);
+            });
+
+            liId++; // увеличиваем Id на единицу
+          });
+
+          progress_counter = 100 / contactScripts.children.length;
+
+          // console.log(
+          //   "contactScripts.children.length - ",
+          //   contactScripts.children.length
+          // );
+
+          return scripts;
+        } catch (error) {
+          console.error("Ошибка при получении скриптов:", error);
+          return [];
+        }
+      };
+
+      getScriptsByParams(getDataFromBack);
+
+      /// НАЧАЛО вывода СКРИПТА
+      // for (scriptPoint of subDivisionAndstatusScripts[keySubDivision][
+      //   "status-scripts"
+      // ][event.target.id]) {
+      //   // console.log("keySubDivision - ", keySubDivision);
+      //   // console.log("subDivisionAndstatusScripts - ", subDivisionAndstatusScripts);
+      //   const newLiScript = document.createElement("li");
+      //   // присваиваем Id каждому пункту скрипта
+      //   newLiScript.id = liId;
+      //   // dialogueStructure[clientStatusForSend] = newLiScript.id;
+      //   dialogueStructure[newLiScript.id] = "-";
+      //   newLiScript.innerHTML =
+      //     i % 2 == 0
+      //       ? `<b>${clientName}, </b>` + scriptPoint
+      //       : scriptPoint[0].toUpperCase() + scriptPoint.slice(1);
+      //   contactScripts.append(newLiScript);
+
+      //   i++;
+
+      //   // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
+
+      //   newLiScript.addEventListener("click", function (event) {
+      //     fullCheck.checked = false;
+      //     if (newLiScript.style.color != "tomato") {
+      //       progress_bar_span.innerHTML = `${Math.round(
+      //         (x += progress_counter)
+      //       )}%`;
+      //       newLiScript.style.color = "tomato";
+      //       dialogueStructure[newLiScript.id] = "+";
+      //     } else {
+      //       progress_bar_span.innerHTML = `${Math.round(
+      //         (x -= progress_counter)
+      //       )}%`;
+      //       newLiScript.style.color = "black";
+      //       dialogueStructure[newLiScript.id] = "-";
+      //     }
+      //     progress_bar_color.style = `width: ${x}%;`;
+      //     if (x > 70) {
+      //       many.style = "display: block; position: absolute; right: -50px;";
+      //       heart.style.display = "none";
+      //       progress.style.float = "Left";
+      //     } else {
+      //       many.style.display = "none";
+      //       heart.style.display = "block";
+      //       progress.style.float = "inherit";
+      //     }
+      //     // console.log(x);
+      //   });
+
+      //   liId++; // увеличиваем Id на единицу
+      // }
+
+      /// ОКОНЧАНИЕ вывода СКРИПТА
+
       //if(){
       // ВЫВОД КНОПОК ПРЕЗЕНТАЦИИ
       for (presentationsUrgentScript of urgentScripts.children) {
@@ -796,7 +895,9 @@ listScript.addEventListener("click", function (event) {
     const employeeName = document.getElementById("employeeName");
     employeeName.innerText = userData.firstChild.textContent.split(" ")[1];
   }
-  progress_counter = 100 / contactScripts.children.length;
+  // progress_counter = 100 / contactScripts.children.length;
+
+  // console.log("contactScripts.children.length - ", contactScripts.children.length);
 
   // ОТПРАВКА РЕЗУЛЬТАТОВ
 
@@ -996,3 +1097,22 @@ const allEmployees = async () => {
     userData.firstChild.textContent = getEmployeesSchow.value;
   });
 };
+
+/*
+
+ОЗОН + Снегурочка из строки 324
+
+<li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonCanc"><label for="labelosonCanc"> ОЗОН (канц):</label>   
+	${colorDate.osonCanc}${data.osonCanc}</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonChos"><label for="labelosonChos"> ОЗОН (хоз):</label> 
+	${colorDate.osonChos}${data.osonChos}</b>
+	</li>
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelosonProd"><label for="labelosonProd"> ОЗОН (прод):</label>
+	${colorDate.osonProd}${data.osonProd}</b>
+	</li>
+
+  <li class = "commonResult"> <input type="checkbox" class = "checkbox" id="labelsnow"><label for="labelsnow" title = 'Потенциальный участник акции по бумаге "Снегурочка"'> Снегурочка:</label>
+	${colorDate.snow}${data.snow}</b>
+	</li>
+  */
