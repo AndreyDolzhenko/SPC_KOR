@@ -834,3 +834,15 @@ textarea {
   pointer-events: none;
   display: none;
 }
+
+#scenaryOfPriority {
+  font-size: 0.8em;
+  color: cadetblue;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#scenaryOfPriority span:hover {
+  text-decoration: underline;
+  color: brown;
+}
