@@ -21,6 +21,11 @@ const ObjClientStatus={
 	'status__16':'Звонок о встрече',
 	'status__17':'Звонок по КП',
 	'status__18':'Дебиторка',
+	'status__851': 'Приоритет 1',
+	'status__852': 'Приоритет 2',
+	'status__853': 'Приоритет 3',
+	'status__854': 'Приоритет 4',
+	'status__855': 'Приоритет 5',
 };
 
 const preparationPlan={

@@ -287,6 +287,7 @@ sentSelect.addEventListener("click", (event) => {
       sentParams[formSelect[index].id] = formSelect[index].value;
     }
 
+    // console.log("sentParams - ", sentParams);
     fetch(
       `http://91.236.199.173:${PORT}/api/v1/dialogues/params?params[${
         Object.keys(sentParams)[0]
@@ -307,6 +308,7 @@ sentSelect.addEventListener("click", (event) => {
           ? (errStatus.innerText = "")
           : (errStatus.innerText = "Данные НЕ найдены!");
 
+         console.log("data - ", data);
         buildingTable(data);
       })
       .catch((err) => {
@@ -437,18 +439,20 @@ const buildingTable = (data) => {
     const conversation = document.createElement("ol");
     conversation.className = "conversation";
 
-    Object.values(
-      subDivisionAndstatusScripts[el.subDiv]["status-scripts"][keyStatus]
-    ).map((el, index) => {
-      const oneSpeach = document.createElement("li");
-      oneSpeach.style.marginLeft = "20px";
-      oneSpeach.className = dataLiId[index];
-      oneSpeach.className == "+"
-        ? (oneSpeach.style.color = "blue")
-        : (oneSpeach.style.color = "red");
-      oneSpeach.innerHTML = el;
-      conversation.append(oneSpeach);
-    });
+    // Object.values(
+    //   subDivisionAndstatusScripts[el.subDiv]["status-scripts"][keyStatus]
+    // ).map((el, index) => {
+    //   const oneSpeach = document.createElement("li");
+    //   oneSpeach.style.marginLeft = "20px";
+    //   oneSpeach.className = dataLiId[index];
+    //   oneSpeach.className == "+"
+    //     ? (oneSpeach.style.color = "blue")
+    //     : (oneSpeach.style.color = "red");
+    //   oneSpeach.innerHTML = el;
+    //   conversation.append(oneSpeach);
+    // });
+
+    
     // const lineOfText = document.createElement("tr");
     conversation.style.display = "none";
     // lineOfText.append(conversation);

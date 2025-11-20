@@ -16,6 +16,10 @@ prioritiesChildren.forEach((el) => {
     previousElement = event.target;
     scenaryOfPriority.style.display = "none";
 
+    clientName = enterName.value;
+
+    console.log("clientName - ", clientName);
+
     getAnyScripts(event);
   });
 });
@@ -93,7 +97,6 @@ const getAnyScripts = function (event) {
   header_tools.style = "display: flex";
 
   let x = 0; // переменная для процента выполнения скрипта
-  // console.log(dialogueStructure);
 
   // 100% checking
 
@@ -101,7 +104,6 @@ const getAnyScripts = function (event) {
     if (contactScripts.innerHTML != "" && fullCheck.checked == true) {
       const includesOfScript = contactScripts.querySelectorAll("li");
       for (let elem of includesOfScript) {
-        // console.log(elem);
         elem.style.color = "tomato";
         dialogueStructure[elem.id] = "+";
       }
@@ -113,7 +115,6 @@ const getAnyScripts = function (event) {
     } else {
       const includesOfScript = contactScripts.querySelectorAll("li");
       for (let elem of includesOfScript) {
-        // console.log(elem);
         elem.style.color = "black";
         dialogueStructure[elem.id] = "-";
       }
@@ -123,7 +124,6 @@ const getAnyScripts = function (event) {
       many.style.display = "none";
       heart.style.display = "block";
     }
-    // console.log(dialogueStructure);
   });
 
   progress_bar_span.innerHTML = `${x}%`;
@@ -136,7 +136,6 @@ const getAnyScripts = function (event) {
 
   // Вывод скрипта на экран
   if (event.target.id != "list_script") {
-    console.log("event.target.id - ", event.target.id);
     //ОБНУЛЯЕМ ВСЕ ПАРАМЕТРЫ ПРЕДЫДУЩЕГО СКРИПТА
 
     contactScripts.innerHTML = "";
@@ -159,11 +158,11 @@ const getAnyScripts = function (event) {
 
     /// ВЫВОД скрипта из БАЗЫ
 
-    console.log("ВЫВОД скрипта из БАЗЫ");
+    // console.log("ВЫВОД скрипта из БАЗЫ");
 
-    console.log("keySubDivision - ", keySubDivision);
+    // console.log("keySubDivision - ", keySubDivision);
 
-    console.log("event.target.innerText - ", event.target.innerText);
+    // console.log("event.target.innerText - ", event.target.innerText);
 
     const getDataFromBack = {
       status_name: event.target.innerText,
@@ -186,11 +185,11 @@ const getAnyScripts = function (event) {
 
         const queryString = queryParams.toString();
         const url = queryString
-          ? // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
-            `http://localhost:3008/api/scripts?${queryString}`
-          : "/api/scripts";
+          ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+          : // ?  `http://localhost:3008/api/scripts?${queryString}`
+            "/api/scripts";
 
-        console.log("Fetching from URL:", url);
+        // console.log("Fetching from URL:", url);
 
         const response = await fetch(url);
 
@@ -204,7 +203,7 @@ const getAnyScripts = function (event) {
         });
 
         scripts.forEach((el) => {
-          console.log("keySubDivision - ", event.target.innerText);
+          // console.log("keySubDivision - ", event.target.innerText);
           // console.log("subDivisionAndstatusScripts - ", subDivisionAndstatusScripts);
           const newLiScript = document.createElement("li");
           // присваиваем Id каждому пункту скрипта
@@ -246,7 +245,6 @@ const getAnyScripts = function (event) {
               heart.style.display = "block";
               progress.style.float = "inherit";
             }
-            // console.log(x);
           });
 
           liId++; // увеличиваем Id на единицу
@@ -254,12 +252,10 @@ const getAnyScripts = function (event) {
 
         progress_counter = 100 / contactScripts.children.length;
 
-        // console.log(
-        //   "contactScripts.children.length - ",
-        //   contactScripts.children.length
-        // );
+        const employeeName = document.getElementById("employeeName");
+        employeeName.innerText = userData.firstChild.textContent.split(" ")[1];
 
-        return scripts;
+        // return scripts;
       } catch (error) {
         console.error("Ошибка при получении скриптов:", error);
         return [];
@@ -267,15 +263,116 @@ const getAnyScripts = function (event) {
     };
 
     if (keySubDivision == "SMB") {
-      getScriptsByParams(getDataFromBack);      
-    } else {
+      getScriptsByParams(getDataFromBack);
 
+      // ОТПРАВКА РЕЗУЛЬТАТОВ
+
+      // // Функция для отправки результатов на сервер
+      // const sendResult = async (dataToSend) => {
+      //   console.log("SMBdataToSend - ", dataToSend);
+      //   await fetch(
+      //     `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+      //     // `http://127.0.0.1:3001/api/v1/dialogues`,
+      //     // `http://89.111.172.208:3001/api/v1/dialogues`,
+      //     {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify(dataToSend),
+      //     }
+      //   );
+      // };
+
+      const sendResult = async (dataToSend) => {
+        console.log("SMBdataToSend - ", dataToSend);
+        try {
+          const response = await fetch(
+            `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataToSend),
+            }
+          );
+
+          const responseText = await response.text();
+
+          if (!response.ok) {
+            throw new Error(
+              `HTTP error! status: ${response.status}, response: ${responseText}`
+            );
+          }
+
+          // Пытаемся распарсить как JSON, если не получается - возвращаем текст
+          try {
+            const jsonData = JSON.parse(responseText);
+            console.log("✅ Данные отправлены. Ответ сервера:", jsonData);
+            return { success: true, data: jsonData };
+          } catch (jsonError) {
+            console.log(
+              "✅ Данные отправлены. Ответ сервера (текст):",
+              responseText
+            );
+            return { success: true, text: responseText };
+          }
+        } catch (error) {
+          console.error("❌ Ошибка отправки:", error);
+          return { success: false, error: error.message };
+        }
+      };
+      // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
+      send.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const dataToSend = {
+          fio: userData.firstChild.textContent,
+          jobTitle: userData.lastChild.textContent,
+          dataClient: clientName,
+          subDiv: keySubDivision,
+          dataStatus: thisStatus,
+          progress: x.toFixed(),
+          questions: JSON.stringify(dialogueStructure),
+        };
+
+        if (
+          dataToSend.progress != 0 &&
+          userData.textContent != "Имя оператора" &&
+          x != 0
+        ) {
+          sendResult(dataToSend)
+            .then((value) => {
+              messageFromBase("Данные отправлены!");
+
+              loader.style = "display: none;";
+              x = 0; // переменная для процента выполнения скрипта
+              contactScripts.style.color = "black";
+              progress_bar_span.innerHTML = `${x}%`;
+              progress_bar_color.style = `width: ${x}%;`;
+              send.disabled = true;
+              inputName.style.display = "block";
+              inputName.style.position = "fixed";
+              inputName.style.zIndex = "2";
+              inputName.style.background = "antiquewhite";
+
+              document.getElementById("enterName").placeholder = "Имя клиента";
+              document.getElementById("enterName").value = "";
+              document
+                .querySelectorAll("li")
+                .forEach((el) => (el.style.color = "black"));
+            })
+            .catch((e) => {
+              messageFromBase("Подключение к базе отсутствует!");
+            });
+        }
+      });
+    } else {
       // НАЧАЛО вывода СКРИПТА
       for (scriptPoint of subDivisionAndstatusScripts[keySubDivision][
         "status-scripts"
       ][event.target.id]) {
-        // console.log("keySubDivision - ", keySubDivision);
-        // console.log("subDivisionAndstatusScripts - ", subDivisionAndstatusScripts);
         const newLiScript = document.createElement("li");
         // присваиваем Id каждому пункту скрипта
         newLiScript.id = liId;
@@ -286,11 +383,11 @@ const getAnyScripts = function (event) {
             ? `<b>${clientName}, </b>` + scriptPoint
             : scriptPoint[0].toUpperCase() + scriptPoint.slice(1);
         contactScripts.append(newLiScript);
-  
+
         i++;
-  
+
         // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
-  
+
         newLiScript.addEventListener("click", function (event) {
           fullCheck.checked = false;
           if (newLiScript.style.color != "tomato") {
@@ -316,15 +413,78 @@ const getAnyScripts = function (event) {
             heart.style.display = "block";
             progress.style.float = "inherit";
           }
-          // console.log(x);
         });
-  
+
         liId++; // увеличиваем Id на единицу
       }
-  
+
       // ОКОНЧАНИЕ вывода СКРИПТА
 
-      
+      // ОТПРАВКА РЕЗУЛЬТАТОВ
+
+      // Функция для отправки результатов на сервер
+
+      const sendResult = async (dataToSend) => {
+        console.log("KBdataToSend - ", dataToSend);
+        await fetch(
+          `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+          // `http://127.0.0.1:3001/api/v1/dialogues`,
+          // `http://89.111.172.208:3001/api/v1/dialogues`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataToSend),
+          }
+        );
+      };
+
+      // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
+      send.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const dataToSend = {
+          fio: userData.firstChild.textContent,
+          jobTitle: userData.lastChild.textContent,
+          dataClient: clientName,
+          subDiv: keySubDivision,
+          dataStatus: thisStatus,
+          progress: x.toFixed(),
+          questions: JSON.stringify(dialogueStructure),
+        };
+
+        if (
+          dataToSend.progress != 0 &&
+          userData.textContent != "Имя оператора" &&
+          x != 0
+        ) {
+          sendResult(dataToSend)
+            .then((value) => {
+              messageFromBase("Данные отправлены!");
+
+              loader.style = "display: none;";
+              x = 0; // переменная для процента выполнения скрипта
+              contactScripts.style.color = "black";
+              progress_bar_span.innerHTML = `${x}%`;
+              progress_bar_color.style = `width: ${x}%;`;
+              send.disabled = true;
+              inputName.style.display = "block";
+              inputName.style.position = "fixed";
+              inputName.style.zIndex = "2";
+              inputName.style.background = "antiquewhite";
+
+              document.getElementById("enterName").placeholder = "Имя клиента";
+              document.getElementById("enterName").value = "";
+              document
+                .querySelectorAll("li")
+                .forEach((el) => (el.style.color = "black"));
+            })
+            .catch((e) => {
+              messageFromBase("Подключение к базе отсутствует!");
+            });
+        }
+      });
     }
 
     //if(){
@@ -349,77 +509,5 @@ const getAnyScripts = function (event) {
     const employeeName = document.getElementById("employeeName");
     employeeName.innerText = userData.firstChild.textContent.split(" ")[1];
   }
-  // progress_counter = 100 / contactScripts.children.length;
-
-  // console.log("contactScripts.children.length - ", contactScripts.children.length);
-
-  // ОТПРАВКА РЕЗУЛЬТАТОВ
-
-  // Функция для отправки результатов на сервер
-  const sendResult = async (dataToSend) => {
-    await fetch(
-      `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-      // `http://127.0.0.1:3001/api/v1/dialogues`,
-      // `http://89.111.172.208:3001/api/v1/dialogues`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToSend),
-      }
-    );
-  };
-
-  // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
-  send.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    const dataToSend = {
-      fio: userData.firstChild.textContent,
-      jobTitle: userData.lastChild.textContent,
-      dataClient: clientName,
-      subDiv: keySubDivision,
-      dataStatus: thisStatus,
-      progress: x.toFixed(),
-      questions: JSON.stringify(dialogueStructure),
-    };
-
-    // Отправляем результаты, если progress не 0 !!!
-    // dataToSend.progress != 0 ? sendResult(dataToSend) : false;
-
-    if (
-      dataToSend.progress != 0 &&
-      userData.textContent != "Имя оператора" &&
-      x != 0
-    ) {
-      sendResult(dataToSend)
-        .then((value) => {
-          messageFromBase("Данные отправлены!");
-
-          loader.style = "display: none;";
-          x = 0; // переменная для процента выполнения скрипта
-          contactScripts.style.color = "black";
-          progress_bar_span.innerHTML = `${x}%`;
-          progress_bar_color.style = `width: ${x}%;`;
-          send.disabled = true;
-          inputName.style.display = "block";
-          inputName.style.position = "fixed";
-          inputName.style.zIndex = "2";
-          inputName.style.background = "antiquewhite";
-
-          document.getElementById("enterName").placeholder = "Имя клиента";
-          document.getElementById("enterName").value = "";
-          document
-            .querySelectorAll("li")
-            .forEach((el) => (el.style.color = "black"));
-
-          // console.log("It's allright!");
-        })
-        .catch((e) => {
-          messageFromBase("Подключение к базе отсутствует!");
-          // console.log("Connection error!");
-        });
-    }
-  });
+  progress_counter = 100 / contactScripts.children.length;
 };
