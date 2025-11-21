@@ -185,9 +185,10 @@ const getAnyScripts = function (event) {
 
         const queryString = queryParams.toString();
         const url = queryString
-          ? `http://89.111.172.208:3008/api/scripts?${queryString}`
-          : // ?  `http://localhost:3008/api/scripts?${queryString}`
-            "/api/scripts";
+        ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
+        // ?  `http://localhost:3008/api/scripts?${queryString}`
+          // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+          : "/api/scripts";
 
         // console.log("Fetching from URL:", url);
 
