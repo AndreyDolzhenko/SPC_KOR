@@ -68,6 +68,11 @@ span {
   display: none;
 }
 
+#list-presentations {
+  max-height: 80vh;
+  overflow: auto;
+}
+
 #searhOfClientsResult {
   flex-wrap: wrap;
   display: flex;

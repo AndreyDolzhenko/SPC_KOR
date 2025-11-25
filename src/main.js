@@ -211,7 +211,7 @@ async function getDataOfCustomers(codeOfCustomer) {
 // Создание переменной с данными для чек-бокса по клиенту
 
 const commonResultOfChecking = (data, codeOfCustomer) => {
-  console.log(data);
+  // console.log(data);
 
   clientsName.innerText = data.clientsNames;
   clientsName_0.innerText = data.clientsNames;
@@ -542,14 +542,16 @@ for (let index = 0; index < buttonPrep.length; index++) {
   });
 }
 // строим блок с возражениями.
-Object.keys(objections).forEach((el, index) => {
-  const button = document.createElement("button");
-  button.className = "objections";
-  button.id = `objections_${index}`;
-  button.innerText = el;
-  const objections = document.getElementById("objections");
-  objections.append(button);
-});
+
+// Object.keys(objections).forEach((el, index) => {
+//   const button = document.createElement("button");
+//   button.className = "objections";
+//   button.id = `objections_${index}`;
+//   button.innerText = el;
+//   const objections = document.getElementById("objections");
+//   objections.append(button);
+// });
+
 // строим блок с презентациями.
 for (objPresentationsUrgentScripts of arrPresentationsUrgentScripts) {
   const newButton = document.createElement("button");
@@ -561,16 +563,17 @@ for (objPresentationsUrgentScripts of arrPresentationsUrgentScripts) {
   urgentScripts.append(newButton);
 }
 // /строим блок с презентациями.
-// Не обязательная презентация.
-listPresentations.innerHTML = "";
-for (ObjPresentations of arrObjPresentations) {
-  newPresentation = document.createElement("button");
-  newPresentation.className = "presentations";
-  newPresentation.value = ObjPresentations["status"];
-  newPresentation.innerHTML = ObjPresentations["title"];
-  listPresentations.append(newPresentation);
-  // objections.style.display='none';
-}
+
+// listPresentations.innerHTML = "";
+// for (ObjPresentations of arrObjPresentations) {
+//   newPresentation = document.createElement("button");
+//   newPresentation.className = "presentations";
+//   newPresentation.value = ObjPresentations["status"];
+//   newPresentation.innerHTML = ObjPresentations["title"];
+//   listPresentations.append(newPresentation);
+//   // objections.style.display='none';
+// }
+
 // вешаем попап на кнопку возражений
 const objectionsCollection = document.getElementsByClassName("objections");
 for (let index = 0; index < objectionsCollection.length; index++) {

@@ -170,6 +170,8 @@ const getAnyScripts = function (event) {
       priority: 1,
     };
 
+    const nameOfEmployee = userData.firstChild.textContent.split(" ")[1];
+
     const getScriptsByParams = async (filters = {}) => {
       try {
         // Создаем query строку из фильтров
@@ -185,10 +187,10 @@ const getAnyScripts = function (event) {
 
         const queryString = queryParams.toString();
         const url = queryString
-        ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-        // ?  `http://localhost:3008/api/scripts?${queryString}`
-          // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
-          : "/api/scripts";
+          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
+            `http://localhost:3008/api/scripts?${queryString}`
+          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            "/api/scripts";
 
         // console.log("Fetching from URL:", url);
 
@@ -199,6 +201,7 @@ const getAnyScripts = function (event) {
         }
 
         const scripts = await response.json();
+        console.log("scripts: ", scripts);
         scripts.forEach((element) => {
           // console.log(element.content);
         });
@@ -256,7 +259,72 @@ const getAnyScripts = function (event) {
         const employeeName = document.getElementById("employeeName");
         employeeName.innerText = userData.firstChild.textContent.split(" ")[1];
 
-        // return scripts;
+        // Работаем с Презентациями
+
+        const presentUrl = queryString
+          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
+            `http://localhost:3008/api/presentations?${queryString}`
+          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            "/api/scripts";
+
+        const presentResponse = await fetch(presentUrl);
+
+        if (!presentResponse.ok) {
+          throw new Error(`HTTP error! status: ${presentResponse.status}`);
+        }
+
+        const listOfPresents = await presentResponse.json();        
+
+        listPresentations.innerHTML = "";
+
+        listOfPresents.forEach((el) => {
+          newPresentation = document.createElement("button");
+          newPresentation.className = "presentations";
+          newPresentation.textContent = el.name;
+          newPresentation.onclick = () => {
+            popupOperation();
+            textOutput.innerHTML = el.content;
+          };
+
+          listPresentations.append(newPresentation);
+        });
+
+        // Работаем с Возражениями
+
+        const objectUrl = queryString
+          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
+            `http://localhost:3008/api/objections?${queryString}`
+          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            "/api/scripts";
+
+        const objectResponse = await fetch(objectUrl);
+
+        if (!objectResponse.ok) {
+          throw new Error(`HTTP error! status: ${objectResponse.status}`);
+        }
+
+        const listOfobjections = await objectResponse.json();
+
+        console.log("listOfobjections - ", listOfobjections);
+
+        const objections = document.getElementById("objections");
+
+        objections.innerHTML = "";
+
+        listOfobjections.forEach((el, index) => {
+          const button = document.createElement("button");
+          button.className = "objections";
+          button.id = `objections_${index}`;
+          button.innerText = el.name;
+          
+
+          button.onclick = () => {
+            popupOperation();
+            textOutput.innerHTML = el.content;
+          };
+
+          objections.append(button);
+        });
       } catch (error) {
         console.error("Ошибка при получении скриптов:", error);
         return [];

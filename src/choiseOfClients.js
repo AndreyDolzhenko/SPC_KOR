@@ -261,7 +261,7 @@ getFilters.addEventListener("click", (event) => {
       })
       .then(function (filterResult) {
 
-        console.log(filterResult);
+        // console.log(filterResult);
 
         const clientsCode = document.getElementsByClassName("clientsCode");
         const labelSearch = document.getElementById(`label${filterItem}`);
