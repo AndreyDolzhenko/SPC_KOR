@@ -215,12 +215,12 @@ td {
   width: 30%;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: center;
   position: relative;
 }
 
 .header_tools_center {
-  width: auto;
+  width: 100%;
   text-align: center;
   padding: 10px;
   display: flex;
@@ -624,7 +624,7 @@ li {
 
 /* Логотип */
 .loader {
-  font-size: 46px;
+  font-size: 40px;
   font-family: math;
   font-weight: bold;
   display: inline-block;
@@ -635,7 +635,7 @@ li {
 }
 
 .loader::after {
-  content: "ОФИСМАГ";
+  content: "ОФИСМАГ_kor";
   position: absolute;
   left: 0;
   top: 0;

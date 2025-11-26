@@ -1,28 +1,28 @@
-const scenaryOfPriority = document.getElementById("scenaryOfPriority");
+// const scenaryOfPriority = document.getElementById("scenaryOfPriority");
 
-const prioritiesChildren = Array.from(scenaryOfPriority.children);
+// const prioritiesChildren = Array.from(scenaryOfPriority.children);
 
-prioritiesChildren.forEach((el) => {
-  el.addEventListener("click", (event) => {
-    greetings.style.display = "none"; // убираем строку с приветствием
-    document.getElementById("objections").style.display = "flex";
-    preparation.style.display = "none"; // убираем блок подготовки к контакту
-    // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
-    preferBlock.style.display = "none"; // убираем фильтры по звонкам
-    getOfClients.style.display = "none"; // убираем фильтры по клиентам
-    rightBar.style.display = "flex";
-    previousElement.style.color = "currentcolor";
-    event.target.style.color = "brown";
-    previousElement = event.target;
-    scenaryOfPriority.style.display = "none";
+// prioritiesChildren.forEach((el) => {
+//   el.addEventListener("click", (event) => {
+//     greetings.style.display = "none"; // убираем строку с приветствием
+//     document.getElementById("objections").style.display = "flex";
+//     preparation.style.display = "none"; // убираем блок подготовки к контакту
+//     // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
+//     preferBlock.style.display = "none"; // убираем фильтры по звонкам
+//     getOfClients.style.display = "none"; // убираем фильтры по клиентам
+//     rightBar.style.display = "flex";
+//     previousElement.style.color = "currentcolor";
+//     event.target.style.color = "brown";
+//     previousElement = event.target;
+//     scenaryOfPriority.style.display = "none";
 
-    clientName = enterName.value;
+//     clientName = enterName.value;
 
-    console.log("clientName - ", clientName);
+//     console.log("clientName - ", clientName);
 
-    getAnyScripts(event);
-  });
-});
+//     getAnyScripts(event);
+//   });
+// });
 
 // Функция для получения скриптов по параметрам
 // const getScriptsByParams = async (filters = {}) => {
@@ -110,7 +110,7 @@ const getAnyScripts = function (event) {
       x = 100;
       progress_bar_span.innerHTML = `${x}%`;
       progress_bar_color.style = `width: ${x}%;`;
-      many.style = "display: block; position: absolute; right: -50px;";
+      many.style = "display: block; position: absolute; right: -1.2em;";
       heart.style.display = "none";
     } else {
       const includesOfScript = contactScripts.querySelectorAll("li");
@@ -188,7 +188,8 @@ const getAnyScripts = function (event) {
         const queryString = queryParams.toString();
         const url = queryString
           ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://localhost:3008/api/scripts?${queryString}`
+            `http://91.236.199.173:3012/api/scripts?${queryString}`
+            // `http://localhost:3008/api/scripts?${queryString}`
           : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
@@ -263,7 +264,8 @@ const getAnyScripts = function (event) {
 
         const presentUrl = queryString
           ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://localhost:3008/api/presentations?${queryString}`
+            `http://91.236.199.173:3012/api/scripts?${queryString}`
+            // `http://localhost:3008/api/presentations?${queryString}`
           : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
@@ -293,7 +295,8 @@ const getAnyScripts = function (event) {
 
         const objectUrl = queryString
           ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://localhost:3008/api/objections?${queryString}`
+            `http://91.236.199.173:3012/api/scripts?${queryString}`
+            // `http://localhost:3008/api/objections?${queryString}`
           : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
@@ -331,7 +334,7 @@ const getAnyScripts = function (event) {
       }
     };
 
-    if (keySubDivision == "SMB") {
+    // if (keySubDivision == "SMB") {
       getScriptsByParams(getDataFromBack);
 
       // ОТПРАВКА РЕЗУЛЬТАТОВ
@@ -393,168 +396,171 @@ const getAnyScripts = function (event) {
         }
       };
       // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
-      send.addEventListener("click", (event) => {
-        event.preventDefault();
+      
+      // send.addEventListener("click", (event) => {
+      //   event.preventDefault();
 
-        const dataToSend = {
-          fio: userData.firstChild.textContent,
-          jobTitle: userData.lastChild.textContent,
-          dataClient: clientName,
-          subDiv: keySubDivision,
-          dataStatus: thisStatus,
-          progress: x.toFixed(),
-          questions: JSON.stringify(dialogueStructure),
-        };
+      //   const dataToSend = {
+      //     fio: userData.firstChild.textContent,
+      //     jobTitle: userData.lastChild.textContent,
+      //     dataClient: clientName,
+      //     subDiv: keySubDivision,
+      //     dataStatus: thisStatus,
+      //     progress: x.toFixed(),
+      //     questions: JSON.stringify(dialogueStructure),
+      //   };
 
-        if (
-          dataToSend.progress != 0 &&
-          userData.textContent != "Имя оператора" &&
-          x != 0
-        ) {
-          sendResult(dataToSend)
-            .then((value) => {
-              messageFromBase("Данные отправлены!");
+      //   if (
+      //     dataToSend.progress != 0 &&
+      //     userData.textContent != "Имя оператора" &&
+      //     x != 0
+      //   ) {
+      //     sendResult(dataToSend)
+      //       .then((value) => {
+      //         messageFromBase("Данные отправлены!");
 
-              loader.style = "display: none;";
-              x = 0; // переменная для процента выполнения скрипта
-              contactScripts.style.color = "black";
-              progress_bar_span.innerHTML = `${x}%`;
-              progress_bar_color.style = `width: ${x}%;`;
-              send.disabled = true;
-              inputName.style.display = "block";
-              inputName.style.position = "fixed";
-              inputName.style.zIndex = "2";
-              inputName.style.background = "antiquewhite";
+      //         loader.style = "display: none;";
+      //         x = 0; // переменная для процента выполнения скрипта
+      //         contactScripts.style.color = "black";
+      //         progress_bar_span.innerHTML = `${x}%`;
+      //         progress_bar_color.style = `width: ${x}%;`;
+      //         send.disabled = true;
+      //         inputName.style.display = "block";
+      //         inputName.style.position = "fixed";
+      //         inputName.style.zIndex = "2";
+      //         inputName.style.background = "antiquewhite";
 
-              document.getElementById("enterName").placeholder = "Имя клиента";
-              document.getElementById("enterName").value = "";
-              document
-                .querySelectorAll("li")
-                .forEach((el) => (el.style.color = "black"));
-            })
-            .catch((e) => {
-              messageFromBase("Подключение к базе отсутствует!");
-            });
-        }
-      });
-    } else {
-      // НАЧАЛО вывода СКРИПТА
-      for (scriptPoint of subDivisionAndstatusScripts[keySubDivision][
-        "status-scripts"
-      ][event.target.id]) {
-        const newLiScript = document.createElement("li");
-        // присваиваем Id каждому пункту скрипта
-        newLiScript.id = liId;
-        // dialogueStructure[clientStatusForSend] = newLiScript.id;
-        dialogueStructure[newLiScript.id] = "-";
-        newLiScript.innerHTML =
-          i % 2 == 0
-            ? `<b>${clientName}, </b>` + scriptPoint
-            : scriptPoint[0].toUpperCase() + scriptPoint.slice(1);
-        contactScripts.append(newLiScript);
+      //         document.getElementById("enterName").placeholder = "Имя клиента";
+      //         document.getElementById("enterName").value = "";
+      //         document
+      //           .querySelectorAll("li")
+      //           .forEach((el) => (el.style.color = "black"));
+      //       })
+      //       .catch((e) => {
+      //         messageFromBase("Подключение к базе отсутствует!");
+      //       });
+      //   }
+      // });
 
-        i++;
 
-        // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
+    // } else {
+    //   // НАЧАЛО вывода СКРИПТА
+    //   for (scriptPoint of subDivisionAndstatusScripts[keySubDivision][
+    //     "status-scripts"
+    //   ][event.target.id]) {
+    //     const newLiScript = document.createElement("li");
+    //     // присваиваем Id каждому пункту скрипта
+    //     newLiScript.id = liId;
+    //     // dialogueStructure[clientStatusForSend] = newLiScript.id;
+    //     dialogueStructure[newLiScript.id] = "-";
+    //     newLiScript.innerHTML =
+    //       i % 2 == 0
+    //         ? `<b>${clientName}, </b>` + scriptPoint
+    //         : scriptPoint[0].toUpperCase() + scriptPoint.slice(1);
+    //     contactScripts.append(newLiScript);
 
-        newLiScript.addEventListener("click", function (event) {
-          fullCheck.checked = false;
-          if (newLiScript.style.color != "tomato") {
-            progress_bar_span.innerHTML = `${Math.round(
-              (x += progress_counter)
-            )}%`;
-            newLiScript.style.color = "tomato";
-            dialogueStructure[newLiScript.id] = "+";
-          } else {
-            progress_bar_span.innerHTML = `${Math.round(
-              (x -= progress_counter)
-            )}%`;
-            newLiScript.style.color = "black";
-            dialogueStructure[newLiScript.id] = "-";
-          }
-          progress_bar_color.style = `width: ${x}%;`;
-          if (x > 70) {
-            many.style = "display: block; position: absolute; right: -50px;";
-            heart.style.display = "none";
-            progress.style.float = "Left";
-          } else {
-            many.style.display = "none";
-            heart.style.display = "block";
-            progress.style.float = "inherit";
-          }
-        });
+    //     i++;
 
-        liId++; // увеличиваем Id на единицу
-      }
+    //     // ниже - скрипт отвечающий за прогресс-бар и изменение цвета пунктов скрипта, по которым кликнули
 
-      // ОКОНЧАНИЕ вывода СКРИПТА
+    //     newLiScript.addEventListener("click", function (event) {
+    //       fullCheck.checked = false;
+    //       if (newLiScript.style.color != "tomato") {
+    //         progress_bar_span.innerHTML = `${Math.round(
+    //           (x += progress_counter)
+    //         )}%`;
+    //         newLiScript.style.color = "tomato";
+    //         dialogueStructure[newLiScript.id] = "+";
+    //       } else {
+    //         progress_bar_span.innerHTML = `${Math.round(
+    //           (x -= progress_counter)
+    //         )}%`;
+    //         newLiScript.style.color = "black";
+    //         dialogueStructure[newLiScript.id] = "-";
+    //       }
+    //       progress_bar_color.style = `width: ${x}%;`;
+    //       if (x > 70) {
+    //         many.style = "display: block; position: absolute; right: -1.2em;";
+    //         heart.style.display = "none";
+    //         progress.style.float = "Left";
+    //       } else {
+    //         many.style.display = "none";
+    //         heart.style.display = "block";
+    //         progress.style.float = "inherit";
+    //       }
+    //     });
 
-      // ОТПРАВКА РЕЗУЛЬТАТОВ
+    //     liId++; // увеличиваем Id на единицу
+    //   }
 
-      // Функция для отправки результатов на сервер
+    //   // ОКОНЧАНИЕ вывода СКРИПТА
 
-      const sendResult = async (dataToSend) => {
-        console.log("KBdataToSend - ", dataToSend);
-        await fetch(
-          `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-          // `http://127.0.0.1:3001/api/v1/dialogues`,
-          // `http://89.111.172.208:3001/api/v1/dialogues`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dataToSend),
-          }
-        );
-      };
+    //   // ОТПРАВКА РЕЗУЛЬТАТОВ
 
-      // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
-      send.addEventListener("click", (event) => {
-        event.preventDefault();
+    //   // Функция для отправки результатов на сервер
 
-        const dataToSend = {
-          fio: userData.firstChild.textContent,
-          jobTitle: userData.lastChild.textContent,
-          dataClient: clientName,
-          subDiv: keySubDivision,
-          dataStatus: thisStatus,
-          progress: x.toFixed(),
-          questions: JSON.stringify(dialogueStructure),
-        };
+    //   const sendResult = async (dataToSend) => {
+    //     console.log("KBdataToSend - ", dataToSend);
+    //     await fetch(
+    //       `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+    //       // `http://127.0.0.1:3001/api/v1/dialogues`,
+    //       // `http://89.111.172.208:3001/api/v1/dialogues`,
+    //       {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(dataToSend),
+    //       }
+    //     );
+    //   };
 
-        if (
-          dataToSend.progress != 0 &&
-          userData.textContent != "Имя оператора" &&
-          x != 0
-        ) {
-          sendResult(dataToSend)
-            .then((value) => {
-              messageFromBase("Данные отправлены!");
+    //   // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
+    //   send.addEventListener("click", (event) => {
+    //     event.preventDefault();
 
-              loader.style = "display: none;";
-              x = 0; // переменная для процента выполнения скрипта
-              contactScripts.style.color = "black";
-              progress_bar_span.innerHTML = `${x}%`;
-              progress_bar_color.style = `width: ${x}%;`;
-              send.disabled = true;
-              inputName.style.display = "block";
-              inputName.style.position = "fixed";
-              inputName.style.zIndex = "2";
-              inputName.style.background = "antiquewhite";
+    //     const dataToSend = {
+    //       fio: userData.firstChild.textContent,
+    //       jobTitle: userData.lastChild.textContent,
+    //       dataClient: clientName,
+    //       subDiv: keySubDivision,
+    //       dataStatus: thisStatus,
+    //       progress: x.toFixed(),
+    //       questions: JSON.stringify(dialogueStructure),
+    //     };
 
-              document.getElementById("enterName").placeholder = "Имя клиента";
-              document.getElementById("enterName").value = "";
-              document
-                .querySelectorAll("li")
-                .forEach((el) => (el.style.color = "black"));
-            })
-            .catch((e) => {
-              messageFromBase("Подключение к базе отсутствует!");
-            });
-        }
-      });
-    }
+    //     if (
+    //       dataToSend.progress != 0 &&
+    //       userData.textContent != "Имя оператора" &&
+    //       x != 0
+    //     ) {
+    //       sendResult(dataToSend)
+    //         .then((value) => {
+    //           messageFromBase("Данные отправлены!");
+
+    //           loader.style = "display: none;";
+    //           x = 0; // переменная для процента выполнения скрипта
+    //           contactScripts.style.color = "black";
+    //           progress_bar_span.innerHTML = `${x}%`;
+    //           progress_bar_color.style = `width: ${x}%;`;
+    //           send.disabled = true;
+    //           inputName.style.display = "block";
+    //           inputName.style.position = "fixed";
+    //           inputName.style.zIndex = "2";
+    //           inputName.style.background = "antiquewhite";
+
+    //           document.getElementById("enterName").placeholder = "Имя клиента";
+    //           document.getElementById("enterName").value = "";
+    //           document
+    //             .querySelectorAll("li")
+    //             .forEach((el) => (el.style.color = "black"));
+    //         })
+    //         .catch((e) => {
+    //           messageFromBase("Подключение к базе отсутствует!");
+    //         });
+    //     }
+    //   });
+    // }
 
     //if(){
     // ВЫВОД КНОПОК ПРЕЗЕНТАЦИИ
