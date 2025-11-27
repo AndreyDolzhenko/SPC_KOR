@@ -1,28 +1,41 @@
-// const scenaryOfPriority = document.getElementById("scenaryOfPriority");
+const scenaryOfPriority = document.getElementById("scenaryOfPriority");
 
-// const prioritiesChildren = Array.from(scenaryOfPriority.children);
+const prioritiesChildren = Array.from(scenaryOfPriority.children);
 
-// prioritiesChildren.forEach((el) => {
-//   el.addEventListener("click", (event) => {
-//     greetings.style.display = "none"; // убираем строку с приветствием
-//     document.getElementById("objections").style.display = "flex";
-//     preparation.style.display = "none"; // убираем блок подготовки к контакту
-//     // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
-//     preferBlock.style.display = "none"; // убираем фильтры по звонкам
-//     getOfClients.style.display = "none"; // убираем фильтры по клиентам
-//     rightBar.style.display = "flex";
-//     previousElement.style.color = "currentcolor";
-//     event.target.style.color = "brown";
-//     previousElement = event.target;
-//     scenaryOfPriority.style.display = "none";
+// Функция Скрыть / Показать
+function toggleText(btn) {
+    const hiddenText = btn.previousElementSibling;
+    
+    if (hiddenText.classList.contains('hidden')) {
+        hiddenText.classList.remove('hidden');
+        btn.textContent = '[Скрыть]';
+    } else {
+        hiddenText.classList.add('hidden');
+        btn.textContent = '[Показать]';
+    }
+}
 
-//     clientName = enterName.value;
+prioritiesChildren.forEach((el) => {
+  el.addEventListener("click", (event) => {
+    greetings.style.display = "none"; // убираем строку с приветствием
+    document.getElementById("objections").style.display = "flex";
+    preparation.style.display = "none"; // убираем блок подготовки к контакту
+    // getFromOrder.style.display = "none"; // убираем фильтры по клиентам
+    preferBlock.style.display = "none"; // убираем фильтры по звонкам
+    getOfClients.style.display = "none"; // убираем фильтры по клиентам
+    rightBar.style.display = "flex";
+    previousElement.style.color = "currentcolor";
+    event.target.style.color = "brown";
+    previousElement = event.target;
+    scenaryOfPriority.style.display = "none";
 
-//     console.log("clientName - ", clientName);
+    clientName = enterName.value;
 
-//     getAnyScripts(event);
-//   });
-// });
+    console.log("clientName - ", clientName);
+
+    getAnyScripts(event);
+  });
+});
 
 // Функция для получения скриптов по параметрам
 // const getScriptsByParams = async (filters = {}) => {
@@ -187,10 +200,10 @@ const getAnyScripts = function (event) {
 
         const queryString = queryParams.toString();
         const url = queryString
-          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://91.236.199.173:3012/api/scripts?${queryString}`
+          ? `http://91.236.199.173:3008/api/scripts?${queryString}`
+          : // `http://91.236.199.173:3012/api/scripts?${queryString}`
             // `http://localhost:3008/api/scripts?${queryString}`
-          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
         // console.log("Fetching from URL:", url);
@@ -202,7 +215,7 @@ const getAnyScripts = function (event) {
         }
 
         const scripts = await response.json();
-        console.log("scripts: ", scripts);
+        // console.log("scripts: ", scripts);
         scripts.forEach((element) => {
           // console.log(element.content);
         });
@@ -263,10 +276,10 @@ const getAnyScripts = function (event) {
         // Работаем с Презентациями
 
         const presentUrl = queryString
-          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://91.236.199.173:3012/api/scripts?${queryString}`
+          ? `http://91.236.199.173:3008/api/presentations?${queryString}`
+          : // `http://91.236.199.173:3012/api/scripts?${queryString}`
             // `http://localhost:3008/api/presentations?${queryString}`
-          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
         const presentResponse = await fetch(presentUrl);
@@ -275,7 +288,7 @@ const getAnyScripts = function (event) {
           throw new Error(`HTTP error! status: ${presentResponse.status}`);
         }
 
-        const listOfPresents = await presentResponse.json();        
+        const listOfPresents = await presentResponse.json();
 
         listPresentations.innerHTML = "";
 
@@ -294,10 +307,10 @@ const getAnyScripts = function (event) {
         // Работаем с Возражениями
 
         const objectUrl = queryString
-          ? // ?  `http://91.236.199.173:3008/api/scripts?${queryString}`
-            `http://91.236.199.173:3012/api/scripts?${queryString}`
+          ? `http://91.236.199.173:3008/api/objections?${queryString}`
+          : // `http://91.236.199.173:3012/api/scripts?${queryString}`
             // `http://localhost:3008/api/objections?${queryString}`
-          : // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
+            // ? `http://89.111.172.208:3008/api/scripts?${queryString}`
             "/api/scripts";
 
         const objectResponse = await fetch(objectUrl);
@@ -319,7 +332,6 @@ const getAnyScripts = function (event) {
           button.className = "objections";
           button.id = `objections_${index}`;
           button.innerText = el.name;
-          
 
           button.onclick = () => {
             popupOperation();
@@ -335,113 +347,112 @@ const getAnyScripts = function (event) {
     };
 
     // if (keySubDivision == "SMB") {
-      getScriptsByParams(getDataFromBack);
+    getScriptsByParams(getDataFromBack);
 
-      // ОТПРАВКА РЕЗУЛЬТАТОВ
+    // ОТПРАВКА РЕЗУЛЬТАТОВ
 
-      // // Функция для отправки результатов на сервер
-      // const sendResult = async (dataToSend) => {
-      //   console.log("SMBdataToSend - ", dataToSend);
-      //   await fetch(
-      //     `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-      //     // `http://127.0.0.1:3001/api/v1/dialogues`,
-      //     // `http://89.111.172.208:3001/api/v1/dialogues`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //       body: JSON.stringify(dataToSend),
-      //     }
-      //   );
-      // };
+    // // Функция для отправки результатов на сервер
+    // const sendResult = async (dataToSend) => {
+    //   console.log("SMBdataToSend - ", dataToSend);
+    //   await fetch(
+    //     `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+    //     // `http://127.0.0.1:3001/api/v1/dialogues`,
+    //     // `http://89.111.172.208:3001/api/v1/dialogues`,
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(dataToSend),
+    //     }
+    //   );
+    // };
 
-      const sendResult = async (dataToSend) => {
-        console.log("SMBdataToSend - ", dataToSend);
-        try {
-          const response = await fetch(
-            `http://91.236.199.173:${PORT}/api/v1/dialogues`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(dataToSend),
-            }
+    const sendResult = async (dataToSend) => {
+      console.log("SMBdataToSend - ", dataToSend);
+      try {
+        const response = await fetch(
+          `http://91.236.199.173:${PORT}/api/v1/dialogues`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataToSend),
+          }
+        );
+
+        const responseText = await response.text();
+
+        if (!response.ok) {
+          throw new Error(
+            `HTTP error! status: ${response.status}, response: ${responseText}`
           );
-
-          const responseText = await response.text();
-
-          if (!response.ok) {
-            throw new Error(
-              `HTTP error! status: ${response.status}, response: ${responseText}`
-            );
-          }
-
-          // Пытаемся распарсить как JSON, если не получается - возвращаем текст
-          try {
-            const jsonData = JSON.parse(responseText);
-            console.log("✅ Данные отправлены. Ответ сервера:", jsonData);
-            return { success: true, data: jsonData };
-          } catch (jsonError) {
-            console.log(
-              "✅ Данные отправлены. Ответ сервера (текст):",
-              responseText
-            );
-            return { success: true, text: responseText };
-          }
-        } catch (error) {
-          console.error("❌ Ошибка отправки:", error);
-          return { success: false, error: error.message };
         }
+
+        // Пытаемся распарсить как JSON, если не получается - возвращаем текст
+        try {
+          const jsonData = JSON.parse(responseText);
+          console.log("✅ Данные отправлены. Ответ сервера:", jsonData);
+          return { success: true, data: jsonData };
+        } catch (jsonError) {
+          console.log(
+            "✅ Данные отправлены. Ответ сервера (текст):",
+            responseText
+          );
+          return { success: true, text: responseText };
+        }
+      } catch (error) {
+        console.error("❌ Ошибка отправки:", error);
+        return { success: false, error: error.message };
+      }
+    };
+    // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
+
+    send.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const dataToSend = {
+        fio: userData.firstChild.textContent,
+        jobTitle: userData.lastChild.textContent,
+        dataClient: clientName,
+        subDiv: keySubDivision,
+        dataStatus: thisStatus,
+        progress: x.toFixed(),
+        questions: JSON.stringify(dialogueStructure),
       };
-      // ДЕЙСТВИЕ ПО ОТПРАВКЕ РЕЗУЛЬТАТОВ
-      
-      // send.addEventListener("click", (event) => {
-      //   event.preventDefault();
 
-      //   const dataToSend = {
-      //     fio: userData.firstChild.textContent,
-      //     jobTitle: userData.lastChild.textContent,
-      //     dataClient: clientName,
-      //     subDiv: keySubDivision,
-      //     dataStatus: thisStatus,
-      //     progress: x.toFixed(),
-      //     questions: JSON.stringify(dialogueStructure),
-      //   };
+      if (
+        dataToSend.progress != 0 &&
+        userData.textContent != "Имя оператора" &&
+        x != 0
+      ) {
+        sendResult(dataToSend)
+          .then((value) => {
+            messageFromBase("Данные отправлены!");
 
-      //   if (
-      //     dataToSend.progress != 0 &&
-      //     userData.textContent != "Имя оператора" &&
-      //     x != 0
-      //   ) {
-      //     sendResult(dataToSend)
-      //       .then((value) => {
-      //         messageFromBase("Данные отправлены!");
+            loader.style = "display: none;";
+            x = 0; // переменная для процента выполнения скрипта
+            contactScripts.style.color = "black";
+            progress_bar_span.innerHTML = `${x}%`;
+            progress_bar_color.style = `width: ${x}%;`;
+            send.disabled = true;
+            inputName.style.display = "block";
+            inputName.style.position = "fixed";
+            inputName.style.zIndex = "2";
+            inputName.style.background = "antiquewhite";
 
-      //         loader.style = "display: none;";
-      //         x = 0; // переменная для процента выполнения скрипта
-      //         contactScripts.style.color = "black";
-      //         progress_bar_span.innerHTML = `${x}%`;
-      //         progress_bar_color.style = `width: ${x}%;`;
-      //         send.disabled = true;
-      //         inputName.style.display = "block";
-      //         inputName.style.position = "fixed";
-      //         inputName.style.zIndex = "2";
-      //         inputName.style.background = "antiquewhite";
-
-      //         document.getElementById("enterName").placeholder = "Имя клиента";
-      //         document.getElementById("enterName").value = "";
-      //         document
-      //           .querySelectorAll("li")
-      //           .forEach((el) => (el.style.color = "black"));
-      //       })
-      //       .catch((e) => {
-      //         messageFromBase("Подключение к базе отсутствует!");
-      //       });
-      //   }
-      // });
-
+            document.getElementById("enterName").placeholder = "Имя клиента";
+            document.getElementById("enterName").value = "";
+            document
+              .querySelectorAll("li")
+              .forEach((el) => (el.style.color = "black"));
+          })
+          .catch((e) => {
+            messageFromBase("Подключение к базе отсутствует!");
+          });
+      }
+    });
 
     // } else {
     //   // НАЧАЛО вывода СКРИПТА

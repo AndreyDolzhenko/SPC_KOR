@@ -635,7 +635,7 @@ li {
 }
 
 .loader::after {
-  content: "ОФИСМАГ_kor";
+  content: "ОФИСМАГ";
   position: absolute;
   left: 0;
   top: 0;
@@ -850,4 +850,26 @@ textarea {
 #scenaryOfPriority span:hover {
   text-decoration: underline;
   color: brown;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    color: #0066cc;
+    cursor: pointer;
+    font-style: italic;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+.toggle-btn:hover {
+    text-decoration: underline;
+}
+
+.hidding {
+  font-style: italic;
+  color: olive;
+  background: aliceblue;
 }
