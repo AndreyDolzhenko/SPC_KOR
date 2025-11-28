@@ -48,6 +48,175 @@ let firstSubDivision;
 let previousElement = listScript;
 let progress_counter;
 
+// Работа с напоминалкой
+
+const reminderList = document.getElementById("reminderList");
+
+// Попап напоминалки
+const remindCross = document.getElementById("remindCross");
+remindCross.addEventListener("click", () => {
+  reminderList.style.display = "none";
+  resetForm();
+});
+
+function resetForm() {
+  document.getElementById("reminderForm").reset();
+  // hideMessages();
+}
+
+const icon_reminder = document.getElementById("icon_reminder");
+
+// Обработка формы
+
+function showSuccess() {
+  const successMessage = document.getElementById("successMessage");
+  const errorMessage = document.getElementById("errorMessage");
+  const reminderFormUpdate = document.getElementById("reminderForm");
+  
+
+  successMessage.style.display = "block";
+  successMessage.style.opacity = "1";
+  errorMessage.style.display = "none";
+
+  setTimeout(() => {
+    // Плавное исчезновение
+    successMessage.style.transition = "opacity 0.5s ease";
+    successMessage.style.opacity = "0";
+
+    setTimeout(() => {
+      successMessage.style.display = "none";
+      successMessage.style.opacity = "1"; // Возвращаем opacity для следующего показа
+    }, 500);
+  }, 2500); // Начинаем исчезать через 2.5 секунды
+}
+
+function showError() {
+  const successMessage = document.getElementById("successMessage");
+  const errorMessage = document.getElementById("errorMessage");
+
+  errorMessage.style.display = "block";
+  successMessage.style.display = "none";
+
+  setTimeout(() => {
+    errorMessage.style.display = "none";
+  }, 5000);
+}
+
+// Редакция НАПОМИНАНИЯ
+
+reminderFormUpdate.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  // Получаем ID из URL или другого источника
+  const reminderId = getReminderId(); // Нужно реализовать эту функцию
+
+  if (!reminderId) {
+    showError("ID напоминания не найден");
+    return;
+  }
+
+  const formData = {
+    employee: e.target.employee.value,
+    client: e.target.client.value,
+    note: e.target.note.value,
+    status: e.target.status.value,
+    execution_date: new Date(e.target.execution_date.value).toISOString(),
+  };
+
+  try {
+    const response = await fetch(`http://91.236.199.173:3008/api/reminders/${reminderId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      showSuccess("Напоминание успешно обновлено!");
+      setTimeout(() => {
+        closePopup();
+      }, 1500);
+    } else {
+      const errorData = await response.json();
+      showError(errorData.message || "Ошибка при обновлении напоминания");
+    }
+  } catch (error) {
+    console.error("Ошибка:", error);
+    showError("Ошибка сети при обновлении напоминания");
+  }
+});
+
+
+// Отправка НАПОМИНАНИЯ
+reminderForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = {
+    employee: e.target.employee.value,
+    client: e.target.client.value,
+    note: e.target.note.value,
+    status: e.target.status.value,
+    execution_date: new Date(e.target.execution_date.value).toISOString(),
+  };
+
+  try {
+    const response = await fetch("http://91.236.199.173:3008/api/reminders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      showSuccess();
+      setTimeout(() => {
+        closePopup();
+      }, 1500);
+    } else {
+      showError();
+    }
+  } catch (error) {
+    console.error("Ошибка:", error);
+    showError();
+  }
+});
+
+// Установка минимальной даты (текущая дата)
+const now = new Date();
+now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+document.querySelector('input[name="execution_date"]').min = now
+  .toISOString()
+  .slice(0, 16);
+
+icon_reminder.addEventListener("click", async (event) => {
+  console.log(checkResult.value);
+  reminderList.style.display = "block";
+
+  notes.textContent = clientsName_0.textContent;
+
+  const response = await fetch(
+    `http://91.236.199.173:3008/api/reminders/client/Василёк`
+  );
+  const result = await response.json();
+
+  result.forEach((el) => {
+    const li = document.createElement("li");
+    li.textContent = el.note;
+    li.onclick = () => {
+      reminderForm.employee.value = el.employee;
+      reminderForm.note.value = el.id;
+      console.log(el);
+    };
+    notes.append(li);
+  });
+
+  console.log("result - ", result);
+});
+
+////////////////////////////
+
 // Загрузка страницы upload
 const updatePass = document.getElementById("updatePass");
 const updateLink = document.getElementById("updateLink");

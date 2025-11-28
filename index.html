@@ -6,11 +6,86 @@
     <meta http-equiv="expires" content="0" />
     <link rel="stylesheet" href="./src/style.css?v=2" />
     <!-- <link type="Image/x-icon" href="img/imgonlinePhon.ico" rel="icon" /> -->
-     <link type="Image/x-icon" href="./img/icons864.png" rel="icon" />
+    <link type="Image/x-icon" href="./img/icons864.png" rel="icon" />
     <title>СПК ОФИСМАГ</title>
   </head>
 
   <body>
+    <div class="success-message" id="successMessage">
+      ✅ Напоминание успешно создано!
+    </div>
+
+    <div class="error-message" id="errorMessage">
+      ❌ Ошибка при создании напоминания
+    </div>
+    <div id="reminderList">
+      <img
+        align="right"
+        id="remindCross"
+        src="./img/cancel-remove-delete-cross-svgrepo-com.svg"
+        alt="cross"
+      />
+      <ul id="notes"></ul>
+      <div style="color: darkcyan; font-style: italic;">Создать напоминание:</div>
+      <div class="popup-content hidding hidden">
+        <form id="reminderForm">
+          <div class="form-group">
+            <label>Сотрудник:</label>
+            <input
+              type="text"
+              name="employee"
+              required
+              placeholder="Введите ФИО сотрудника"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Клиент:</label>
+            <input
+              type="text"
+              name="client"
+              required
+              placeholder="Введите название клиента"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Заметка:</label>
+            <textarea
+              name="note"
+              required
+              placeholder="Опишите задачу..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Статус:</label>
+            <select name="status">              
+              <option value="в работе">В работе</option>
+              <option value="выполнено">Выполнено</option>
+              <option value="отменено">Отменено</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Дата и время исполнения:</label>
+            <input type="datetime-local" name="execution_date" required />
+          </div>
+
+          <button type="submit" class="submit-btn">Создать напоминание</button>
+          <button id="reminderFormUpdate" type="button" class="submit-btn">Обновить напоминание</button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+          ✅ Напоминание успешно создано!
+        </div>
+
+        <div class="error-message" id="errorMessage">
+          ❌ Ошибка при создании напоминания
+        </div>
+      </div>      
+      <div class="toggle-btn" onclick="toggleText(this)">[Показать]</div>
+    </div>
     <div class="main">
       <div id="icon_home">
         <svg
@@ -26,6 +101,13 @@
             d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"
           ></path>
         </svg>
+      </div>
+      <div id="icon_reminder">
+        <img
+          id="icon_reminder_style"
+          src="./img/document-education.svg"
+          alt="reminder"
+        />
       </div>
       <header class="header" id="header">
         <div class="header_left" id="header_left">
@@ -77,15 +159,14 @@
             <div id="progress_bar_color"></div>
           </div>
           <button id="send">Отправить</button>
-          
-          <span id="many" class="many" style="position: absolute; right: -1.2em;"></span>
+
+          <span
+            id="many"
+            class="many"
+            style="position: absolute; right: -1.2em"
+          ></span>
           <div
-            style="
-              display: block;
-              position: absolute;
-              right: -2em;
-              bottom: 2em;
-            "
+            style="display: block; position: absolute; right: -2em; bottom: 2em"
           >
             <input
               type="checkbox"
@@ -97,7 +178,12 @@
           <div id="statusData"></div>
         </div>
         <div class="header_tools_center">
-          <a href="https://samson.team/services/learning/course.php?COURSE_ID=16&LESSON_ID=11546" target="_blank" style="font-size: 0.7em; position: absolute; top: 2px;">Все возражения &#8594;</a>
+          <a
+            href="https://samson.team/services/learning/course.php?COURSE_ID=16&LESSON_ID=11546"
+            target="_blank"
+            style="font-size: 0.7em; position: absolute; top: 2px"
+            >Все возражения &#8594;</a
+          >
           <div id="objections">
             <span id="heart"></span>
           </div>
@@ -217,7 +303,8 @@
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      Обратили внимание, что не было заказа в <b>прошлом месяце</b>. Подскажите, где приобрели товары?
+                      Обратили внимание, что не было заказа в
+                      <b>прошлом месяце</b>. Подскажите, где приобрели товары?
                     </div>
                   </td>
                 </tr>
@@ -233,7 +320,9 @@
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      Обратили внимание, что не закупа-ли у нас товары <b>2 последних месяца</b>. Подскажите, пожалуйста, где приобрели товары?
+                      Обратили внимание, что не закупа-ли у нас товары
+                      <b>2 последних месяца</b>. Подскажите, пожалуйста, где
+                      приобрели товары?
                     </div>
                   </td>
                 </tr>
@@ -249,7 +338,10 @@
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      Обратили внимание на то, что не закупаете у нас основные группы товаров <b>(товары для офиса, хозяйственные, бакалея)</b>. Подскажите, где приобретаете?
+                      Обратили внимание на то, что не закупаете у нас основные
+                      группы товаров
+                      <b>(товары для офиса, хозяйственные, бакалея)</b>.
+                      Подскажите, где приобретаете?
                     </div>
                   </td>
                 </tr>
@@ -265,7 +357,9 @@
                   </td>
                   <td style="position: relative; padding: 0">
                     <div class="preferPrompt">
-                      Обратили внимание, что <b>ранее приобретали товары на сумму...</b>, в этом месяце сумма заказа составила … Подскажите, с чем связано?
+                      Обратили внимание, что
+                      <b>ранее приобретали товары на сумму...</b>, в этом месяце
+                      сумма заказа составила … Подскажите, с чем связано?
                     </div>
                   </td>
                 </tr>
@@ -293,7 +387,7 @@
               <span id="status__852">Приоритет 2</span>
               <span id="status__853">Приоритет 3</span>
               <span id="status__854">Приоритет 4</span>
-              <span id="status__855">Приоритет 5</span>              
+              <span id="status__855">Приоритет 5</span>
             </div>
           </div>
         </div>
