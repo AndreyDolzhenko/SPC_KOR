@@ -950,7 +950,7 @@ textarea {
   color: white;
   border: none;
   padding: 12px;
-  font-size: 0.9em;
+  font-size: 60%;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -1008,6 +1008,33 @@ textarea {
 
 #notes {
   width: 100%;
-  height: 5em;
+  height: 3em;
   background-color: antiquewhite;
+  color: brown;
+  font-weight: 600;
+  padding: 0.5em;
+}
+
+#reminderOfDate {
+  max-height: 15em;
+  background-color: antiquewhite;
+  overflow-y: auto;
+}
+
+#reminderId::before {
+  content: "Id: ";
+  color: cadetblue;
+  font-weight: 600;
+}
+
+#reminderStatus::before {
+  content: "Status: ";
+  color: cadetblue;
+  font-weight: 600;
+}
+
+#deleteReminde {
+  color: #dc3545;
+  font-weight: 600;
+  cursor: pointer;
 }

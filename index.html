@@ -27,6 +27,11 @@
       />
       <ul id="notes"></ul>
       <div style="color: darkcyan; font-style: italic;">Создать напоминание:</div>
+      <div>
+        <span id="reminderId"></span>
+        <span id="reminderStatus"></span>
+        <!-- <span id="deleteReminde">&#10008;</span> -->
+      </div>
       <div class="popup-content hidding hidden">
         <form id="reminderForm">
           <div class="form-group">
@@ -85,6 +90,7 @@
         </div>
       </div>      
       <div class="toggle-btn" onclick="toggleText(this)">[Показать]</div>
+      <ul id="reminderOfDate"></ul>
     </div>
     <div class="main">
       <div id="icon_home">

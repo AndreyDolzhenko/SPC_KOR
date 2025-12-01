@@ -51,6 +51,12 @@ let progress_counter;
 // Работа с напоминалкой
 
 const reminderList = document.getElementById("reminderList");
+const reminderForm = document.getElementById("reminderForm");
+const reminderFormUpdate = document.getElementById("reminderFormUpdate");
+const reminderOfDate = document.getElementById("reminderOfDate");
+const reminderId = document.getElementById("reminderId");
+const reminderStatus = document.getElementById("reminderStatus");
+const deleteReminde = document.getElementById("deleteReminde");
 
 // Попап напоминалки
 const remindCross = document.getElementById("remindCross");
@@ -72,7 +78,6 @@ function showSuccess() {
   const successMessage = document.getElementById("successMessage");
   const errorMessage = document.getElementById("errorMessage");
   const reminderFormUpdate = document.getElementById("reminderForm");
-  
 
   successMessage.style.display = "block";
   successMessage.style.opacity = "1";
@@ -108,29 +113,35 @@ reminderFormUpdate.addEventListener("click", async (e) => {
   e.preventDefault();
 
   // Получаем ID из URL или другого источника
-  const reminderId = getReminderId(); // Нужно реализовать эту функцию
+  const reminderId = document.getElementById("reminderId").textContent; // Нужно реализовать эту функцию
 
   if (!reminderId) {
     showError("ID напоминания не найден");
     return;
   }
 
+  console.log(reminderForm);
+
   const formData = {
-    employee: e.target.employee.value,
-    client: e.target.client.value,
-    note: e.target.note.value,
-    status: e.target.status.value,
-    execution_date: new Date(e.target.execution_date.value).toISOString(),
+    employee: reminderForm.employee.value,
+    client: reminderForm.client.value,
+    note: reminderForm.note.value,
+    status: reminderForm.status.value,
+    execution_date: reminderForm.execution_date.value
   };
 
   try {
-    const response = await fetch(`http://91.236.199.173:3008/api/reminders/${reminderId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      `http://127.0.0.1:3008/api/reminders/${reminderId}`,
+      // `http://91.236.199.173:3008/api/reminders/${reminderId}`
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     if (response.ok) {
       showSuccess("Напоминание успешно обновлено!");
@@ -147,7 +158,6 @@ reminderFormUpdate.addEventListener("click", async (e) => {
   }
 });
 
-
 // Отправка НАПОМИНАНИЯ
 reminderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -161,13 +171,17 @@ reminderForm.addEventListener("submit", async (e) => {
   };
 
   try {
-    const response = await fetch("http://91.236.199.173:3008/api/reminders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      "http://127.0.0.1:3008/api/reminders",
+      // "http://91.236.199.173:3008/api/reminders"
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     if (response.ok) {
       showSuccess();
@@ -195,25 +209,73 @@ icon_reminder.addEventListener("click", async (event) => {
   reminderList.style.display = "block";
 
   notes.textContent = clientsName_0.textContent;
+  console.log("checkResult - ", checkResult.value);
 
-  const response = await fetch(
-    `http://91.236.199.173:3008/api/reminders/client/Василёк`
-  );
-  const result = await response.json();
+  const userName = userData.innerHTML.split("<br>")[0];
+
+  reminderForm.employee.value = userName;
+  reminderForm.client.value = checkResult.value;
+
+  console.log("userName - ", userName);
+
+  let response;
+
+  if (checkResult.value == "") {
+    response = await fetch(
+      `http://127.0.0.1:3008/api/reminders/employee/${userName}/today`
+      // `http://91.236.199.173:3008/api/reminders/client/Василёк`
+    );
+  } else {
+    console.log("!!checkResult - ", checkResult.value);
+    response = await fetch(
+      `http://127.0.0.1:3008/api/reminders/client/${checkResult.value}`
+      // `http://91.236.199.173:3008/api/reminders/client/Василёк`
+    );
+  }
+
+  let result = await response.json();
+  
+  checkResult.value == "" ? result = result.data : result = result;
+
+  console.log("!!result - ", result);
+
+  reminderOfDate.textContent = "";
 
   result.forEach((el) => {
     const li = document.createElement("li");
+    if (el.status == "выполнено" || el.status == "отменено") {
+      li.style = "color: grey; text-decoration: line-through;";
+    }
     li.textContent = el.note;
-    li.onclick = () => {
-      reminderForm.employee.value = el.employee;
-      reminderForm.note.value = el.id;
-      console.log(el);
+    li.onclick = async() => {      
+      autoFilling(el);
+      await getDataOfCustomers(el.client);
+      notes.innerText = document.getElementById("clientsName_0").innerText;      
+      console.log("el - ", el);
     };
-    notes.append(li);
+    li.textContent =
+      el.execution_date.slice(0, 10) + ". " + el.client + ": " + el.note.slice(0, 15) + "... " + el.execution_date.slice(11, 19);
+    reminderOfDate.append(li);
   });
 
   console.log("result - ", result);
 });
+
+// Функция АвтоЗаполнения ФОРМЫ напоминания
+
+const autoFilling = (el) => {
+  reminderId.innerText = el.id;
+  reminderStatus.innerText = el.status;
+  reminderForm.employee.value = el.employee;
+  reminderForm.client.value = el.client;
+  reminderForm.note.value = el.note;
+  reminderForm.status.value = el.status;
+  reminderForm.execution_date.value = 
+    new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
+    .toISOString()
+    .slice(0, 16);
+  // console.log("reminderForm - ", reminderForm.employee);
+};
 
 ////////////////////////////
 
