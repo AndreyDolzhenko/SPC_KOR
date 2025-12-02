@@ -31,7 +31,7 @@ prioritiesChildren.forEach((el) => {
 
     clientName = enterName.value;
 
-    console.log("clientName - ", clientName);
+    // console.log("clientName - ", clientName);
 
     getAnyScripts(event);
   });
@@ -215,7 +215,9 @@ const getAnyScripts = function (event) {
         }
 
         const scripts = await response.json();
+
         // console.log("scripts: ", scripts);
+
         scripts.forEach((element) => {
           // console.log(element.content);
         });
@@ -290,6 +292,8 @@ const getAnyScripts = function (event) {
 
         const listOfPresents = await presentResponse.json();
 
+        // console.log("listOfPresents - ", listOfPresents);
+
         listPresentations.innerHTML = "";
 
         listOfPresents.forEach((el) => {
@@ -321,7 +325,7 @@ const getAnyScripts = function (event) {
 
         const listOfobjections = await objectResponse.json();
 
-        console.log("listOfobjections - ", listOfobjections);
+        // console.log("listOfobjections - ", listOfobjections);
 
         const objections = document.getElementById("objections");
 
@@ -369,7 +373,7 @@ const getAnyScripts = function (event) {
     // };
 
     const sendResult = async (dataToSend) => {
-      console.log("SMBdataToSend - ", dataToSend);
+      // console.log("SMBdataToSend - ", dataToSend);
       try {
         const response = await fetch(
           `http://91.236.199.173:${PORT}/api/v1/dialogues`,

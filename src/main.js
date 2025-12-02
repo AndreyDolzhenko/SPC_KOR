@@ -137,7 +137,7 @@ reminderFormUpdate.addEventListener("click", async (e) => {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:3008/api/reminders/${reminderId}`,
+      `http://91.236.199.173:3008/api/reminders/${reminderId}`,
       // `http://91.236.199.173:3008/api/reminders/${reminderId}`
       {
         method: "PUT",
@@ -177,7 +177,7 @@ reminderForm.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      "http://127.0.0.1:3008/api/reminders",
+      "http://91.236.199.173:3008/api/reminders",
       // "http://91.236.199.173:3008/api/reminders"
       {
         method: "POST",
@@ -224,13 +224,13 @@ icon_reminder.addEventListener("click", async (event) => {
 
   if (checkResult.value == "") {
     response = await fetch(
-      `http://127.0.0.1:3008/api/reminders/employee/${userName}/today`
+      `http://91.236.199.173:3008/api/reminders/employee/${userName}/today`
       // `http://91.236.199.173:3008/api/reminders/client/Василёк`
     );
   } else {
     console.log("!!checkResult - ", checkResult.value);
     response = await fetch(
-      `http://127.0.0.1:3008/api/reminders/client/${checkResult.value}`
+      `http://91.236.199.173:3008/api/reminders/client/${checkResult.value}`
       // `http://91.236.199.173:3008/api/reminders/client/Василёк`
     );
   }
