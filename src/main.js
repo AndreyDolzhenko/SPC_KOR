@@ -57,6 +57,11 @@ const reminderOfDate = document.getElementById("reminderOfDate");
 const reminderId = document.getElementById("reminderId");
 const reminderStatus = document.getElementById("reminderStatus");
 const deleteReminde = document.getElementById("deleteReminde");
+const allRemindersByEmployee = document.getElementById("allRemindersByEmployee");
+
+// Страница со всеми напоминаниями по сотруднику
+
+const remindersEmployeeLink = document.getElementById("remindersEmployeeLink");
 
 // Попап напоминалки
 const remindCross = document.getElementById("remindCross");
@@ -77,7 +82,7 @@ const icon_reminder = document.getElementById("icon_reminder");
 function showSuccess() {
   const successMessage = document.getElementById("successMessage");
   const errorMessage = document.getElementById("errorMessage");
-  const reminderFormUpdate = document.getElementById("reminderForm");
+  // const reminderFormUpdate = document.getElementById("reminderForm");
 
   successMessage.style.display = "block";
   successMessage.style.opacity = "1";
@@ -205,19 +210,16 @@ document.querySelector('input[name="execution_date"]').min = now
   .slice(0, 16);
 
 icon_reminder.addEventListener("click", async (event) => {
-  console.log(checkResult.value);
-  reminderList.style.display = "block";
-
-  notes.textContent = clientsName_0.textContent;
-  console.log("checkResult - ", checkResult.value);
 
   const userName = userData.innerHTML.split("<br>")[0];
+  reminderList.style.display = "block";
+
+  document.getElementById("allReminderLink").href = `./pages/allRemindersByEmployee.html?employee=${userName}`;
+
+  notes.textContent = clientsName_0.textContent;
 
   reminderForm.employee.value = userName;
   reminderForm.client.value = checkResult.value;
-
-  console.log("userName - ", userName);
-
   let response;
 
   if (checkResult.value == "") {
@@ -237,7 +239,7 @@ icon_reminder.addEventListener("click", async (event) => {
   
   checkResult.value == "" ? result = result.data : result = result;
 
-  console.log("!!result - ", result);
+  // console.log("!!result - ", result);
 
   reminderOfDate.textContent = "";
 
@@ -251,14 +253,16 @@ icon_reminder.addEventListener("click", async (event) => {
       autoFilling(el);
       await getDataOfCustomers(el.client);
       notes.innerText = document.getElementById("clientsName_0").innerText;      
-      console.log("el - ", el);
+      // console.log("el - ", el);
     };
     li.textContent =
-      el.execution_date.slice(0, 10) + ". " + el.client + ": " + el.note.slice(0, 15) + "... " + el.execution_date.slice(11, 19);
+      el.execution_date.slice(0, 10) + ". " + el.client + ": " + el.note.slice(0, 15) + "... " + new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
+    .toISOString()
+    .slice(11, 19);
     reminderOfDate.append(li);
   });
 
-  console.log("result - ", result);
+  // console.log("result - ", result);
 });
 
 // Функция АвтоЗаполнения ФОРМЫ напоминания
