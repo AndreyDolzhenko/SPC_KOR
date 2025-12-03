@@ -308,7 +308,7 @@ sentSelect.addEventListener("click", (event) => {
           ? (errStatus.innerText = "")
           : (errStatus.innerText = "Данные НЕ найдены!");
 
-         console.log("data - ", data);
+        //  console.log("data - ", data);
         buildingTable(data);
       })
       .catch((err) => {

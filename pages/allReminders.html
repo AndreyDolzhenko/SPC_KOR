@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Напоминания сотрудника</title>
+    <link type="Image/x-icon" href="../img/list_992.png" rel="icon" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      h1 {
+        color: #333;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 10px;
+      }
+      .controls {
+        margin: 20px 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      .count {
+        font-size: 14px;
+        color: #666;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+        text-align: left;
+        padding: 12px;
+        position: sticky;
+        top: 0;
+      }
+      td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #ddd;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      .status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .status-в-работе {
+        background-color: #e7f3fe;
+        color: #0066cc;
+      }
+      .status-выполнено {
+        background-color: #e7f7e7;
+        color: #2e7d32;
+      }
+      .status-отменено {
+        background-color: #fde7e7;
+        color: #c62828;
+      }
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+      .error {
+        color: #c62828;
+        padding: 20px;
+        background-color: #ffebee;
+        border-radius: 4px;
+      }
+      .no-data {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Напоминания сотрудника</h1>
+
+    <div class="controls">
+      <button id="exportBtn" disabled>📊 Экспорт в Excel</button>
+      <span class="count" id="count">Загрузка...</span>
+    </div>
+
+    <div id="reminders-container">
+      <div class="loading">Загрузка напоминаний...</div>
+    </div>
+
+    <!-- Библиотека для экспорта в Excel -->
+    <!-- <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script>
+      let remindersData = []; // Здесь будем хранить данные для экспорта
+
+      const allReminderList = async () => {
+        try {
+          const response = await fetch(
+            `http://91.236.199.173:3008/api/reminders`
+          );
+
+          if (!response.ok) {
+            throw new Error(`Ошибка HTTP: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          return result;
+        } catch (error) {
+          console.error("Ошибка при загрузке напоминаний:", error);
+          throw error;
+        }
+      };
+
+      function getEmployeeFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("employee") || "Неизвестный сотрудник";
+      }
+
+      // Форматирование даты
+      function formatDate(dateString) {
+        if (!dateString) return "—";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      // Создание строки статуса с CSS классом
+      function getStatusBadge(status) {
+        if (!status) return "—";
+        const className = `status status-${status
+          .toLowerCase()
+          .replace(/\s+/g, "-")}`;
+        return `<span class="${className}">${status}</span>`;
+      }
+
+      // Отображение напоминаний в таблице
+      function displayRemindersTable(reminders) {
+        const container = document.getElementById("reminders-container");
+
+        if (!reminders || reminders.length === 0) {
+          container.innerHTML =
+            '<div class="no-data">Напоминаний не найдено</div>';
+          document.getElementById("count").textContent = "Напоминаний: 0";
+          return;
+        }
+
+        // Обновляем счетчик
+        document.getElementById(
+          "count"
+        ).textContent = `Напоминаний: ${reminders.length}`;
+
+        // Создаем таблицу
+        const tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>id</th>
+                            <th>Сотрудник</th>
+                            <th>Клиент</th>
+                            <th>Описание</th>
+                            <th>Статус</th>
+                            <th>Дата выполнения</th>
+                            <th>Создано</th>
+                            <th>Обновлено</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reminders-body">
+                        ${reminders
+                          .map(
+                            (reminder, index) => `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>
+                                    <span class="delete-btn" 
+                                          data-id="${reminder.id}"
+                                          style="cursor: pointer; color: red; font-size: 18px;">
+                                        &#10008;
+                                    </span>
+                                </td>
+                                <td>${getStatusBadge(reminder.employee)}</td>
+                                <td><strong>${
+                                  reminder.client || "—"
+                                }</strong></td>
+                                <td>${reminder.note || "—"}</td>
+                                <td>${getStatusBadge(reminder.status)}</td>
+                                <td>${formatDate(reminder.execution_date)}</td>
+                                <td>${formatDate(reminder.created_at)}</td>
+                                <td>${formatDate(reminder.updated_at)}</td>
+                            </tr>
+                        `
+                          )
+                          .join("")}
+                    </tbody>
+                </table>
+            `;
+
+        container.innerHTML = tableHTML;
+
+        // Включаем кнопку экспорта
+        document.getElementById("exportBtn").disabled = false;
+        
+        // ⭐⭐⭐ ДОБАВЛЕНО: Обработчик для удаления напоминаний ⭐⭐⭐
+        console.log("Таблица создана, добавляем обработчик удаления...");
+        
+        const remindersBody = document.getElementById("reminders-body");
+        
+        if (remindersBody) {
+            console.log("Элемент reminders-body найден");
+            
+            remindersBody.addEventListener("click", (event) => {
+                console.log("Клик по таблице, target:", event.target);
+                
+                if (event.target.classList.contains("delete-btn")) {
+                    const id = event.target.getAttribute("data-id");
+                    console.log("Нажали delete-btn с id:", id);
+                    deleteReminder(id);
+                }
+            });
+            
+            console.log("Обработчик удаления добавлен успешно");
+        } else {
+            console.error("Элемент reminders-body не найден после создания таблицы!");
+        }
+        // ⭐⭐⭐ КОНЕЦ ДОБАВЛЕННОГО КОДА ⭐⭐⭐
+      }
+
+      async function deleteReminder(id) {
+        if (!confirm("Удалить это напоминание?")) return;
+
+        try {
+          const response = await fetch(
+            `http://91.236.199.173:3008/api/reminders/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          if (response.ok) {
+            alert("Напоминание удалено");
+            location.reload();
+          } else {
+            const error = await response.text();
+            alert(`Ошибка: ${error}`);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Сетевая ошибка");
+        }
+      }
+
+      // Экспорт в Excel
+      function exportToExcel(reminders, employeeName) {
+        try {
+          // Подготовка данных для Excel
+          const excelData = reminders.map((reminder, index) => ({
+            "№": index + 1,
+            Клиент: reminder.client || "",
+            Описание: reminder.note || "",
+            Статус: reminder.status || "",
+            "Дата выполнения": reminder.execution_date
+              ? formatDate(reminder.execution_date)
+              : "",
+            Создано: reminder.created_at ? formatDate(reminder.created_at) : "",
+            Обновлено: reminder.updated_at
+              ? formatDate(reminder.updated_at)
+              : "",
+            Сотрудник: reminder.employee || "",
+          }));
+
+          // Создание рабочей книги
+          const worksheet = XLSX.utils.json_to_sheet(excelData);
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, "Напоминания");
+
+          // Настройка ширины колонок
+          const colWidths = [
+            { wch: 5 }, // №
+            { wch: 20 }, // Клиент
+            { wch: 40 }, // Описание
+            { wch: 15 }, // Статус
+            { wch: 20 }, // Дата выполнения
+            { wch: 20 }, // Создано
+            { wch: 20 }, // Обновлено
+            { wch: 30 }, // Сотрудник
+          ];
+          worksheet["!cols"] = colWidths;
+
+          // Генерация имени файла
+          const fileName = `Напоминания_${employeeName}_${new Date()
+            .toISOString()
+            .slice(0, 10)}.xlsx`;
+
+          // Сохранение файла
+          XLSX.writeFile(workbook, fileName);
+
+          console.log(
+            `Экспортировано ${reminders.length} записей в файл: ${fileName}`
+          );
+        } catch (error) {
+          console.error("Ошибка при экспорте в Excel:", error);
+          alert(
+            "Ошибка при экспорте в Excel. Проверьте консоль для подробностей."
+          );
+        }
+      }
+
+      // Основная функция загрузки данных
+      async function loadReminders() {
+        document.querySelector("h1").textContent = `Все напоминания:`;
+
+        try {
+          const reminders = await allReminderList();
+          remindersData = reminders; // Сохраняем для экспорта
+          displayRemindersTable(reminders);
+        } catch (error) {
+          document.getElementById(
+            "reminders-container"
+          ).innerHTML = `<div class="error">
+                        <strong>Ошибка загрузки данных:</strong><br>
+                        ${error.message}
+                    </div>`;
+          document.getElementById("count").textContent = "Ошибка загрузки";
+        }
+      }
+
+      // Инициализация при загрузке страницы
+      document.addEventListener("DOMContentLoaded", () => {
+        loadReminders();
+
+        // Назначаем обработчик для кнопки экспорта
+        document.getElementById("exportBtn").addEventListener("click", () => {
+          if (remindersData.length > 0) {
+            const employee = getEmployeeFromUrl();
+            exportToExcel(remindersData, employee);
+          } else {
+            alert("Нет данных для экспорта");
+          }
+        });
+      });
+
+      // Обновляем заголовок при изменении размера окна (для мобильных)
+      window.addEventListener("resize", () => {
+        const employee = getEmployeeFromUrl();
+        if (window.innerWidth < 768) {
+          document.querySelector(
+            "h1"
+          ).textContent = `Напоминания: ${employee.substring(0, 20)}...`;
+        } else {
+          document.querySelector(
+            "h1"
+          ).textContent = `Напоминания сотрудника: ${employee}`;
+        }
+      });
+
+      // Экспорт в CSV (работает без библиотек)
+      function exportToCSV(reminders, employeeName) {
+        try {
+          // Заголовки колонок
+          const headers = [
+            "№",
+            "Клиент",
+            "Описание",
+            "Статус",
+            "Дата выполнения",
+            "Создано",
+            "Обновлено",
+            "Сотрудник",
+          ];
+
+          // Подготовка данных
+          const rows = reminders.map((reminder, index) => [
+            index + 1,
+            reminder.client || "",
+            reminder.note || "",
+            reminder.status || "",
+            formatDate(reminder.execution_date),
+            formatDate(reminder.created_at),
+            formatDate(reminder.updated_at),
+            reminder.employee || "",
+          ]);
+
+          // Создание CSV контента
+          const csvContent = [
+            headers.join(";"),
+            ...rows.map((row) =>
+              row
+                .map((cell) => {
+                  // Экранируем кавычки и точки с запятой
+                  const cellStr = String(cell);
+                  if (
+                    cellStr.includes(";") ||
+                    cellStr.includes('"') ||
+                    cellStr.includes("\n")
+                  ) {
+                    return `"${cellStr.replace(/"/g, '""')}"`;
+                  }
+                  return cellStr;
+                })
+                .join(";")
+            ),
+          ].join("\n");
+
+          // Создание BLOB и скачивание
+          const blob = new Blob(["\ufeff" + csvContent], {
+            type: "text/csv;charset=utf-8;",
+          });
+          const link = document.createElement("a");
+
+          if (navigator.msSaveBlob) {
+            // Для IE
+            navigator.msSaveBlob(blob, `Напоминания_${employeeName}.csv`);
+          } else {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute(
+              "download",
+              `Напоминания_${employeeName}_${new Date()
+                .toISOString()
+                .slice(0, 10)}.csv`
+            );
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }
+
+          console.log(`Экспортировано ${reminders.length} записей в CSV`);
+        } catch (error) {
+          console.error("Ошибка при экспорте в CSV:", error);
+          alert("Ошибка при экспорте: " + error.message);
+        }
+      }      
+     
+</script>
+  </body>
+</html>

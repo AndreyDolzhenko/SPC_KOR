@@ -117,7 +117,8 @@
     </div>
 
     <!-- Библиотека для экспорта в Excel -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <!-- <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
         let remindersData = []; // Здесь будем хранить данные для экспорта
@@ -310,6 +311,89 @@
                 document.querySelector("h1").textContent = `Напоминания сотрудника: ${employee}`;
             }
         });
+
+
+        // Экспорт в CSV (работает без библиотек)
+        function exportToCSV(reminders, employeeName) {
+            try {
+                // Заголовки колонок
+                const headers = [
+                    '№',
+                    'Клиент', 
+                    'Описание',
+                    'Статус',
+                    'Дата выполнения',
+                    'Создано',
+                    'Обновлено',
+                    'Сотрудник'
+                ];
+                
+                // Подготовка данных
+                const rows = reminders.map((reminder, index) => [
+                    index + 1,
+                    reminder.client || '',
+                    reminder.note || '',
+                    reminder.status || '',
+                    formatDate(reminder.execution_date),
+                    formatDate(reminder.created_at),
+                    formatDate(reminder.updated_at),
+                    reminder.employee || ''
+                ]);
+                
+                // Создание CSV контента
+                const csvContent = [
+                    headers.join(';'),
+                    ...rows.map(row => 
+                        row.map(cell => {
+                            // Экранируем кавычки и точки с запятой
+                            const cellStr = String(cell);
+                            if (cellStr.includes(';') || cellStr.includes('"') || cellStr.includes('\n')) {
+                                return `"${cellStr.replace(/"/g, '""')}"`;
+                            }
+                            return cellStr;
+                        }).join(';')
+                    )
+                ].join('\n');
+                
+                // Создание BLOB и скачивание
+                const blob = new Blob(['\ufeff' + csvContent], { 
+                    type: 'text/csv;charset=utf-8;' 
+                });
+                const link = document.createElement('a');
+                
+                if (navigator.msSaveBlob) { // Для IE
+                    navigator.msSaveBlob(blob, `Напоминания_${employeeName}.csv`);
+                } else {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', `Напоминания_${employeeName}_${new Date().toISOString().slice(0,10)}.csv`);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+                
+                console.log(`Экспортировано ${reminders.length} записей в CSV`);
+                
+            } catch (error) {
+                console.error("Ошибка при экспорте в CSV:", error);
+                alert("Ошибка при экспорте: " + error.message);
+            }
+        }
+
+        // Обновленный обработчик кнопки
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     loadReminders();
+            
+        //     document.getElementById('exportBtn').addEventListener('click', () => {
+        //         if (remindersData.length > 0) {
+        //             const employee = getEmployeeFromUrl();
+        //             exportToCSV(remindersData, employee);
+        //         } else {
+        //             alert("Нет данных для экспорта");
+        //         }
+        //     });
+        // });
     </script>
 </body>
 </html>
