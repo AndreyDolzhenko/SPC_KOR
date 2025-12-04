@@ -48,6 +48,10 @@ let firstSubDivision;
 let previousElement = listScript;
 let progress_counter;
 
+enterName.addEventListener("click", (event) => {
+  enterName.value = serchData.value;
+});
+
 // Работа с напоминалкой
 
 const reminderList = document.getElementById("reminderList");
@@ -57,7 +61,9 @@ const reminderOfDate = document.getElementById("reminderOfDate");
 const reminderId = document.getElementById("reminderId");
 const reminderStatus = document.getElementById("reminderStatus");
 const deleteReminde = document.getElementById("deleteReminde");
-const allRemindersByEmployee = document.getElementById("allRemindersByEmployee");
+const allRemindersByEmployee = document.getElementById(
+  "allRemindersByEmployee"
+);
 
 // Страница со всеми напоминаниями по сотруднику
 
@@ -132,7 +138,7 @@ reminderFormUpdate.addEventListener("click", async (e) => {
     client: reminderForm.client.value,
     note: reminderForm.note.value,
     status: reminderForm.status.value,
-    execution_date: reminderForm.execution_date.value
+    execution_date: reminderForm.execution_date.value,
   };
 
   try {
@@ -202,6 +208,8 @@ reminderForm.addEventListener("submit", async (e) => {
   }
 });
 
+////////////////////////
+
 // Установка минимальной даты (текущая дата)
 const now = new Date();
 now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -209,12 +217,293 @@ document.querySelector('input[name="execution_date"]').min = now
   .toISOString()
   .slice(0, 16);
 
+// ========== УВЕДОМЛЕНИЯ ==========
+class ReminderNotifications {
+  constructor() {
+    this.timers = new Map();
+    this.isEnabled = false;
+  }
+
+  // Запланировать уведомление для одного напоминания
+  scheduleReminder(reminder) {
+    // Пропускаем выполненные/отмененные
+    if (reminder.status === "выполнено" || reminder.status === "отменено") {
+      return;
+    }
+
+    console.log("=== ПЛАНИРОВАНИЕ УВЕДОМЛЕНИЯ ===");
+    console.log("Напоминание ID:", reminder.id);
+    console.log("Клиент:", reminder.client);
+
+    // Используем ТОЧНО ТО ЖЕ время, что и в выводе списка
+    // В списке используется время из БД БЕЗ коррекции timezone
+    const reminderTime = new Date(reminder.execution_date);
+    console.log("Время из БД (для уведомления):", reminderTime.toISOString());
+    console.log(
+      "Часы (как в списке):",
+      reminderTime.toISOString().slice(11, 19)
+    );
+
+    const currentTime = new Date();
+    console.log("Текущее время:", currentTime.toISOString());
+
+    // За 5 минут до события (используем то же время, что и в списке)
+    const notificationTime = new Date(reminderTime.getTime() - 5 * 60000);
+    console.log("Уведомление за 5 мин:", notificationTime.toISOString());
+
+    // Если время уведомления еще не наступило
+    const timeUntilNotification =
+      notificationTime.getTime() - currentTime.getTime();
+    console.log("До уведомления (мс):", timeUntilNotification);
+    console.log(
+      "До уведомления (мин):",
+      Math.round(timeUntilNotification / 60000)
+    );
+
+    if (timeUntilNotification > 0) {
+      const timerId = setTimeout(() => {
+        console.log("Сработало уведомление за 5 минут для:", reminder.client);
+        this.showNotification(reminder, "через 5 минут", reminderTime);
+      }, timeUntilNotification);
+
+      this.timers.set(`5min-${reminder.id}`, timerId);
+    }
+
+    // Уведомление точно в время события
+    const timeUntilReminder = reminderTime.getTime() - currentTime.getTime();
+    console.log("До события (мс):", timeUntilReminder);
+    console.log("До события (мин):", Math.round(timeUntilReminder / 60000));
+
+    if (timeUntilReminder > 0) {
+      const exactTimerId = setTimeout(() => {
+        console.log(
+          "Сработало уведомление точно в время для:",
+          reminder.client
+        );
+        this.showNotification(reminder, "прямо сейчас", reminderTime);
+      }, timeUntilReminder);
+
+      this.timers.set(`exact-${reminder.id}`, exactTimerId);
+    }
+
+    console.log("=== КОНЕЦ ПЛАНИРОВАНИЯ ===\n");
+  }
+
+  // Показать уведомление
+  showNotification(reminder, timing, reminderTime) {
+    if (!("Notification" in window) || Notification.permission !== "granted") {
+      console.log("Нет разрешения на уведомления");
+      return;
+    }
+
+    // Форматируем время ТАК ЖЕ, как в списке
+    const timeString = reminderTime.toISOString().slice(11, 16);
+    console.log("Показываем уведомление:", timeString, timing, reminder.client);
+
+    try {
+      const notification = new Notification("🔔 Напоминание!", {
+        body: `${timeString} (${timing}) - ${
+          reminder.client
+        }: ${reminder.note.slice(0, 50)}${
+          reminder.note.length > 50 ? "..." : ""
+        }`,
+        icon: "/favicon.ico",
+        tag: `reminder-${reminder.id}`,
+        requireInteraction: true,
+      });
+
+      // При клике на уведомление - заполняем форму
+      notification.onclick = () => {
+        window.focus();
+        autoFilling(reminder);
+      };
+
+      // Автоматически закрыть через 15 секунд
+      setTimeout(() => {
+        notification.close();
+      }, 15000);
+    } catch (error) {
+      console.error("Ошибка при создании уведомления:", error);
+    }
+  }
+
+  // Запланировать все напоминания
+  scheduleAll(reminders) {
+    console.log("=== НАЧАЛО ПЛАНИРОВАНИЯ ВСЕХ УВЕДОМЛЕНИЙ ===");
+    this.clearAll();
+    reminders.forEach((reminder) => {
+      this.scheduleReminder(reminder);
+    });
+    this.isEnabled = true;
+    console.log(`Запланировано уведомлений: ${this.timers.size}`);
+    console.log("=== КОНЕЦ ПЛАНИРОВАНИЯ ВСЕХ УВЕДОМЛЕНИЙ ===\n");
+  }
+
+  // Очистить все таймеры
+  clearAll() {
+    console.log("Очистка всех таймеров уведомлений");
+    this.timers.forEach((timerId) => clearTimeout(timerId));
+    this.timers.clear();
+    this.isEnabled = false;
+  }
+
+  // Проверить состояние
+  isScheduled() {
+    return this.isEnabled;
+  }
+}
+
+// Создаем экземпляр менеджера уведомлений
+const notificationManager = new ReminderNotifications();
+
+// Функция для создания кнопки-колокольчика
+function createNotificationBell() {
+  const bell = document.createElement("button");
+  bell.className = "notification-bell";
+  bell.innerHTML = "🔔";
+  bell.title = "Управление уведомлениями";
+
+  bell.style.cssText = `
+    position: absolute;
+    top: 0;
+    right: 50px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  `;
+
+  // Обновляем внешний вид в зависимости от состояния
+  function updateBellAppearance() {
+    if (Notification.permission === "granted") {
+      if (notificationManager.isScheduled()) {
+        // Уведомления включены
+        bell.style.background = "#4CAF50";
+        bell.style.color = "white";
+        bell.style.boxShadow = "0 0 10px #4CAF50";
+        bell.innerHTML = "🔔";
+        bell.title = "Уведомления включены (клик для отключения)";
+      } else {
+        // Уведомления выключены
+        bell.style.background = "#f44336";
+        bell.style.color = "white";
+        bell.innerHTML = "🔕";
+        bell.title = "Уведомления выключены (клик для включения)";
+      }
+    } else {
+      // Нет разрешения
+      bell.style.background = "#FF9800";
+      bell.style.color = "white";
+      bell.innerHTML = "🔔";
+      bell.title = "Нет разрешения на уведомления (клик для запроса)";
+    }
+  }
+
+  // Обработчик клика на колокольчик
+  bell.onclick = (e) => {
+    e.stopPropagation(); // Чтобы не срабатывал клик на список
+
+    if (Notification.permission === "granted") {
+      if (notificationManager.isScheduled()) {
+        // Выключаем уведомления
+        notificationManager.clearAll();
+        updateBellAppearance();
+        console.log("Уведомления отключены");
+      } else {
+        // Включаем уведомления
+        // Для этого нужно перезагрузить список напоминаний
+        console.log("Для включения уведомлений обновите список напоминаний");
+        alert(
+          "Для включения уведомлений нажмите на иконку напоминаний ещё раз"
+        );
+      }
+    } else {
+      // Запрашиваем разрешение
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          updateBellAppearance();
+          console.log("Разрешение на уведомления получено");
+        }
+      });
+    }
+  };
+
+  updateBellAppearance();
+  return bell;
+}
+
+// Функция для добавления колокольчика в список напоминаний
+function addNotificationBellToReminderList() {
+  // Удаляем старый колокольчик если есть
+  const oldBell = reminderList.querySelector(".notification-bell");
+  if (oldBell) oldBell.remove();
+
+  // Добавляем новый
+  // const bell = createNotificationBell();
+  // reminderList.appendChild(bell);
+}
+
+// ========== ОСНОВНАЯ ЛОГИКА (НЕ МЕНЯЕМ) ==========
 icon_reminder.addEventListener("click", async (event) => {
+  function testNotificationImmediately() {
+    console.log("=== ТЕСТ УВЕДОМЛЕНИЯ ===");
+    console.log("Notification support:", "Notification" in window);
+    console.log("Permission:", Notification.permission);
+
+    if (!("Notification" in window)) {
+      console.log("Браузер не поддерживает уведомления");
+      return;
+    }
+
+    if (Notification.permission !== "granted") {
+      console.log("Нет разрешения. Запрашиваем...");
+      Notification.requestPermission().then((permission) => {
+        console.log("Новое разрешение:", permission);
+        if (permission === "granted") {
+          showTestNotification();
+        }
+      });
+    } else {
+      showTestNotification();
+    }
+
+    function showTestNotification() {
+      console.log("Показываем тестовое уведомление...");
+      try {
+        const notification = new Notification("🔔 Тест!", {
+          body: "Тестовое уведомление в " + new Date().toLocaleTimeString(),
+          icon: "/favicon.ico",
+          requireInteraction: true,
+        });
+
+        notification.onclick = () => {
+          console.log("Уведомление кликнуто");
+          notification.close();
+        };
+
+        setTimeout(() => notification.close(), 10000);
+        console.log("Уведомление показано!");
+      } catch (error) {
+        console.error("Ошибка:", error);
+      }
+    }
+  }
+
+  // testNotificationImmediately();
 
   const userName = userData.innerHTML.split("<br>")[0];
   reminderList.style.display = "block";
 
-  document.getElementById("allReminderLink").href = `./pages/allRemindersByEmployee.html?employee=${userName}`;
+  document.getElementById(
+    "allReminderLink"
+  ).href = `./pages/allRemindersByEmployee.html?employee=${userName}`;
 
   notes.textContent = clientsName_0.textContent;
 
@@ -225,48 +514,72 @@ icon_reminder.addEventListener("click", async (event) => {
   if (checkResult.value == "") {
     response = await fetch(
       `http://91.236.199.173:3008/api/reminders/employee/${userName}/today`
-      // `http://91.236.199.173:3008/api/reminders/client/Василёк`
     );
   } else {
     console.log("!!checkResult - ", checkResult.value);
     response = await fetch(
       `http://91.236.199.173:3008/api/reminders/client/${checkResult.value}`
-      // `http://91.236.199.173:3008/api/reminders/client/Василёк`
     );
   }
 
   let result = await response.json();
-  
-  checkResult.value == "" ? result = result.data : result = result;
 
-  // console.log("!!result - ", result);
+  checkResult.value == "" ? (result = result.data) : (result = result);
 
   reminderOfDate.textContent = "";
 
   result.forEach((el) => {
+   
+    const dateFromServer = new Date(el.execution_date);
+    
     const li = document.createElement("li");
     if (el.status == "выполнено" || el.status == "отменено") {
       li.style = "color: grey; text-decoration: line-through;";
     }
     li.textContent = el.note;
-    li.onclick = async() => {      
+    li.onclick = async () => {
       autoFilling(el);
       await getDataOfCustomers(el.client);
-      notes.innerText = document.getElementById("clientsName_0").innerText;      
-      // console.log("el - ", el);
+      notes.innerText = document.getElementById("clientsName_0").innerText;
+      serchData.value = el.client;
+      serchData.focus();
+      console.log("el - ", el);
     };
+   
+    const formattedDate = dateFromServer.toISOString().slice(0, 10);
+    const formattedTime = dateFromServer.toISOString().slice(11, 19);
+
     li.textContent =
-      el.execution_date.slice(0, 10) + ". " + el.client + ": " + el.note.slice(0, 15) + "... " + new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
-    .toISOString()
-    .slice(11, 19);
+      formattedDate +
+      ". " +
+      el.client +
+      ": " +
+      el.note.slice(0, 15) +
+      "... " +
+      formattedTime;
+
     reminderOfDate.append(li);
   });
 
-  // console.log("result - ", result);
+ 
+  // ========== ДОБАВЛЯЕМ УВЕДОМЛЕНИЯ ==========
+
+  // Добавляем колокольчик в список
+  // addNotificationBellToReminderList();
+
+
+  // Если есть разрешение и напоминания - планируем уведомления
+  if (Notification.permission === "granted" && result.length > 0) {
+    notificationManager.scheduleAll(result);
+    console.log(`Уведомления запланированы для ${result.length} напоминаний`);
+  } else {
+    console.log("Уведомления не запланированы. Причина:");
+    if (Notification.permission !== "granted") console.log("- Нет разрешения");
+    if (result.length === 0) console.log("- Нет напоминаний");
+  }
 });
 
 // Функция АвтоЗаполнения ФОРМЫ напоминания
-
 const autoFilling = (el) => {
   reminderId.innerText = el.id;
   reminderStatus.innerText = el.status;
@@ -274,12 +587,105 @@ const autoFilling = (el) => {
   reminderForm.client.value = el.client;
   reminderForm.note.value = el.note;
   reminderForm.status.value = el.status;
-  reminderForm.execution_date.value = 
-    new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
+
+  // ВАШ ОРИГИНАЛЬНЫЙ КОД, но вычитаем 3 часа дополнительно
+  const dateWithTimezone = new Date(
+    new Date(el.execution_date).getTime() -
+      new Date(el.execution_date).getTimezoneOffset() * 60000
+  );
+
+  // Дополнительно вычитаем 3 часа для компенсации браузера
+  dateWithTimezone.setHours(dateWithTimezone.getHours() - 3);
+
+  reminderForm.execution_date.value = dateWithTimezone
     .toISOString()
     .slice(0, 16);
-  // console.log("reminderForm - ", reminderForm.employee);
+
+  console.log("Заполнено:", reminderForm.execution_date.value);
 };
+
+///////////////////////////
+
+// // Установка минимальной даты (текущая дата)
+// const now = new Date();
+// now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+// document.querySelector('input[name="execution_date"]').min = now
+//   .toISOString()
+//   .slice(0, 16);
+
+// icon_reminder.addEventListener("click", async (event) => {
+
+//   const userName = userData.innerHTML.split("<br>")[0];
+//   reminderList.style.display = "block";
+
+//   document.getElementById("allReminderLink").href = `./pages/allRemindersByEmployee.html?employee=${userName}`;
+
+//   notes.textContent = clientsName_0.textContent;
+
+//   reminderForm.employee.value = userName;
+//   reminderForm.client.value = checkResult.value;
+//   let response;
+
+//   if (checkResult.value == "") {
+//     response = await fetch(
+//       `http://91.236.199.173:3008/api/reminders/employee/${userName}/today`
+//       // `http://91.236.199.173:3008/api/reminders/client/Василёк`
+//     );
+//   } else {
+//     console.log("!!checkResult - ", checkResult.value);
+//     response = await fetch(
+//       `http://91.236.199.173:3008/api/reminders/client/${checkResult.value}`
+//       // `http://91.236.199.173:3008/api/reminders/client/Василёк`
+//     );
+//   }
+
+//   let result = await response.json();
+
+//   checkResult.value == "" ? result = result.data : result = result;
+
+//   // console.log("!!result - ", result);
+
+//   reminderOfDate.textContent = "";
+
+//   result.forEach((el) => {
+//     const li = document.createElement("li");
+//     if (el.status == "выполнено" || el.status == "отменено") {
+//       li.style = "color: grey; text-decoration: line-through;";
+//     }
+//     li.textContent = el.note;
+//     li.onclick = async() => {
+//       autoFilling(el);
+//       await getDataOfCustomers(el.client);
+//       notes.innerText = document.getElementById("clientsName_0").innerText;
+//       serchData.value = el.client;
+//       serchData.focus(); // Добавляем фокус
+//       console.log("el - ", el);
+//     };
+//     li.textContent =
+//       el.execution_date.slice(0, 10) + ". " + el.client + ": " + el.note.slice(0, 15) + "... " + new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
+//     .toISOString()
+//     .slice(11, 19);
+//     reminderOfDate.append(li);
+//   });
+
+//   // console.log("result - ", result);
+// });
+
+// // Функция АвтоЗаполнения ФОРМЫ напоминания
+
+// const autoFilling = (el) => {
+//   reminderId.innerText = el.id;
+//   reminderStatus.innerText = el.status;
+//   reminderForm.employee.value = el.employee;
+//   reminderForm.client.value = el.client;
+//   reminderForm.note.value = el.note;
+//   reminderForm.status.value = el.status;
+//   reminderForm.execution_date.value =
+//     new Date(new Date(el.execution_date).getTime() - (new Date(el.execution_date).getTimezoneOffset() * 60000))
+//     .toISOString()
+//     .slice(0, 16);
+//   // console.log("reminderForm - ", reminderForm.employee);
+// };
 
 ////////////////////////////
 
