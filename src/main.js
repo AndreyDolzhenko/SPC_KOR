@@ -64,6 +64,34 @@ const deleteReminde = document.getElementById("deleteReminde");
 const allRemindersByEmployee = document.getElementById(
   "allRemindersByEmployee"
 );
+const select = document.querySelector('select[name="employee"]');
+
+// формирование списка сотрудников в напоминалке
+
+const allEmployeesForRemind = async () => {
+  let response = await fetch(
+    // `http://91.236.199.173:3012/api/v1/employees`
+    `http://91.236.199.173:3001/api/v1/employees`
+    // `http://127.0.0.1:3001/api/v1/employees`
+    // `http://89.111.172.208:3001/api/v1/employees`
+  );
+
+  let res = await response.json();
+  // console.log(res);
+
+  res.map((el) => {
+    const reminderEmployeeList = document.createElement("option");
+    reminderEmployeeList.value = el;
+    reminderEmployeeList.innerText = el;
+    select.append(reminderEmployeeList);
+  });
+
+  // getEmployeesSchow.addEventListener("click", (event) => {
+  //   userData.firstChild.textContent = getEmployeesSchow.value;
+  // });
+};
+
+select.addEventListener("click", (event) => allEmployeesForRemind());
 
 // Страница со всеми напоминаниями по сотруднику
 
@@ -124,19 +152,34 @@ reminderFormUpdate.addEventListener("click", async (e) => {
   e.preventDefault();
 
   // Получаем ID из URL или другого источника
-  const reminderId = document.getElementById("reminderId").textContent; // Нужно реализовать эту функцию
+  const reminderId = document.getElementById("reminderId").textContent;
 
   if (!reminderId) {
     showError("ID напоминания не найден");
     return;
   }
 
-  console.log(reminderForm);
+  const userName = userData.innerHTML.split("<br>")[0];
+
+  // Форматируем дату
+  const now = new Date();
+  const formattedDate = now.toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  // Создаём заметку с комментарием
+  const identitiRemind =
+    reminderForm.note.value +
+    `\n---\nИзменил напоминание\n--- [${formattedDate}] ${userName}`;
 
   const formData = {
     employee: reminderForm.employee.value,
     client: reminderForm.client.value,
-    note: reminderForm.note.value,
+    note: identitiRemind,
     status: reminderForm.status.value,
     execution_date: reminderForm.execution_date.value,
   };
@@ -173,13 +216,36 @@ reminderFormUpdate.addEventListener("click", async (e) => {
 reminderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const userName = userData.innerHTML.split("<br>")[0];
+
+  // Форматируем дату
+  const now = new Date();
+  const formattedDate = now.toLocaleString("ru-RU", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  // Создаём заметку с комментарием
+  const identitiRemind =
+    e.target.note.value +
+    `\n---\nСоздал напоминание\n--- [${formattedDate}] ${userName}`;
+
   const formData = {
     employee: e.target.employee.value,
     client: e.target.client.value,
-    note: e.target.note.value,
+    note: identitiRemind,
     status: e.target.status.value,
-    execution_date: new Date(e.target.execution_date.value).toISOString(),
+    execution_date: reminderForm.execution_date.value,
   };
+
+  console.log("reminderForm - ", reminderForm);
+  console.log(
+    "reminderForm.execution_date.value - ",
+    reminderForm.execution_date.value
+  );
 
   try {
     const response = await fetch(
@@ -245,7 +311,11 @@ class ReminderNotifications {
     );
 
     const currentTime = new Date();
-    console.log("Текущее время:", currentTime.toISOString());
+
+    // Добавляем 3 часа к UTC
+    const moscowTime = new Date(currentTime.getTime() + 3 * 60 * 60 * 1000);
+
+    console.log("Московское время (+3 часа):", moscowTime.toISOString());
 
     // За 5 минут до события (используем то же время, что и в списке)
     const notificationTime = new Date(reminderTime.getTime() - 5 * 60000);
@@ -253,7 +323,7 @@ class ReminderNotifications {
 
     // Если время уведомления еще не наступило
     const timeUntilNotification =
-      notificationTime.getTime() - currentTime.getTime();
+      notificationTime.getTime() - moscowTime.getTime();
     console.log("До уведомления (мс):", timeUntilNotification);
     console.log(
       "До уведомления (мин):",
@@ -270,7 +340,7 @@ class ReminderNotifications {
     }
 
     // Уведомление точно в время события
-    const timeUntilReminder = reminderTime.getTime() - currentTime.getTime();
+    const timeUntilReminder = reminderTime.getTime() - moscowTime.getTime();
     console.log("До события (мс):", timeUntilReminder);
     console.log("До события (мин):", Math.round(timeUntilReminder / 60000));
 
@@ -446,8 +516,8 @@ function addNotificationBellToReminderList() {
   if (oldBell) oldBell.remove();
 
   // Добавляем новый
-  // const bell = createNotificationBell();
-  // reminderList.appendChild(bell);
+  const bell = createNotificationBell();
+  reminderList.appendChild(bell);
 }
 
 // ========== ОСНОВНАЯ ЛОГИКА (НЕ МЕНЯЕМ) ==========
@@ -507,8 +577,14 @@ icon_reminder.addEventListener("click", async (event) => {
 
   notes.textContent = clientsName_0.textContent;
 
-  reminderForm.employee.value = userName;
+  // reminderForm.employee.value = userName;
   reminderForm.client.value = checkResult.value;
+
+  select.value = userName;
+  select.innerHTML = `<option>${userName}</option>`;
+
+  console.log("select - ", select.value);
+
   let response;
 
   if (checkResult.value == "") {
@@ -526,12 +602,13 @@ icon_reminder.addEventListener("click", async (event) => {
 
   checkResult.value == "" ? (result = result.data) : (result = result);
 
+  console.log("result - ", result);
+
   reminderOfDate.textContent = "";
 
   result.forEach((el) => {
-   
     const dateFromServer = new Date(el.execution_date);
-    
+
     const li = document.createElement("li");
     if (el.status == "выполнено" || el.status == "отменено") {
       li.style = "color: grey; text-decoration: line-through;";
@@ -545,7 +622,7 @@ icon_reminder.addEventListener("click", async (event) => {
       serchData.focus();
       console.log("el - ", el);
     };
-   
+
     const formattedDate = dateFromServer.toISOString().slice(0, 10);
     const formattedTime = dateFromServer.toISOString().slice(11, 19);
 
@@ -561,12 +638,10 @@ icon_reminder.addEventListener("click", async (event) => {
     reminderOfDate.append(li);
   });
 
- 
   // ========== ДОБАВЛЯЕМ УВЕДОМЛЕНИЯ ==========
 
   // Добавляем колокольчик в список
   // addNotificationBellToReminderList();
-
 
   // Если есть разрешение и напоминания - планируем уведомления
   if (Notification.permission === "granted" && result.length > 0) {

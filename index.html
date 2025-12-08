@@ -26,12 +26,21 @@
         alt="cross"
       />
       <ul id="notes"></ul>
-      <div style="color: darkcyan; font-style: italic; display: flex; justify-content: space-between;">
+      <div
+        style="
+          color: darkcyan;
+          font-style: italic;
+          display: flex;
+          justify-content: space-between;
+        "
+      >
+        <span> Создать напоминание: </span>
         <span>
-          Создать напоминание:
-        </span>
-        <span>
-          <a id="allReminderLink" href="./pages/allRemindersByEmployee.html" target="_blank">
+          <a
+            id="allReminderLink"
+            href="./pages/allRemindersByEmployee.html"
+            target="_blank"
+          >
             Все по сотруднику &#8594;
           </a>
         </span>
@@ -43,14 +52,11 @@
       </div>
       <div class="popup-content hidding hidden">
         <form id="reminderForm">
+
           <div class="form-group">
             <label>Сотрудник:</label>
-            <input
-              type="text"
-              name="employee"
-              required
-              placeholder="Введите ФИО сотрудника"
-            />
+            <select name="employee" required>             
+            </select>
           </div>
 
           <div class="form-group">
@@ -74,7 +80,7 @@
 
           <div class="form-group">
             <label>Статус:</label>
-            <select name="status">              
+            <select name="status">
               <option value="в работе">В работе</option>
               <option value="выполнено">Выполнено</option>
               <option value="отменено">Отменено</option>
@@ -87,7 +93,9 @@
           </div>
 
           <button type="submit" class="submit-btn">Создать напоминание</button>
-          <button id="reminderFormUpdate" type="button" class="submit-btn">Обновить напоминание</button>
+          <button id="reminderFormUpdate" type="button" class="submit-btn">
+            Обновить напоминание
+          </button>
         </form>
 
         <div class="success-message" id="successMessage">
@@ -97,7 +105,7 @@
         <div class="error-message" id="errorMessage">
           ❌ Ошибка при создании напоминания
         </div>
-      </div>      
+      </div>
       <div class="toggle-btn" onclick="toggleText(this)">[Показать]</div>
       <ul id="reminderOfDate"></ul>
     </div>
