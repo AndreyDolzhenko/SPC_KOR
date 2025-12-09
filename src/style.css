@@ -635,7 +635,7 @@ li {
 }
 
 .loader::after {
-  content: "ОФИСМАГ";
+  content: "ОФИСМАГ_kor";
   position: absolute;
   left: 0;
   top: 0;

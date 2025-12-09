@@ -17,7 +17,7 @@ const ordersToEmployee = async (employeeName, orderType) => {
   let dateSort = [];
 
   await fetch(
-    `http://91.236.199.173:3001/api/v1/getOrdersToEmployee?getOrdersToEmployee=${[
+    `http://91.236.199.173:3012/api/v1/getOrdersToEmployee?getOrdersToEmployee=${[
       employeeName,
       orderType,
     ]}`
@@ -146,7 +146,7 @@ getOfClients.addEventListener("submit", function (e) {
       //   clientsConditions.status_1,
       //   clientsConditions.status_2,
       // ]}`
-      `http://91.236.199.173:3001/api/v1/getOfClients?getOfClients=${[
+      `http://91.236.199.173:3012/api/v1/getOfClients?getOfClients=${[
         clientsConditions.operatorSName,
         clientsConditions.status_1,
         clientsConditions.status_2,
@@ -253,7 +253,7 @@ getFilters.addEventListener("click", (event) => {
   const getClientByFilter = async (filterItem) => {
     await fetch(
       // `http://127.0.0.1:3001/api/v1/filterItem?filterItem=${filterItem}`
-      `http://91.236.199.173:3001/api/v1/filterItem?filterItem=${filterItem}`
+      `http://91.236.199.173:3012/api/v1/filterItem?filterItem=${filterItem}`
       // `http://89.111.172.208:3001/api/v1/filterItem?filterItem=${filterItem}`
     )
       .then(function (response) {

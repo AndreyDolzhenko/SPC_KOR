@@ -71,7 +71,7 @@ const select = document.querySelector('select[name="employee"]');
 const allEmployeesForRemind = async () => {
   let response = await fetch(
     // `http://91.236.199.173:3012/api/v1/employees`
-    `http://91.236.199.173:3001/api/v1/employees`
+    `http://91.236.199.173:3012/api/v1/employees`
     // `http://127.0.0.1:3001/api/v1/employees`
     // `http://89.111.172.208:3001/api/v1/employees`
   );
@@ -186,7 +186,7 @@ reminderFormUpdate.addEventListener("click", async (e) => {
 
   try {
     const response = await fetch(
-      `http://91.236.199.173:3008/api/reminders/${reminderId}`,
+      `http://91.236.199.173:3012/api/reminders/${reminderId}`,
       // `http://91.236.199.173:3008/api/reminders/${reminderId}`
       {
         method: "PUT",
@@ -249,7 +249,7 @@ reminderForm.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      "http://91.236.199.173:3008/api/reminders",
+      "http://91.236.199.173:3012/api/reminders",
       // "http://91.236.199.173:3008/api/reminders"
       {
         method: "POST",
@@ -589,12 +589,12 @@ icon_reminder.addEventListener("click", async (event) => {
 
   if (checkResult.value == "") {
     response = await fetch(
-      `http://91.236.199.173:3008/api/reminders/employee/${userName}/today`
+      `http://91.236.199.173:3012/api/reminders/employee/${userName}/today`
     );
   } else {
     console.log("!!checkResult - ", checkResult.value);
     response = await fetch(
-      `http://91.236.199.173:3008/api/reminders/client/${checkResult.value}`
+      `http://91.236.199.173:3012/api/reminders/client/${checkResult.value}`
     );
   }
 
@@ -890,7 +890,7 @@ iconHome.addEventListener("click", function (event) {
 async function getActualDate() {
   let response = await fetch(
     // `http://91.236.199.173:3012/api/v1/date`
-    `http://91.236.199.173:${3001}/api/v1/date`
+    `http://91.236.199.173:3012/api/v1/date`
     // `http://127.0.0.1:3001/api/v1/date`
     // `http://89.111.172.208:3001/api/v1/date`
   );
@@ -909,7 +909,7 @@ getActualDate();
 async function getDataOfCustomers(codeOfCustomer) {
   let response = await fetch(
     // `http://91.236.199.173:3012/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
-    `http://91.236.199.173:${3001}/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
+    `http://91.236.199.173:3012/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
     // `http://127.0.0.1:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
     // `http://89.111.172.208:3001/api/v1/customers?codeOfCustomer=${codeOfCustomer}`
   );
@@ -1388,7 +1388,7 @@ function homePage() {
 async function getDataOfEmployee(person) {
   let response = await fetch(
     // `http://91.236.199.173:3012/api/v1/employee?person=${person}`
-    `http://91.236.199.173:3001/api/v1/employee?person=${person}`
+    `http://91.236.199.173:3012/api/v1/employee?person=${person}`
     // `http://127.0.0.1:3001/api/v1/employee?person=${person}`
     // `http://89.111.172.208:3001/api/v1/employee?person=${person}`
   );
@@ -1484,7 +1484,7 @@ getDataOfEmployee(person).then((result) => {
 const allEmployees = async () => {
   let response = await fetch(
     // `http://91.236.199.173:3012/api/v1/employees`
-    `http://91.236.199.173:3001/api/v1/employees`
+    `http://91.236.199.173:3012/api/v1/employees`
     // `http://127.0.0.1:3001/api/v1/employees`
     // `http://89.111.172.208:3001/api/v1/employees`
   );

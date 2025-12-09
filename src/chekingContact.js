@@ -81,7 +81,7 @@ const contactOperations = () => {
        }       
     });
 
-    console.log(lastArray);
+    // console.log(lastArray);
 
     lastArray.map((el) => {  
           const p = document.createElement("p");

@@ -82,7 +82,7 @@ const searchTeam = document.getElementById("searchTeam");
 // Функция для получения данных о команде
 const dataOfManager = async (manager) => {
   let response = await fetch(    
-    `http://91.236.199.173:3001/api/v1/manager?manager=${manager}`
+    `http://91.236.199.173:3012/api/v1/manager?manager=${manager}`
     // `http://89.111.172.208:3001/api/v1/manager?manager=${manager}`
   );
 
@@ -102,7 +102,7 @@ searchTeam.addEventListener("click", (event) => {
   if (event.target.value != "СТ ОКБ/СРК") {
     const nextEmployee = async (manager) => {
       let response = await fetch(        
-        `http://91.236.199.173:3001/api/v1/manager?manager=${manager}`
+        `http://91.236.199.173:3012/api/v1/manager?manager=${manager}`
         // `http://89.111.172.208:3001/api/v1/manager?manager=${manager}`
       );
 

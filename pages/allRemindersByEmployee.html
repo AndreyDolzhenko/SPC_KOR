@@ -124,7 +124,7 @@
       const allReminderList = async (employee) => {
         try {
           const response = await fetch(
-            `http://91.236.199.173:3008/api/reminders/employee/${encodeURIComponent(
+            `http://91.236.199.173:3011/api/reminders/employee/${encodeURIComponent(
               employee
             )}`
           );
@@ -273,7 +273,7 @@
 
         try {
           const response = await fetch(
-            `http://91.236.199.173:3008/api/reminders/${id}`,
+            `http://91.236.199.173:3011/api/reminders/${id}`,
             {
               method: "DELETE",
             }

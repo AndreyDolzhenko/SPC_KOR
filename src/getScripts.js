@@ -124,7 +124,7 @@ const getAnyScripts = function (event) {
 
         const queryString = queryParams.toString();
         const url = queryString
-          ? `http://91.236.199.173:3008/api/scripts?${queryString}`
+          ? `http://91.236.199.173:3011/api/scripts?${queryString}`
           : "/api/scripts";
 
         const response = await fetch(url);
@@ -188,7 +188,7 @@ const getAnyScripts = function (event) {
         // Работаем с Презентациями
 
         const presentUrl = queryString
-          ? `http://91.236.199.173:3008/api/presentations?${queryString}`
+          ? `http://91.236.199.173:3011/api/presentations?${queryString}`
           : "/api/scripts";
 
         const presentResponse = await fetch(presentUrl);
@@ -216,7 +216,7 @@ const getAnyScripts = function (event) {
         // Работаем с Возражениями
 
         const objectUrl = queryString
-          ? `http://91.236.199.173:3008/api/objections?${queryString}`
+          ? `http://91.236.199.173:3011/api/objections?${queryString}`
           : "/api/scripts";
 
         const objectResponse = await fetch(objectUrl);

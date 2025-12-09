@@ -124,7 +124,7 @@
       const allReminderList = async () => {
         try {
           const response = await fetch(
-            `http://91.236.199.173:3008/api/reminders`
+            `http://91.236.199.173:3011/api/reminders`
           );
 
           if (!response.ok) {
@@ -264,7 +264,7 @@
 
         try {
           const response = await fetch(
-            `http://91.236.199.173:3008/api/reminders/${id}`,
+            `http://91.236.199.173:3011/api/reminders/${id}`,
             {
               method: "DELETE",
             }
